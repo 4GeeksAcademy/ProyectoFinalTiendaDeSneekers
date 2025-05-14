@@ -5,6 +5,7 @@
       <span classname="navbar-toggler-icon"></span>
     </button>
     <div classname="collapse navbar-collapse" id="navbarSupportedContent">
+      <Navbar.Brand href="/"> <img src="https://w7.pngwing.com/pngs/672/449/png-transparent-sneakers-shoe-graphy-others-white-logo-monochrome.png" alt="Logo" width="120" /> </Navbar.Brand>
       <ul classname="navbar-nav me-auto mb-2 mb-lg-0">
         <li classname="nav-item">
           <a classname="nav-link active" aria-current="page" href="#">Hombre</a>
