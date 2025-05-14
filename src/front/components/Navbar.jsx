@@ -12,7 +12,7 @@ import { FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
 const NavbarMenu = () => {
   return (
     <Navbar bg="light" expand="lg">
-      <Container>
+      <Container className="d-flex justify-content-between">
         <Navbar.Brand href="/">
           <img
             src="https://w7.pngwing.com/pngs/672/449/png-transparent-sneakers-shoe-graphy-others-white-logo-monochrome.png"
