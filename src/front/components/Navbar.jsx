@@ -1,57 +1,51 @@
 import React from "react";
-import {
-  Navbar,
-  Nav,
-  Form,
-  FormControl,
-  Button,
-  Container,
-} from "react-bootstrap";
+
 import { FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
 
 const NavbarMenu = () => {
   return (
-    <Navbar bg="light" expand="lg">
-      <Container className="d-flex justify-content-between">
-        <Navbar.Brand href="/">
-          <img
-            src="https://w7.pngwing.com/pngs/672/449/png-transparent-sneakers-shoe-graphy-others-white-logo-monochrome.png"
-            alt="Logo"
-            width="120"
-          />
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarNav" />
-        <Navbar.Collapse id="navbarNav">
-          <Nav className="mr-auto">
-            <Nav.Link href="#hombre">Hombre</Nav.Link>
-            <Nav.Link href="#mujer">Mujer</Nav.Link>
-            <Nav.Link href="#ninos">Niños</Nav.Link>
-            <Nav.Link href="#novedades">Novedades</Nav.Link>
-            <Nav.Link href="#ofertas">Ofertas</Nav.Link>
-          </Nav>
-          <Form className="d-flex">
-            <FormControl
-              type="text"
-              placeholder="Buscar productos, marcas..."
-              className="mr-sm-2"
-            />
-            <Button variant="outline-danger">Buscar</Button>
-          </Form>
-          <Nav>
-            <Nav.Link href="#account">
-              <FaUser size={20} />
-            </Nav.Link>
-            <Nav.Link href="#favorites">
-              <FaHeart size={20} />
-            </Nav.Link>
-            <Nav.Link href="#cart">
-              <FaShoppingBag size={20} />
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="#">Navbar</a>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <a className="nav-link active" aria-current="page" href="#">Hombre</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Mujer</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Niño</a>
+            </li>
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Ofertas
+              </a>
+              <ul className="dropdown-menu">
+                <li><a className="dropdown-item" href="#">Todas las ofertas</a></li>
+                <li><hr className="dropdown-divider" /></li>
+                <li><a className="dropdown-item" href="#">Hombre</a></li>
+                <li><a className="dropdown-item" href="#">Mujer</a></li>
+                <li><a className="dropdown-item" href="#">Niños</a></li>
+              </ul>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link disabled" aria-disabled="true">Disabled</a>
+            </li>
+          </ul>
+          <form className="d-flex" role="search">
+            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+            <button className="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
   );
 };
 
 export default NavbarMenu;
+
