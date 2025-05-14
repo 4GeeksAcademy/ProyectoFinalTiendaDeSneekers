@@ -16,7 +16,7 @@ CORS(api)
 def handle_hello():
 
     response_body = {
-        "message": "Raul estudia fetch de api"
+        "message": "Antes de hacer merge o pull request leer bien cada una de las acciones para no joder el proyecto"
     }
 
     return jsonify(response_body), 200
