@@ -1,51 +1,96 @@
 import React from "react";
-
 import { FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const NavbarMenu = () => {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="#">Navbar</a>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">Hombre</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Mujer</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Niño</a>
-            </li>
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Ofertas
-              </a>
-              <ul className="dropdown-menu">
-                <li><a className="dropdown-item" href="#">Todas las ofertas</a></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><a className="dropdown-item" href="#">Hombre</a></li>
-                <li><a className="dropdown-item" href="#">Mujer</a></li>
-                <li><a className="dropdown-item" href="#">Niños</a></li>
-              </ul>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" aria-disabled="true">Disabled</a>
-            </li>
-          </ul>
-          <form className="d-flex" role="search">
-            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-            <button className="btn btn-outline-success" type="submit">Search</button>
-          </form>
+    <>
+      <style>{`
+        /* Mostrar dropdown al hacer hover en desktop */
+        .nav-item.dropdown:hover > .dropdown-menu {
+          display: block;
+          margin-top: 0;
+        }
+        /* Asegura que el dropdown se muestre encima */
+        .dropdown-menu {
+          margin-top: 0;
+          border-radius: 0.25rem;
+        }
+      `}</style>
+
+      <nav className="navbar navbar-expand-lg bg-dark px-3">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="#">
+            <img
+              src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/sneaker-store-logo-brand-logo-design-template-ea9c8040d69fa064feee3014cb8e9827_screen.jpg?ts=1645976739"
+              alt="Logo"
+              width="90"
+              className="rounded"
+            />
+          </a>
+          {/* No toggle button necesario si no usas JS, pero lo dejo por si quieres */}
+          <button
+            className="navbar-toggler bg-light"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <a className="nav-link text-white fw-bold" href="#">Hombre</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-white fw-bold" href="#">Mujer</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-white fw-bold" href="#">Niño</a>
+              </li>
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle text-white fw-bold"
+                  href="#"
+                  role="button"
+                  aria-expanded="false"
+                >
+                  Ofertas
+                </a>
+                <ul className="dropdown-menu bg-dark">
+                  <li><a className="dropdown-item text-white" href="#">Todas las ofertas</a></li>
+                  <li><hr className="dropdown-divider bg-light" /></li>
+                  <li><a className="dropdown-item text-white" href="#">Hombre</a></li>
+                  <li><a className="dropdown-item text-white" href="#">Mujer</a></li>
+                  <li><a className="dropdown-item text-white" href="#">Niños</a></li>
+                </ul>
+              </li>
+            </ul>
+
+            <form className="d-flex me-3" role="search">
+              <input
+                className="form-control me-2 bg-secondary text-white border-0"
+                type="search"
+                placeholder="Buscar"
+                aria-label="Search"
+              />
+              <button className="btn btn-outline-danger" type="submit">Buscar</button>
+            </form>
+
+            <div className="d-flex align-items-center gap-3">
+              <FaUser className="text-white fs-5" title="Cuenta" />
+              <FaHeart className="text-white fs-5" title="Favoritos" />
+              <FaShoppingBag className="text-white fs-5" title="Carrito" />
+            </div>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 };
 
 export default NavbarMenu;
-
