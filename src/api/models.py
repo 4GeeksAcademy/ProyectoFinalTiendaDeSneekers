@@ -20,7 +20,6 @@ class User(db.Model):
             "id": self.id,
             "name": self.name,
             "email": self.email,
-            # do not serialize the password, its a security breach
         }
 
 
@@ -28,8 +27,6 @@ class Marca(db.Model):
     __tablename__ = "marcas"
     id: Mapped[int] = mapped_column(primary_key=True)
     nombre: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-
-    # Relación con los modelos
     modelos = relationship("Modelo", back_populates="marca")
 
     def serialize(self):
@@ -42,6 +39,7 @@ class Modelo(db.Model):
     nombre: Mapped[str] = mapped_column(String(120), nullable=False)
     marca_id: Mapped[int] = mapped_column(ForeignKey("marcas.id"), nullable=False)
     precio: Mapped[int] = mapped_column(Integer, nullable=False)
+    oferta: Mapped[bool] = mapped_column(Boolean, nullable=False)
 
     marca = relationship("Marca", back_populates="modelos")
     zapatillas = relationship("Zapatillas", back_populates="modelo")
@@ -51,6 +49,7 @@ class Modelo(db.Model):
             "id": self.id,
             "nombre": self.nombre,
             "precio": self.precio,
+            "oferta": self.oferta,
             "marca": self.marca.serialize()
         }
 
@@ -61,7 +60,6 @@ class Zapatillas(db.Model):
     modelo_id: Mapped[int] = mapped_column(ForeignKey("modelos.id"), nullable=False)
     marca_id: Mapped[int] = mapped_column(ForeignKey("marcas.id"), nullable=False)  # Referencia directa a la marca
     tallas: Mapped[list[int]] = mapped_column(ARRAY(Integer), nullable=False)
-    oferta: Mapped[bool] = mapped_column(Boolean, nullable=False)
 
     modelo = relationship("Modelo", back_populates="zapatillas")
     marca = relationship("Marca", back_populates="modelos")  # Relación con la marca
@@ -72,16 +70,13 @@ class Zapatillas(db.Model):
             "modelo": self.modelo.serialize(),
             "marca": self.marca.serialize(),
             "tallas": self.tallas,
-            "oferta": self.oferta
         }
 
 class carrito(db.Model):
     __tablename__ = "carrito"
     id: Mapped[int] = mapped_column(primary_key=True)
-    usuario_id: Mapped[int] = mapped_column(
-        ForeignKey("user.id"), nullable=False)
-    zapatillas_id: Mapped[int] = mapped_column(
-        ForeignKey('zapatillas.id'), nullable=False)
+    usuario_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
+    zapatillas_id: Mapped[int] = mapped_column(ForeignKey('zapatillas.id'), nullable=False)
     talla: Mapped[int] = mapped_column(nullable=False)
     cantidad: Mapped[int] = mapped_column(default=1, nullable=False)
 
