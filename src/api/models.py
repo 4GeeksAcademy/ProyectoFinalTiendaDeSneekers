@@ -37,12 +37,10 @@ class Marca(db.Model):
     nombre: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
 
     modelos = relationship("Modelo", back_populates="marca")
-    zapatillas = relationship("Zapatilla", back_populates="marca")
 
     def serialize(self):
         return { 
-            "nombre": self.nombre,
-            "modelos": [modelo.serialize() for modelo in self.modelos],
+            "nombre": self.nombre
             }
 
 
