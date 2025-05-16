@@ -7,6 +7,7 @@ export const Home = () => {
 
 	const getBackend = async () => {
 		try {
+			const urlbase = import.meta.env.VITE_BACKEND_URL
 			const response = await fetch("https://upgraded-space-waddle-v6q94pvxqppxfxrjp-3001.app.github.dev/api/hello")
 			if (!response.ok) {
 				throw new Error("No se puede ejecutar el fetch")
