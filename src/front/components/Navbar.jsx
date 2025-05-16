@@ -6,12 +6,11 @@ const NavbarMenu = () => {
   return (
     <>
       <style>{`
-        /* Mostrar dropdown al hacer hover en desktop */
         .nav-item.dropdown:hover > .dropdown-menu {
           display: block;
           margin-top: 0;
         }
-        /* Asegura que el dropdown se muestre encima */
+      
         .dropdown-menu {
           margin-top: 0;
           border-radius: 0.25rem;
