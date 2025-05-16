@@ -40,7 +40,8 @@ class Marca(db.Model):
 
     def serialize(self):
         return { 
-            "nombre": self.nombre
+            "nombre": self.nombre,
+            "modelos": [modelo.serialize() for modelo in self.modelos]
             }
 
 
@@ -61,7 +62,7 @@ class Modelo(db.Model):
             "nombre": self.nombre,
             "precio": self.precio,
             "oferta": self.oferta,
-            "marca": self.marca.serialize()
+            "marca": self.marca.nombre
         }
 
 

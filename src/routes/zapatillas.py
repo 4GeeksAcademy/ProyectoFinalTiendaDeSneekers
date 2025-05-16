@@ -18,6 +18,15 @@ def add_marca():
     except Exception as e:
             db.session.rollback()
             return jsonify({"error": str(e)}), 500
+@zapatillas_bp.route('/marca/<string:marca_name>', methods=['GET'])
+def get_marca(marca_name):
+    try:
+        marca = Marca.query.filter_by(nombre=marca_name).first()
+        if not marca:
+            return jsonify({"msg": "Marca no encontrada"}), 404
+        return jsonify(marca.serialize()), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
     
 @zapatillas_bp.route('/zapatillas', methods=['POST'])
 def add_zapatillas():
