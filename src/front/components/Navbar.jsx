@@ -22,7 +22,7 @@ const NavbarMenu = () => {
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
             <img
-              src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/sneaker-store-logo-brand-logo-design-template-ea9c8040d69fa064feee3014cb8e9827_screen.jpg?ts=1645976739"
+              src="https://c0.klipartz.com/pngpicture/504/502/gratis-png-zapatillas.png"
               alt="Logo"
               width="90"
               className="rounded"
