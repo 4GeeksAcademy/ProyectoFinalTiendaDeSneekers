@@ -6,6 +6,7 @@ import { StoreProvider } from './hooks/useGlobalReducer';  // Import the StorePr
 import { BackendURL } from './components/BackendURL';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+
 const Main = () => {
 
     if (! import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_BACKEND_URL == "") return (
