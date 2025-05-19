@@ -12,13 +12,14 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from routes.zapatillas import zapatillas_bp
 from routes.usuario import usuario_bp
+from flask_jwt_extended import JWTManager
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
-
+jwt=JWTManager(app)
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
@@ -55,9 +56,8 @@ def sitemap():
     if ENV == "development":
         return generate_sitemap(app)
     return send_from_directory(static_file_dir, 'index.html')
-@app.route('/lo', methods=['GET'])
-def saludo():
-    return jsonify({"msg": "Hola desde la ruta de zapatillas"}), 200
+
+
 # any other endpoint will try to serve it like a static file
 @app.route('/<path:path>', methods=['GET'])
 def serve_any_other_file(path):
