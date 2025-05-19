@@ -1,6 +1,7 @@
 import React from "react";
 import { FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from "react-router-dom";
 
 const NavbarMenu = () => {
   return (
@@ -43,7 +44,8 @@ const NavbarMenu = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link text-white fw-bold" href="#">Hombre</a>
+              <Link to ="/hombre"><span className="nav-link text-white fw-bold">Hombre</span>
+              </Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link text-white fw-bold" href="#">Mujer</a>
