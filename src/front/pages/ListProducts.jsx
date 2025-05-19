@@ -1,7 +1,40 @@
 import React from 'react';
 import { Card, Row, Col, Container, Button, Badge } from 'react-bootstrap';
+import { useState } from 'react';
 
-const ListProducts = ({ products, onAddToCart }) => {
+const ListProducts = () => {
+   const [products, setProducts] = useState([
+    {
+      id: 1,
+      name: 'Nike Air Max 90',
+      brand: 'Nike',
+      price: 120,
+      originalPrice: 150,
+      description: 'Zapatillas icónicas con gran amortiguación y estilo retro.',
+      image: 'https://via.placeholder.com/300x200?text=Nike+Air+Max+90',//cambiar
+      stock: 5,
+    },
+    {
+      id: 2,
+      name: 'Adidas Ultraboost',
+      brand: 'Adidas',
+      price: 140,
+      originalPrice: 180,
+      description: 'Máximo confort y diseño moderno para runners exigentes.',
+      image: 'https://via.placeholder.com/300x200?text=Adidas+Ultraboost',//cambiar
+      stock: 0,
+    },
+    {
+      id: 3,
+      name: 'Puma RS-X',
+      brand: 'Puma',
+      price: 110,
+      originalPrice: null,
+      description: 'Diseño llamativo con un toque urbano para destacar.',
+      image: 'https://via.placeholder.com/300x200?text=Puma+RS-X',//cambiar
+      stock: 3,
+    },
+  ]);
   return (
     <Container className="my-5">
       <h2 className="mb-4">Nuestra Colección de Sneakers</h2>

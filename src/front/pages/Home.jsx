@@ -1,7 +1,7 @@
 
 import { Container } from "react-bootstrap";
 import NavbarMenu from "../components/Navbar.jsx";
-import Products from './components/Products'; 
+import Products from "./Products"; 
 
 export const Home = () => {
 
