@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from api.models import User
 from api.models import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token,jwt_required,get_jwt_identity
+from src.app import jwt
 
 usuario_bp = Blueprint('usuario', __name__)
 @usuario_bp.route('/users', methods=['GET'])
@@ -12,6 +14,8 @@ def get_usuarios():
         return jsonify([user.serialize() for user in users]), 200
     else:
         return jsonify({"msg": "No hay usuarios"}), 404
+    
+    
 @usuario_bp.route('/users/<int:id>', methods=['GET'])
 def get_usuario(id):
     user = User.query.get(id)
@@ -42,3 +46,20 @@ def add_user():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+    
+@usuario_bp.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    if not email or not password:
+        return jsonify({"msg": "Faltan datos"}), 400
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    if  check_password_hash(user.password, password):
+        access_token = create_access_token(identity=user.id)
+        print(access_token)
+        return jsonify(token=access_token), 200
+    else:
+        return jsonify({"msg": "wrong credentials"}), 401
