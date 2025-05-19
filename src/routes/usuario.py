@@ -4,7 +4,6 @@ from api.models import User
 from api.models import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token,jwt_required,get_jwt_identity
-from src.app import jwt
 
 usuario_bp = Blueprint('usuario', __name__)
 @usuario_bp.route('/users', methods=['GET'])
@@ -15,7 +14,7 @@ def get_usuarios():
     else:
         return jsonify({"msg": "No hay usuarios"}), 404
     
-    
+
 @usuario_bp.route('/users/<int:id>', methods=['GET'])
 def get_usuario(id):
     user = User.query.get(id)
@@ -58,7 +57,7 @@ def login():
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
     if  check_password_hash(user.password, password):
-        access_token = create_access_token(identity=user.id)
+        access_token = create_access_token(identity=str(user.id))
         print(access_token)
         return jsonify(token=access_token), 200
     else:
