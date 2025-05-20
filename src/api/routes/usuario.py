@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from api.models import User
-from api.models import db
+from src.api.models import User
+from src.api.models import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token,jwt_required,get_jwt_identity
 
