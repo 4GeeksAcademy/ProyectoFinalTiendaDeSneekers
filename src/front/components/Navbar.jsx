@@ -1,7 +1,7 @@
 import React from "react";
-import { FaUser, FaHeart, FaShoppingBag} from "react-icons/fa";
+import { FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NavbarMenu = () => {
   return (
@@ -20,14 +20,14 @@ const NavbarMenu = () => {
 
       <nav className="navbar navbar-expand-lg bg-dark px-3">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <Link to="/" className="navbar-brand">
             <img
               src="https://c0.klipartz.com/pngpicture/504/502/gratis-png-zapatillas.png"
               alt="Logo"
               width="90"
               className="rounded"
             />
-          </a>
+          </Link>
           <button
             className="navbar-toggler bg-light"
             type="button"
@@ -36,7 +36,7 @@ const NavbarMenu = () => {
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
             aria-label="Toggle navigation"
->
+          >
             <span className="navbar-toggler-icon"></span>
           </button>
 
@@ -63,7 +63,7 @@ const NavbarMenu = () => {
                   href="#"
                   role="button"
                   aria-expanded="false"
->
+                >
                   Ofertas
                 </a>
                 <ul className="dropdown-menu bg-dark">
@@ -95,7 +95,8 @@ const NavbarMenu = () => {
         </div>
       </nav>
     </>
-);
+  );
 };
 
-export default NavbarMenu;
+export default NavbarMenu;
+
