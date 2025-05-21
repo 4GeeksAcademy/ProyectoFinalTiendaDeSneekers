@@ -52,10 +52,12 @@ class Modelo(db.Model):
     marca_id: Mapped[int] = mapped_column(ForeignKey("marca.id"), nullable=False)
     precio: Mapped[int] = mapped_column(Integer, nullable=False)
     oferta: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    genero: Mapped[str] = mapped_column(String(120), nullable=False)
     descripcion: Mapped[str] = mapped_column(String(255), nullable=True)
     img: Mapped[str] = mapped_column(String(255), nullable=True)
     marca = relationship("Marca", back_populates="modelos")
     zapatillas = relationship("Zapatilla", back_populates="modelo")
+    
 
     def serialize(self):
         return {
@@ -65,6 +67,7 @@ class Modelo(db.Model):
             "descripcion": self.descripcion,
             "img": self.img,
             "oferta": self.oferta,
+            "genero": self.genero,
             "marca": self.marca.nombre
         }
 
