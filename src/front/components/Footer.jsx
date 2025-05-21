@@ -35,18 +35,6 @@ const Footer = () => {
 						</div>
 					</div>
 
-					{/* Tienda */}
-					<div style={{ flex: '1 1 150px' }}>
-						<h4 style={{ marginBottom: '1rem', color: 'white' }}>Tienda</h4>
-						<ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem' }}>
-							{['Novedades', 'Más vendidos', 'Hombre', 'Mujer', 'Niños', 'Ofertas'].map((item, idx) => (
-								<li key={idx} style={{ marginBottom: '0.5rem' }}>
-									<a href="#" style={{ color: '#ccc', textDecoration: 'none' }}>{item}</a>
-								</li>
-							))}
-						</ul>
-					</div>
-
 					{/* Información */}
 					<div style={{ flex: '1 1 150px' }}>
 						<h4 style={{ marginBottom: '1rem', color: 'white' }}>Información</h4>

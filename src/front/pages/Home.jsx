@@ -1,40 +1,19 @@
 
 import { Container } from "react-bootstrap";
-import NavbarMenu from "../components/Navbar.jsx";
-import Products from "./Products"; 
+import Navbar from "../components/Navbar.jsx";
+import Jumbotron from "../components/Jumbotron.jsx";
+import Body from "../components/Body.jsx";
+import Footer from "../components/Footer.jsx"
 
 export const Home = () => {
 
-
-	const getBackend = async () => {
-		try {
-			const urlbase = import.meta.env.VITE_BACKEND_URL
-			const response = await fetch("https://upgraded-space-waddle-v6q94pvxqppxfxrjp-3001.app.github.dev/api/hello")
-			if (!response.ok) {
-				throw new Error("No se puede ejecutar el fetch")
-			}
-			const data = await response.json();
-			console.log(data)
-			return data
-		} catch (error) {
-			console.log("Error en el backend")
-
-		}
-	}
-
-
-
-
 	return (
-		<Container className="d-flex flex-column align-items-center justify-content-center vh-100">
-			<h1>BAMBAS</h1>
-			<div>
-				<button
-					className="btn btn-primary"
-					onClick={() => getBackend()}>
-					LLamar al backend
-				</button>
-			</div>
-		</Container>
+		<div className="text-center">
+			<Jumbotron/>
+			<Body/>
+			<Navbar/>
+			<Footer/>
+
+		</div>
 	);
 }; 

@@ -6,7 +6,8 @@ import {
   Route,
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
-import Body from "./components/Body";
+import { Home } from "./pages/Home";
+import Descuentos  from "./pages/Descuentos";
 import ListProducts from "./pages/ListProducts";
 
 export const router = createBrowserRouter(
@@ -15,9 +16,12 @@ export const router = createBrowserRouter(
     <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
 
       {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
-      <Route path="/" element={<Body/>} />
-      <Route path="/hombre" element={<ListProducts />} />
+      <Route path="/" element={<Home />} />
 
+      <Route path="/genero/:genero" element={<ListProducts />} />
+
+      <Route path="/descuentos" element={<Descuentos />} />
+    
 
     </Route>
   )
