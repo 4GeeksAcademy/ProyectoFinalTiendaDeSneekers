@@ -21,7 +21,7 @@ def add_zapatillas():
     data = request.get_json()
     if not data:
         return jsonify({"msg": "No se ha enviado ningun dato"}), 400
-    if 'marca' not in data or 'nombre' not in data or 'talla' not in data or 'precio' not in data or 'oferta' not in data:
+    if 'marca' not in data or 'nombre' not in data or 'talla' not in data or 'precio' not in data or 'oferta' not in data or 'genero' not in data:
         return jsonify({"error": "Faltan datos obligatorios"}), 400
     try:
         marca = Marca.query.filter_by(nombre=data['marca']).first()
@@ -32,7 +32,14 @@ def add_zapatillas():
         print(marca.id)
         modelo = Modelo.query.filter_by(nombre=data['nombre']).first()
         if not modelo:
-            modelo = Modelo(nombre=data['nombre'], precio=data['precio'], oferta=data['oferta'],descripcion=data.get('descripcion'),img=data.get('img'), marca_id=marca.id)
+            modelo = Modelo(nombre=data['nombre'],
+                            precio=data['precio'], 
+                            oferta=data['oferta'],
+                            descripcion=data.get('descripcion'),
+                            img=data.get('img'), 
+                            marca_id=marca.id, 
+                            genero=data.get('genero')
+                            )
             db.session.add(modelo)
             db.session.commit()
         else:
@@ -44,6 +51,7 @@ def add_zapatillas():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+    
 @zapatillas_bp.route('/zapatillas/<int:zapatilla_id>', methods=['PUT'])
 def update_zapatilla(zapatilla_id):
     data= request.get_json()
@@ -65,15 +73,45 @@ def update_zapatilla(zapatilla_id):
         modelo.img = data['img']
     if 'talla' in data:
         zapatilla.tallas = data['talla']
+    if 'genero' in data:
+        modelo.genero = data['genero']
     db.session.commit()
     return jsonify({"msg": "Zapatilla actualizada"}), 200
 
 @zapatillas_bp.route('/zapatillas',methods=['GET'])
 def get_zapatillas():
     try:
-        zapatillas = Zapatilla.query.all()
-        if not zapatillas:
-            return jsonify({"msg": "No hay zapatillas"}), 404
-        return jsonify([zapatilla.serialize() for zapatilla in zapatillas]), 200
+        marcas = Marca.query.all()
+        if not marcas:
+            return jsonify({"msg": "No hay marcas"}), 404
+        
+        data=[]
+        for marca in marcas:
+            zapatillas =[]
+            for modelo in marca.modelos:
+                for zapatilla in modelo.zapatillas:
+                    zapatillas.append(zapatilla.serialize())
+            data.append({
+                "marca": marca.nombre,
+                "zapatillas": zapatillas
+            })  
+        return jsonify(data), 200
     except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@zapatillas_bp.route('/zapatillas/<int:zapatillas_id>', methods=['DELETE'])
+def delete_zapatilla(zapatillas_id):
+    try:
+        zapatilla = Zapatilla.query.get(zapatillas_id)
+        if not zapatilla:
+            return jsonify({"msg": "Zapatilla no encontrada"}), 404
+        modelo = Modelo.query.filter_by(id=zapatilla.modelo.id).first()
+        if not modelo:
+            return jsonify({"msg": "Modelo no encontrado"}), 404    
+        db.session.delete(modelo)
+        db.session.delete(zapatilla)
+        db.session.commit()
+        return jsonify({"msg": "Zapatilla eliminada"}), 200
+    except Exception as e:
+        db.session.rollback()
         return jsonify({"error": str(e)}), 500
