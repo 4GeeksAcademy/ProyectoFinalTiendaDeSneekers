@@ -21,7 +21,7 @@ const Footer = () => {
 					<div style={{ flex: '1 1 200px' }}>
 						<div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
 							<ShoppingBag size={32} color="white" style={{ marginRight: '0.5rem' }} />
-							<h3 style={{ fontSize: '1.5rem', color: 'white' }}>SNEAKPEAK</h3>
+							<h3 style={{ fontSize: '1.5rem', color: 'white' }}>SNEAKPEAKS</h3>
 						</div>
 						<p style={{ fontWeight: 'normal', fontSize: '0.9rem' }}>
 							Tu destino para zapatillas premium. Lo último en tendencias, lanzamientos exclusivos y clásicos.
