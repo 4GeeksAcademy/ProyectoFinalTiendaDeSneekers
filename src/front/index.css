@@ -3,3 +3,30 @@
   height: 1px;
   object-fit: cover;
 }
+
+.brand-card {
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.brand-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.brand-img {
+  height: 150px;
+  object-fit: contain;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.img-wrapper {
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 170px;
+}

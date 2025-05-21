@@ -1,122 +1,37 @@
 import React from 'react';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
-function Body() {
-  return (
-    <div className="container py-5 card mb-3 mt-3">
-      <div className="row g-4 mb-3">
-        <div className="col-md-6">
-          <div className="card h-100 ">
-            <img
-              src="https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              className="card-img-top h-100 object-fit-cover"
-              alt="Nike Shoes"
-            />
-            <div className="card-body">
-              <h5 className="card-title">Nike Collection</h5>
-              <p className="card-text">Premium Nike athletic footwear for superior performance.</p>
+const brands = [
+  { name: 'Nike (Jordan)', image: 'https://cdn.worldvectorlogo.com/logos/jordan-air.svg', url: 'https://www.nike.com/jordan' },
+  { name: 'Adidas', image: 'https://ams3.digitaloceanspaces.com/graffica/2022/12/Adidas-Logo-1971-1024x576.jpeg', url: 'https://www.adidas.com' },
+  { name: 'Reebok', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Reebok_2019_logo.svg/2560px-Reebok_2019_logo.svg.png', url: 'https://www.reebok.com' },
+  { name: 'Puma', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNOhHZ-0c3De3DFuwuosHkDnJRDwhDb-tLdw&s', url: 'https://us.puma.com' },
+  { name: 'Converse', image: 'https://1000marcas.net/wp-content/uploads/2020/01/Converse-Logo.png', url: 'https://www.converse.com' },
+  { name: 'Vans', image: 'https://cdn.worldvectorlogo.com/logos/vans-5.svg', url: 'https://www.vans.com' },
+  { name: 'Asics', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFfbBl9qSo9F6ru_oLjr3eL9ihfcdWYJxufw&s', url: 'https://www.asics.com' },
+  { name: 'Crocs', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7LP4BbMw9CZFrmP7PXSmAAor0I8c32unBNA&s', url: 'https://www.crocs.com' },
+];
+
+const Body = () => (
+  <Container className="my-5">
+    <Row>
+      {brands.map((brand, idx) => (
+        <Col key={idx} md={3} className="mb-4">
+          <Card className="brand-card h-100 text-center">
+            <div className="img-wrapper">
+              <Card.Img variant="top" src={brand.image} className="brand-img" />
             </div>
-          </div>
-        </div>
-        <div className="col-md-6">
-          <div className="card h-100">
-            <img
-              src="https://images.pexels.com/photos/2385482/pexels-photo-2385482.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              className="card-img-top h-100 object-fit-cover"
-              alt="New Balance Shoes"
-            />
-            <div className="card-body">
-              <h5 className="card-title">New Balance Collection</h5>
-              <p className="card-text">Comfortable and stylish New Balance shoes for every athlete.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row g-4 mb-3">
-        <div className="col-md-6 ">
-          <div className="card h-100 ">
-            <img
-              src="https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              className="card-img-top h-100 object-fit-cover"
-              alt="Nike Shoes"
-            />
-            <div className="card-body">
-              <h5 className="card-title">Nike Collection</h5>
-              <p className="card-text">Premium Nike athletic footwear for superior performance.</p>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-6">
-          <div className="card h-100">
-            <img
-              src="https://images.pexels.com/photos/2385482/pexels-photo-2385482.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              className="card-img-top h-100 object-fit-cover"
-              alt="New Balance Shoes"
-            />
-            <div className="card-body">
-              <h5 className="card-title">New Balance Collection</h5>
-              <p className="card-text">Comfortable and stylish New Balance shoes for every athlete.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row g-4 mb-3">
-        <div className="col-md-6">
-          <div className="card h-100">
-            <img
-              src="https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              className="card-img-top h-100 object-fit-cover"
-              alt="Nike Shoes"
-            />
-            <div className="card-body">
-              <h5 className="card-title">Nike Collection</h5>
-              <p className="card-text">Premium Nike athletic footwear for superior performance.</p>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-6">
-          <div className="card h-100">
-            <img
-              src="https://images.pexels.com/photos/2385482/pexels-photo-2385482.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              className="card-img-top h-100 object-fit-cover"
-              alt="New Balance Shoes"
-            />
-            <div className="card-body">
-              <h5 className="card-title">New Balance Collection</h5>
-              <p className="card-text">Comfortable and stylish New Balance shoes for every athlete.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row g-4 mb-3">
-        <div className="col-md-6">
-          <div className="card h-100 ">
-            <img
-              src="https://images.pexels.com/photos/6748252/pexels-photo-6748252.jpeg"
-              className="card-img-top h-100 object-fit-cover"
-              alt="Nike Shoes"
-            />
-            <div className="card-body">
-              <h5 className="card-title">Asics Collection</h5>
-              <p className="card-text">High-performance ASICS running shoes engineered for comfort and durability.</p>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-6">
-          <div className="card h-100">
-            <img
-              src="https://imagenes.elpais.com/resizer/v2/O2ZNNIKT5TNPCSJH7FM7KCNNNQ.jpg?auth=efe86a6873c27f208d925344990de23b7119728476c9c2e9c27f5bce0a16438e&width=1960&height=1103&smart=true"
-              className="card-img-top h-100 object-fit-cover"
-              alt="New Balance Shoes"
-            />
-            <div className="card-body">
-              <h5 className="card-title">Crocs Cogit llection</h5>
-              <p className="card-text">Lightweight and versatile Crocs designed for everyday comfort and casual style.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+            <Card.Body>
+              <Card.Title>{brand.name}</Card.Title>
+              <Button variant="dark" href={brand.url} target="_blank">
+                Ir a sitio
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
+    </Row>
+  </Container>
+);
 
 export default Body;

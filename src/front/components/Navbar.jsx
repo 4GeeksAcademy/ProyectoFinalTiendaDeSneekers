@@ -44,18 +44,18 @@ const NavbarMenu = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to="/hombre">
+                <Link to="/genero/man">
                   <span className="nav-link text-white fw-bold">Hombre</span>
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/mujer">
-                  <span className="nav-link text-white fw-bold">mujer</span>
+                <Link to="/genero/woman">
+                  <span className="nav-link text-white fw-bold">Mujer</span>
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/niño">
-                  <span className="nav-link text-white fw-bold">niño</span>
+                <Link to="/genero/child">
+                  <span className="nav-link text-white fw-bold">Niño</span>
                 </Link>
               </li>
               <li className="nav-item dropdown">
