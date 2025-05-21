@@ -109,7 +109,7 @@ function Body() {
               alt="New Balance Shoes"
             />
             <div className="card-body">
-              <h5 className="card-title">Crocs Collection</h5>
+              <h5 className="card-title">Crocs Cogit llection</h5>
               <p className="card-text">Lightweight and versatile Crocs designed for everyday comfort and casual style.</p>
             </div>
           </div>
