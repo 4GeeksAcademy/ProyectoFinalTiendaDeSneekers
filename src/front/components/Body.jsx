@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const brands = [
   { name: 'Nike (Jordan)', image: 'https://cdn.worldvectorlogo.com/logos/jordan-air.svg', url: 'https://www.nike.com/jordan' },
@@ -12,26 +13,65 @@ const brands = [
   { name: 'Crocs', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7LP4BbMw9CZFrmP7PXSmAAor0I8c32unBNA&s', url: 'https://www.crocs.com' },
 ];
 
-const Body = () => (
-  <Container className="my-5">
-    <Row>
-      {brands.map((brand, idx) => (
-        <Col key={idx} md={3} className="mb-4">
-          <Card className="brand-card h-100 text-center">
-            <div className="img-wrapper">
-              <Card.Img variant="top" src={brand.image} className="brand-img" />
-            </div>
-            <Card.Body>
-              <Card.Title>{brand.name}</Card.Title>
-              <Button variant="dark" href={brand.url} target="_blank">
-                Ir a sitio
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      ))}
-    </Row>
-  </Container>
-);
+const Body = () => {
+  return (
+    <div
+      style={{
+        minHeight: '100vh',
+        paddingTop: '30px',
+        paddingBottom: '30px',
+        background: 'linear-gradient(-45deg, #c2e9fb, #a1c4fd, #fbc2eb, #f9f9f9)',
+        backgroundSize: '400% 400%',
+        animation: 'gradientBG 15s ease infinite',
+      }}
+    >
+      <style>
+        {`
+          @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+        `}
+      </style>
+
+      <Container fluid="lg">
+        <Row className="g-4">
+          {brands.map((brand, idx) => (
+            <Col key={idx} xs={12} sm={6} md={4} lg={3}>
+              <Card className="h-100 shadow-lg border-0 d-flex flex-column justify-content-between text-center">
+                <Card.Img
+                  variant="top"
+                  src={brand.image}
+                  style={{
+                    height: '220px',
+                    objectFit: 'contain',
+                    padding: '30px',
+                    backgroundColor: '#f8f9fa',
+                  }}
+                />
+                <Card.Body className="d-flex flex-column justify-content-between">
+                  <div>
+                    <Card.Title className="fs-5">{brand.name}</Card.Title>
+                  </div>
+                  <div className="mt-3">
+                    <Button
+                      variant="dark"
+                      href={brand.url}
+                      target="_blank"
+                      className="rounded-pill px-4 py-2"
+                    >
+                      Ir a sitio
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </div>
+  );
+};
 
 export default Body;
