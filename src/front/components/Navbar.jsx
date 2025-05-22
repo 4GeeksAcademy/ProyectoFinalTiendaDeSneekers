@@ -7,15 +7,15 @@ const NavbarMenu = () => {
   return (
     <>
       <style>{`
-.nav-item.dropdown:hover>.dropdown-menu {
+        .nav-item.dropdown:hover>.dropdown-menu {
           display: block;
           margin-top: 0;
-}
+        }
 
-.dropdown-menu {
+        .dropdown-menu {
           margin-top: 0;
           border-radius: 0.25rem;
-}
+        }
       `}</style>
 
       <nav className="navbar navbar-expand-lg bg-dark px-3">
@@ -43,18 +43,18 @@ const NavbarMenu = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to="/genero/man">
-                  <span className="nav-link text-white fw-bold">Hombre</span>
+                <Link to="/genero/man" className="nav-link text-white fw-bold">
+                  Hombre
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/genero/woman">
-                  <span className="nav-link text-white fw-bold">Mujer</span>
+                <Link to="/genero/woman" className="nav-link text-white fw-bold">
+                  Mujer
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/genero/child">
-                  <span className="nav-link text-white fw-bold">Niño</span>
+                <Link to="/genero/child" className="nav-link text-white fw-bold">
+                  Niño
                 </Link>
               </li>
               <li className="nav-item dropdown">
@@ -67,11 +67,29 @@ const NavbarMenu = () => {
                   Ofertas
                 </a>
                 <ul className="dropdown-menu bg-dark">
-                  <li><Link className="dropdown-item text-white" to="/ofertas">Todas las ofertas</Link></li>
-                  <li><hr className="dropdown-divider bg-light" /></li>
-                  <li><Link className="dropdown-item text-white" to="/ofertas/hombre">Hombre</Link></li>
-                  <li><Link className="dropdown-item text-white" to="/ofertas/mujer">Mujer</Link></li>
-                  <li><Link className="dropdown-item text-white" to="/ofertas/nino">Niño</Link></li>
+                  <li>
+                    <Link className="dropdown-item text-white" to="/ofertas">
+                      Todas las ofertas
+                    </Link>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider bg-light" />
+                  </li>
+                  <li>
+                    <Link className="dropdown-item text-white" to="/ofertas/hombre">
+                      Hombre
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item text-white" to="/ofertas/mujer">
+                      Mujer
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item text-white" to="/ofertas/nino">
+                      Niño
+                    </Link>
+                  </li>
                 </ul>
               </li>
             </ul>
@@ -83,13 +101,21 @@ const NavbarMenu = () => {
                 placeholder="Buscar"
                 aria-label="Search"
               />
-              <button className="btn btn-outline-danger" type="submit">Buscar</button>
+              <button className="btn btn-outline-danger" type="submit">
+                Buscar
+              </button>
             </form>
 
             <div className="d-flex align-items-center gap-3">
-              <FaUser className="text-white fs-5" title="Cuenta" />
-              <FaHeart className="text-white fs-5" title="Favoritos" />
-              <FaShoppingBag className="text-white fs-5" title="Carrito" />
+              <Link to="/perfil" title="Cuenta" className="text-white">
+                <FaUser className="fs-5" />
+              </Link>
+              <Link to="/favoritos" title="Favoritos" className="text-white">
+                <FaHeart className="fs-5" />
+              </Link>
+              <Link to="/carrito" title="Carrito" className="text-white">
+                <FaShoppingBag className="fs-5" />
+              </Link>
             </div>
           </div>
         </div>
@@ -99,4 +125,3 @@ const NavbarMenu = () => {
 };
 
 export default NavbarMenu;
-

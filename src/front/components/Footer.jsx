@@ -7,9 +7,9 @@ import {
 	Mail,
 	Phone,
 	MapPin,
-	CreditCard,
 	ShoppingBag,
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
 	return (
@@ -39,11 +39,21 @@ const Footer = () => {
 					<div style={{ flex: '1 1 150px' }}>
 						<h4 style={{ marginBottom: '1rem', color: 'white' }}>Información</h4>
 						<ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem' }}>
-							{['Sobre nosotros', 'Envíos y devoluciones', 'Privacidad', 'Términos', 'Preguntas frecuentes'].map((item, idx) => (
-								<li key={idx} style={{ marginBottom: '0.5rem' }}>
-									<a href="#" style={{ color: '#ccc', textDecoration: 'none' }}>{item}</a>
-								</li>
-							))}
+							<li style={{ marginBottom: '0.5rem' }}>
+								<Link to="/sobre-nosotros" style={{ color: '#ccc', textDecoration: 'none' }}>Sobre nosotros</Link>
+							</li>
+							<li style={{ marginBottom: '0.5rem' }}>
+								<Link to="/envios-devoluciones" style={{ color: '#ccc', textDecoration: 'none' }}>Envíos y devoluciones</Link>
+							</li>
+							<li style={{ marginBottom: '0.5rem' }}>
+								<Link to="/privacidad" style={{ color: '#ccc', textDecoration: 'none' }}>Privacidad</Link>
+							</li>
+							<li style={{ marginBottom: '0.5rem' }}>
+								<Link to="/terminos" style={{ color: '#ccc', textDecoration: 'none' }}>Términos</Link>
+							</li>
+							<li style={{ marginBottom: '0.5rem' }}>
+								<Link to="/faq" style={{ color: '#ccc', textDecoration: 'none' }}>Preguntas frecuentes</Link>
+							</li>
 						</ul>
 					</div>
 
@@ -102,9 +112,9 @@ const Footer = () => {
 					<div>© {new Date().getFullYear()} SneakPeak. Todos los derechos reservados.</div>
 					<div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
 						<span>Métodos de pago:</span>
-						{[...Array(4)].map((_, i) => (
-							<CreditCard key={i} size={20} color="#aaa" />
-						))}
+						<img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" style={{ height: '24px' }} />
+						<img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="MasterCard" style={{ height: '24px' }} />
+						<img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" style={{ height: '24px' }} />
 					</div>
 				</div>
 			</div>
