@@ -5,15 +5,36 @@ import { useParams } from 'react-router-dom';
 
 const ListProducts = () => {
   const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const data = useParams()
   console.log(data.genero)
 
-  useEffect (
-    ()=>{
-      //hacer la peticion al servidor y guardar respuesta en cambiante de estado
-    },[]
-  )
+
+
+ useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        // Aquí deberías reemplazar la URL con tu endpoint real
+        const response = await fetch(`http://tu-api.com/productos?genero=${genero || ''}`);
+        
+        if (!response.ok) {
+          throw new Error('Error al obtener los productos');
+        }
+        
+        const data = await response.json();
+        setProducts(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [genero]); // Se ejecutará cada vez que cambie el género
 
 
   return (
