@@ -7,28 +7,27 @@ const NavbarMenu = () => {
   return (
     <>
       <style>{`
-        .nav-item.dropdown:hover > .dropdown-menu {
+.nav-item.dropdown:hover>.dropdown-menu {
           display: block;
           margin-top: 0;
-        }
-      
-        .dropdown-menu {
+}
+
+.dropdown-menu {
           margin-top: 0;
           border-radius: 0.25rem;
-        }
+}
       `}</style>
 
       <nav className="navbar navbar-expand-lg bg-dark px-3">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <Link to="/" className="navbar-brand">
             <img
               src="https://c0.klipartz.com/pngpicture/504/502/gratis-png-zapatillas.png"
               alt="Logo"
               width="90"
               className="rounded"
             />
-          </a>
-          {/* No toggle button necesario si no usas JS, pero lo dejo por si quieres */}
+          </Link>
           <button
             className="navbar-toggler bg-light"
             type="button"
@@ -68,11 +67,11 @@ const NavbarMenu = () => {
                   Ofertas
                 </a>
                 <ul className="dropdown-menu bg-dark">
-                  <li><a className="dropdown-item text-white" href="#">Todas las ofertas</a></li>
+                  <li><Link className="dropdown-item text-white" to="/ofertas">Todas las ofertas</Link></li>
                   <li><hr className="dropdown-divider bg-light" /></li>
-                  <li><a className="dropdown-item text-white" href="#">Hombre</a></li>
-                  <li><a className="dropdown-item text-white" href="#">Mujer</a></li>
-                  <li><a className="dropdown-item text-white" href="#">Niños</a></li>
+                  <li><Link className="dropdown-item text-white" to="/ofertas/hombre">Hombre</Link></li>
+                  <li><Link className="dropdown-item text-white" to="/ofertas/mujer">Mujer</Link></li>
+                  <li><Link className="dropdown-item text-white" to="/ofertas/nino">Niño</Link></li>
                 </ul>
               </li>
             </ul>
@@ -100,3 +99,4 @@ const NavbarMenu = () => {
 };
 
 export default NavbarMenu;
+
