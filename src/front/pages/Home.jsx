@@ -9,10 +9,8 @@ export const Home = () => {
 
 	return (
 		<div className="text-center">
-			<Jumbotron/>
-			<Body/>
-			<Navbar/>
-			<Footer/>
+			<Jumbotron />
+			<Body />
 
 		</div>
 	);
