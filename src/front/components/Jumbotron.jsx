@@ -33,7 +33,7 @@ const Jumbotron = () => {
                         </Link>
                     </div>
                 </div>
-                
+
                 <div>
                     <div className="d-flex align-items-center justify-content-center gap-3">
                         <img
