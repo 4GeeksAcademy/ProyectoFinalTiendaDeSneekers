@@ -8,7 +8,7 @@ const SobreNosotros = () => {
       <Row className="align-items-center">
         <Col md={6}>
           <Image
-            src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80"
+            src="https://www.shutterstock.com/image-photo/relax-legs-shoes-black-family-260nw-2272016795.jpg"
             alt="Equipo de SneakPeaks"
             fluid
             rounded
@@ -49,7 +49,7 @@ const SobreNosotros = () => {
           <Card className="shadow-sm">
             <Card.Img
               variant="top"
-              src="https://images.unsplash.com/photo-1520975690953-51ae4ec2b4c3?auto=format&fit=crop&w=600&q=80"
+              src="https://www.unniun.com/wp-content/uploads/2017/07/Verdadero-equipo-trabajo.jpeg"
               alt="Equipo experto"
             />
             <Card.Body>
@@ -65,7 +65,7 @@ const SobreNosotros = () => {
           <Card className="shadow-sm">
             <Card.Img
               variant="top"
-              src="https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?auto=format&fit=crop&w=600&q=80"
+              src="https://estaticos-cdn.prensaiberica.es/clip/5b1ad74a-6f1e-4b01-806b-e5bcbb047308_16-9-aspect-ratio_default_0.jpg"
               alt="Cultura urbana"
             />
             <Card.Body>
