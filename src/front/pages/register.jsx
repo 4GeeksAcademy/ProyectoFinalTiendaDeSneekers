@@ -34,7 +34,7 @@ export default function Register() {
             .then((data) => {
                 console.log(data);
                 alert("Usuario creado correctamente")
-                navigate("/")
+                navigate("/login")
             })
         setEmail("")
         setPassword("")
