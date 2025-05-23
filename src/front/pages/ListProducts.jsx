@@ -18,14 +18,14 @@ const ListProducts = () => {
       try {
         setLoading(true);
         // Aquí deberías reemplazar la URL con tu endpoint real
-        const response = await fetch(`https://ominous-couscous-x5vj6w7x54vv2p79r-3001.app.github.dev/zapatillas`);
+        const response = await fetch(`http://127.0.0.1:3001/zapatillas`);
 
         if (!response.ok) {
           throw new Error('Error al obtener los productos');
         }
 
         const data = await response.json();
-        setProducts(data.zapatillas);
+        setProducts(data);
         console.log(data)
       } catch (err) {
         setError(err.message);
@@ -45,12 +45,12 @@ const ListProducts = () => {
 
 
 
-        { products?.length !==0 ?
-        
-        products.map((product) => (
-          <Col key={product.id}>
-            <Card className="h-100 shadow-sm">
-             {/* <Badge
+        {products?.length !== 0 ?
+          products.map((brand) => (
+            brand.zapatillas.map((product) => (
+              <Col key={product.id}>
+                <Card className="h-100 shadow-sm">
+                  {/* <Badge
                 bg={product.stock > 0 ? "success" : "danger"}
                 className="position-absolute end-0 mt-2 me-2"
               >
@@ -62,20 +62,20 @@ const ListProducts = () => {
                 alt={product.name}
                 style={{ height: '200px', objectFit: 'cover' }}
               /> */}
-              <Card.Body className="d-flex flex-column">
-                <Card.Title>{product.modelo.nombre}</Card.Title>
-                <Card.Text className="text-muted">
-                  {product.modelo.oferta}
-                </Card.Text>
-                <Card.Text>
-                  <span className="fs-5 ms-2 fw-bold text-primary">
-                    ${product.modelo.precio}
-                  </span>
-                </Card.Text>
-                <Card.Text className="flex-grow-1">
-                  {product.modelo.descripcion.substring(0, 60)}...
-                </Card.Text>
-                {/*<Button
+                  <Card.Body className="d-flex flex-column">
+                    <Card.Title>{product.modelo.nombre}</Card.Title>
+                    <Card.Text className="text-muted">
+                      {product.modelo.oferta}
+                    </Card.Text>
+                    <Card.Text>
+                      <span className="fs-5 ms-2 fw-bold text-primary">
+                        ${product.modelo.precio}
+                      </span>
+                    </Card.Text>
+                    <Card.Text className="flex-grow-1">
+                      {product.modelo.descripcion ? product.modelo.descripcion.substring(0, 60) : <h1></h1> }...
+                    </Card.Text>
+                    {/*<Button
                   variant="primary"
                   onClick={() => onAddToCart(product)}
                   disabled={product.stock <= 0}
@@ -83,10 +83,12 @@ const ListProducts = () => {
                 >
                   {product.stock > 0 ? "Añadir al carrito" : "Sin stock"}
                 </Button>*/}
-              </Card.Body>
-            </Card>
-          </Col>
-        )):null}
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))
+          ))
+          : null}
       </Row>
     </Container>
   );
