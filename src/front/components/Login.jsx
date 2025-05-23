@@ -90,7 +90,7 @@ export default function Login() {
                                 </Button>
                             </Form>
                             <Card.Footer className=" mt-3">
-                                <p className="text-muted">¿No tienes cuenta? <Link to="/register" className="text-white">Regístrate aquí</Link></p>
+                                <p className="text-white">¿No tienes cuenta? <Link to="/register" className="text-white">Regístrate aquí</Link></p>
                             </Card.Footer>
                         </Card>
                     </Col>
