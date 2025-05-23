@@ -6,6 +6,7 @@ import { StoreProvider } from './hooks/useGlobalReducer';  // Import the StorePr
 import { BackendURL } from './components/BackendURL';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import { AuthProvider } from './hooks/authContext';
 
 const Main = () => {
 
@@ -17,11 +18,13 @@ const Main = () => {
     return (
         <React.StrictMode>
             {/* Provide global state to all components */}
-            <StoreProvider>
-                {/* Set up routing for the application */}
-                <RouterProvider router={router}>
-                </RouterProvider>
-            </StoreProvider>
+            <AuthProvider>
+                <StoreProvider>
+                    {/* Set up routing for the application */}
+                    <RouterProvider router={router}>
+                    </RouterProvider>
+                </StoreProvider>
+            </AuthProvider>
         </React.StrictMode>
     );
 }
