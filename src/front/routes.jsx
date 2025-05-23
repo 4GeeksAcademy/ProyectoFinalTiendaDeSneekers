@@ -18,7 +18,8 @@ import EnviosDevoluciones from "./pages/EnviosDevoluciones";
 import PoliticaPrivacidad from "./pages/PoliticaPrivacidad";
 import TerminosCondiciones from "./pages/TerminosCondiciones";
 import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
-import Login from "./components/Login";
+import Login from "./pages/Login";
+import Register from "./pages/register";
 
 
 export const router = createBrowserRouter(
@@ -32,7 +33,7 @@ export const router = createBrowserRouter(
       <Route path="/favoritos" element={<Favoritos />} />
       <Route path="/perfil" element={<Perfil />} />
       <Route path="/login" element={<Login />} />
-
+      <Route path="/register" element={<Register/>}/>
 
 
 

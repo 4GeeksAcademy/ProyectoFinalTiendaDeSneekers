@@ -9,9 +9,9 @@ export const Layout = () => {
         <ScrollToTop>
             <NavbarMenu />
             <Outlet />
-           
+
             <Footer />
- {/**          <ListProduct/>
+            {/**          <ListProduct/>
             <Products/>*/}
         </ScrollToTop>
     )
