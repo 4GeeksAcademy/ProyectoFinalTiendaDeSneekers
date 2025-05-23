@@ -45,7 +45,7 @@ const ListProducts = () => {
 
 
 
-        { products.length !==0 ?
+        { products?.length !==0 ?
         
         products.map((product) => (
           <Col key={product.id}>
