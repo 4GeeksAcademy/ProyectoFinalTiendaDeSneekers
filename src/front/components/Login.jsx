@@ -86,7 +86,7 @@ export default function Login() {
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit" className="w-100">
-                                    Guardar Cambios
+                                    Enviar
                                 </Button>
                             </Form>
                             <Card.Footer className=" mt-3">
