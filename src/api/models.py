@@ -68,7 +68,6 @@ class Modelo(db.Model):
             "img": self.img,
             "oferta": self.oferta,
             "genero": self.genero,
-            "marca": self.marca.nombre
         }
 
 

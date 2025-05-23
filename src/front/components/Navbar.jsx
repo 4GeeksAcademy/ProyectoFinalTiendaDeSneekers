@@ -2,8 +2,10 @@ import React from "react";
 import { FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
-
+import { useAuth } from "../hooks/authContext";
+import { Button } from "react-bootstrap";
 const NavbarMenu = () => {
+  const { isAuthenticated, login } = useAuth(); // Access the authentication context
   return (
     <>
       <style>{`
@@ -106,17 +108,22 @@ const NavbarMenu = () => {
               </button>
             </form>
 
-            <div className="d-flex align-items-center gap-3">
-              <Link to="/perfil" title="Cuenta" className="text-white">
-                <FaUser className="fs-5" />
-              </Link>
-              <Link to="/favoritos" title="Favoritos" className="text-white">
-                <FaHeart className="fs-5" />
-              </Link>
-              <Link to="/carrito" title="Carrito" className="text-white">
-                <FaShoppingBag className="fs-5" />
-              </Link>
-            </div>
+            {
+              isAuthenticated ? (
+              <div className="d-flex align-items-center gap-3">
+                <Link to="/perfil" title="Cuenta" className="text-white">
+                  <FaUser className="fs-5" />
+                </Link>
+                <Link to="/favoritos" title="Favoritos" className="text-white">
+                  <FaHeart className="fs-5" />
+                </Link>
+                <Link to="/carrito" title="Carrito" className="text-white">
+                  <FaShoppingBag className="fs-5" />
+                </Link>
+              </div>)
+              : <Button onClick={() => login()} >Login</Button>
+            }
+
           </div>
         </div>
       </nav>
