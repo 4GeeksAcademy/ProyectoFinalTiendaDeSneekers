@@ -9,9 +9,9 @@ export const Home = () => {
 
 	return (
 		<div className="text-center">
-			
-			<Jumbotron/>
-			<Body/>
+
+			<Jumbotron />
+			<Body />
 		</div>
 	);
 }; 
