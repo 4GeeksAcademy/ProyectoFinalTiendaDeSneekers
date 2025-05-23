@@ -1,12 +1,47 @@
 import { useState } from "react";
 import { Card, Col, Row, Container, Button, Form,  } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/authContext";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { login, setUserData } = useAuth()
+    const [error, setError] = useState(null)
+    const navigate = useNavigate()
 
-    
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+        })
+            .then((response) => {
+                if (response.status === 404) {
+                    alert("credenciales incorrectas")
+                    return
+                } else if (response.status === 400) {
+                    alert("Error en el servidor")
+                    return
+                 }
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                localStorage.setItem("token", data.token);
+                login()
+                setUserData(data.user)
+                navigate("/")
+            })
+        setEmail("")
+        setPassword("")
+    }
     return (
         <div
             style={{
@@ -26,23 +61,35 @@ export default function Login() {
                 <Row className="justify-content-center">
                     <Col md={6}>
                         <Card bg="dark" text="white" className="p-4 shadow-lg">
-                            <Form>
+                            <Form onSubmit={ handleSubmit}>
 
                                 <Form.Group className="mb-3" controlId="formEmail">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" placeholder="juan.perez@example.com" />
+                                    <Form.Control
+                                        type="email"
+                                        placeholder="juan.perez@example.com"
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        value={email}
+                                        required
+                                    />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formPassword">
-                                    <Form.Label>Cambiar Contraseña</Form.Label>
-                                    <Form.Control type="password" placeholder="Nueva contraseña" />
+                                    <Form.Label>Contraseña</Form.Label>
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Nueva contraseña"
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        value={password}
+                                        required
+                                    />
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit" className="w-100">
                                     Guardar Cambios
                                 </Button>
                             </Form>
-                            <Card.Footer className="text-center mt-3">
+                            <Card.Footer className=" mt-3">
                                 <p className="text-muted">¿No tienes cuenta? <Link to="/register" className="text-white">Regístrate aquí</Link></p>
                             </Card.Footer>
                         </Card>

@@ -49,6 +49,7 @@ def add_user():
 @usuario_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
+    print(data.get('email'))
     email = data.get('email')
     password = data.get('password')
     if not email or not password:
@@ -59,6 +60,6 @@ def login():
     if  check_password_hash(user.password, password):
         access_token = create_access_token(identity=str(user.id))
         print(access_token)
-        return jsonify(token=access_token), 200
+        return jsonify(token=access_token, user=user.name), 200
     else:
         return jsonify({"msg": "wrong credentials"}), 401
