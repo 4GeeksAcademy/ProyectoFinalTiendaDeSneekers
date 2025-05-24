@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Container, Button, Badge } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { FaCartArrowDown } from "react-icons/fa";
 
 
 const ListProducts = () => {
@@ -37,7 +38,16 @@ const ListProducts = () => {
     fetchProducts();
   }, []); // Se ejecutará cada vez que cambie el género
 
-
+  const handleAddToCart = async (zapatilla_id) => {
+    const response = await fetch(`http://127.0.0.1:3001/add_to_cart`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ zapatilla_id, cantidad: 1, talla: 42 }),
+    });
+  }
   return (
     <Container className="my-5">
       <h2 className="mb-4">Nuestra Colección de Sneakers</h2>
@@ -73,7 +83,7 @@ const ListProducts = () => {
                       </span>
                     </Card.Text>
                     <Card.Text className="flex-grow-1">
-                      {product.modelo.descripcion ? product.modelo.descripcion.substring(0, 60) : <h1></h1> }...
+                      {product.modelo.descripcion ? product.modelo.descripcion.substring(0, 60) : <h1></h1>}...
                     </Card.Text>
                     {/*<Button
                   variant="primary"
@@ -84,6 +94,11 @@ const ListProducts = () => {
                   {product.stock > 0 ? "Añadir al carrito" : "Sin stock"}
                 </Button>*/}
                   </Card.Body>
+                  <Card.Footer className="text-end">
+                    <Button variant="primary" className="w-100" onClick={() => handleAddToCart(product.id)}>
+                      <FaCartArrowDown />
+                      </Button>
+                  </Card.Footer>
                 </Card>
               </Col>
             ))
