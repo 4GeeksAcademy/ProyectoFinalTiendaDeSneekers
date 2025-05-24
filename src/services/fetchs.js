@@ -2,7 +2,7 @@ export const fetchProducts = async (dispatch) => {
   try {
     // Aquí deberías reemplazar la URL con tu endpoint real
     const response = await fetch(
-      "https://ominous-couscous-x5vj6w7x54vv2p79r-3001.app.github.dev/zapatillas"
+      import.meta.env.VITE_BACKEND_URL + "/zapatillas" 
     );
 
     if (!response.ok) {

@@ -5,14 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 db = SQLAlchemy()
 
 
-carrito_zapatilla = Table(
-    'carrito_zapatilla',
-    db.Model.metadata,
-    Column('talla', Integer),
-    Column('cantidad', Integer),
-    Column('zapatilla_id', Integer, ForeignKey('zapatilla.id'), primary_key=True),
-    Column('carrito_id', Integer, ForeignKey('carrito.id'), primary_key=True)
-)
+
 class User(db.Model):
     __tablename__ = "user"
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -21,13 +14,14 @@ class User(db.Model):
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
 
-    carrito = relationship("Carrito", back_populates="usuario", cascade="all, delete-orphan")
+    carrito = relationship("Carrito", back_populates="usuario", uselist=False, cascade="all, delete-orphan")
 
     def serialize(self):
         return {
             "id": self.id,
             "name": self.name,
             "email": self.email,
+            "carrito": self.carrito.serialize() if self.carrito else None
         }
 
 
@@ -78,8 +72,6 @@ class Zapatilla(db.Model):
     tallas: Mapped[list[int]] = mapped_column(ARRAY(Integer), nullable=False)
 
     modelo = relationship("Modelo", back_populates="zapatillas")
-
-    carrito: Mapped[list["Carrito"]] = relationship("Carrito", secondary=carrito_zapatilla, back_populates="zapatillas")
     def serialize(self):
         return {
             "id": self.id,
@@ -87,17 +79,34 @@ class Zapatilla(db.Model):
             "tallas": self.tallas,
         }
 
+class CarritoZapatilla(db.Model):
+    __tablename__ = "carrito_zapatilla"
 
+    carrito_id = mapped_column(ForeignKey("carrito.id"), primary_key=True)
+    zapatilla_id = mapped_column(ForeignKey("zapatilla.id"), primary_key=True)
+    talla = mapped_column(Integer, nullable=False)
+    cantidad = mapped_column(Integer, nullable=False)
+
+    carrito = relationship("Carrito", back_populates="carrito_zapatillas")
+    zapatilla = relationship("Zapatilla")
+
+    def serialize(self):
+        return {
+            "zapatilla": self.zapatilla.serialize(),
+            "talla": self.talla,
+            "cantidad": self.cantidad
+        }
 class Carrito(db.Model):
     __tablename__ = "carrito"
     id: Mapped[int] = mapped_column(primary_key=True)
     usuario_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
 
     usuario = relationship("User", back_populates="carrito")
-    zapatillas:  Mapped[list["Zapatilla"]] = relationship("Zapatilla", secondary=carrito_zapatilla, back_populates="carrito")
+    carrito_zapatillas = relationship("CarritoZapatilla", back_populates="carrito", cascade="all, delete-orphan")
+
     def serialize(self):
         return {
             "id": self.id,
             "usuario_id": self.usuario_id,
+            "items": [item.serialize() for item in self.carrito_zapatillas]
         }
-
