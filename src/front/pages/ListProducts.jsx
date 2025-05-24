@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Container, Button, Badge } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { FaCartArrowDown } from "react-icons/fa";
+import ProductCard from '../components/productCard';
 
 
 const ListProducts = () => {
@@ -38,14 +39,15 @@ const ListProducts = () => {
     fetchProducts();
   }, []); // Se ejecutará cada vez que cambie el género
 
-  const handleAddToCart = async (zapatilla_id) => {
+  const onAddToCart = async (zapatilla_id, talla, cantidad) => {
+    console.log("Añadiendo al carrito", zapatilla_id, talla, cantidad);
     const response = await fetch(`http://127.0.0.1:3001/add_to_cart`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ zapatilla_id, cantidad: 1, talla: 42 }),
+      body: JSON.stringify({ zapatilla_id, cantidad, talla }),
     });
   }
   return (
@@ -59,47 +61,7 @@ const ListProducts = () => {
           products.map((brand) => (
             brand.zapatillas.map((product) => (
               <Col key={product.id}>
-                <Card className="h-100 shadow-sm">
-                  {/* <Badge
-                bg={product.stock > 0 ? "success" : "danger"}
-                className="position-absolute end-0 mt-2 me-2"
-              >
-                {product.stock > 0 ? "Disponible" : "Agotado"}
-              </Badge>
-              <Card.Img
-                variant="top"
-                src={product.image}
-                alt={product.name}
-                style={{ height: '200px', objectFit: 'cover' }}
-              /> */}
-                  <Card.Body className="d-flex flex-column">
-                    <Card.Title>{product.modelo.nombre}</Card.Title>
-                    <Card.Text className="text-muted">
-                      {product.modelo.oferta}
-                    </Card.Text>
-                    <Card.Text>
-                      <span className="fs-5 ms-2 fw-bold text-primary">
-                        ${product.modelo.precio}
-                      </span>
-                    </Card.Text>
-                    <Card.Text className="flex-grow-1">
-                      {product.modelo.descripcion ? product.modelo.descripcion.substring(0, 60) : <h1></h1>}...
-                    </Card.Text>
-                    {/*<Button
-                  variant="primary"
-                  onClick={() => onAddToCart(product)}
-                  disabled={product.stock <= 0}
-                  className="mt-auto"
-                >
-                  {product.stock > 0 ? "Añadir al carrito" : "Sin stock"}
-                </Button>*/}
-                  </Card.Body>
-                  <Card.Footer className="text-end">
-                    <Button variant="primary" className="w-100" onClick={() => handleAddToCart(product.id)}>
-                      <FaCartArrowDown />
-                      </Button>
-                  </Card.Footer>
-                </Card>
+                <ProductCard product={product} onAddToCart={onAddToCart}/>
               </Col>
             ))
           ))
