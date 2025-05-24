@@ -1,43 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Container, Button, Badge } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-
-
+import { fetchProducts } from '../../services/fetchs';
+import useGlobalReducer from "../hooks/useGlobalReducer";
 const ListProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const data = useParams()
-  console.log(data.genero)
+
+  const { store, dispatch } = useGlobalReducer();
 
 
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoading(true);
-        // Aquí deberías reemplazar la URL con tu endpoint real
-        const response = await fetch(`http://127.0.0.1:3001/zapatillas`);
-
-        if (!response.ok) {
-          throw new Error('Error al obtener los productos');
-        }
-
-        const data = await response.json();
-        setProducts(data);
-        console.log(data)
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []); // Se ejecutará cada vez que cambie el género
 
 
+    fetchProducts(dispatch);
+  }, [dispatch]); // Se ejecutará cada vez que cambie el género
+
+  const { products } = store
+  console.log(products)
   return (
     <Container className="my-5">
       <h2 className="mb-4">Nuestra Colección de Sneakers</h2>
@@ -73,7 +54,7 @@ const ListProducts = () => {
                       </span>
                     </Card.Text>
                     <Card.Text className="flex-grow-1">
-                      {product.modelo.descripcion ? product.modelo.descripcion.substring(0, 60) : <h1></h1> }...
+                      {product.modelo.descripcion ? product.modelo.descripcion.substring(0, 60) : <h1></h1>}...
                     </Card.Text>
                     {/*<Button
                   variant="primary"
