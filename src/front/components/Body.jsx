@@ -45,7 +45,7 @@ const Body = () => {
     const interval = setInterval(() => {
       setFade(false);
       setTimeout(() => {
-        setCurrentImageIndex((prevIndex) => 
+        setCurrentImageIndex((prevIndex) =>
           (prevIndex + 1) % sneakerImages.length
         );
         setFade(true);
@@ -102,7 +102,7 @@ const Body = () => {
           filter: 'blur(2px)',
         }}
       />
-      
+
       {/* Gradient overlay */}
       <div
         style={{
@@ -117,7 +117,7 @@ const Body = () => {
           zIndex: -1,
         }}
       />
-      
+
       <style>
         {`
           @keyframes gradientBG {
@@ -130,10 +130,10 @@ const Body = () => {
 
       {/* Botón de concurso a ancho completo */}
       <div className="w-100 mb-4" style={{ padding: '0 15px' }}>
-        <Button 
-          variant="warning" 
-          size="lg" 
-          className="rounded-0 w-100 py-3 shadow"
+        <Button
+          variant="btn-succes"
+          size="lg"
+          className="rounded-10 w-100 py-3 shadow"
           onClick={() => setShowContest(!showContest)}
           style={{
             fontSize: '1.25rem',
@@ -161,7 +161,7 @@ const Body = () => {
                     Cómo ganar más puntos
                   </Button>
                 </Col>
-                <Col md={8}>
+                <Col md={4}>  {/* Cambiado de md={8} a md={6} (12 columnas * 0.5 = 6) */}
                   <h4 className="mb-3">Canjea tus puntos por promociones</h4>
                   <Row>
                     {promotions.map(promo => (
@@ -172,8 +172,8 @@ const Body = () => {
                             <Card.Text>{promo.description}</Card.Text>
                             <div className="d-flex justify-content-between align-items-center">
                               <span className="badge bg-success">{promo.points} pts</span>
-                              <Button 
-                                variant={userPoints >= promo.points ? "primary" : "secondary"} 
+                              <Button
+                                variant={userPoints >= promo.points ? "primary" : "secondary"}
                                 size="sm"
                                 disabled={userPoints < promo.points}
                                 onClick={() => handleRedeem(promo)}
@@ -207,7 +207,7 @@ const Body = () => {
                     height: '220px',
                     objectFit: 'contain',
                     padding: '30px',
-                    backgroundColor: '#f8f9fa',
+                    backgroundColor: '#e6e6fa',
                   }}
                 />
                 <Card.Body className="d-flex flex-column justify-content-between">
@@ -240,12 +240,12 @@ const Body = () => {
           <p>Estás a punto de canjear <strong>{selectedPromo?.points} puntos</strong> por:</p>
           <p className="lead">{selectedPromo?.description}</p>
           <p>Te quedarán {userPoints - selectedPromo?.points} puntos después de este canje.</p>
-          
+
           <Form.Group className="mb-3">
             <Form.Label>Ingresa tu email para recibir el código:</Form.Label>
-            <Form.Control 
-              type="email" 
-              placeholder="tu@email.com" 
+            <Form.Control
+              type="email"
+              placeholder="tu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -270,17 +270,17 @@ const Body = () => {
         <Modal.Body>
           <div className="text-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#28a745" className="bi bi-check-circle-fill mb-3" viewBox="0 0 16 16">
-              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
             </svg>
             <h4>¡Felicidades!</h4>
             <p>Has canjeado {selectedPromo?.name} exitosamente.</p>
-            
+
             <div className="alert alert-success mt-3">
               <h5 className="mb-2">Tu código de promoción:</h5>
               <div className="d-flex justify-content-center align-items-center">
                 <span className="h4 font-weight-bold me-3">{selectedPromo?.code}</span>
-                <Button 
-                  variant="outline-success" 
+                <Button
+                  variant="outline-success"
                   size="sm"
                   onClick={copyToClipboard}
                 >
@@ -288,7 +288,7 @@ const Body = () => {
                 </Button>
               </div>
             </div>
-            
+
             <p className="mt-3">Hemos enviado los detalles a <strong>{email}</strong></p>
           </div>
         </Modal.Body>
