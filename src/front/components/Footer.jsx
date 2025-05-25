@@ -38,7 +38,7 @@ const Footer = () => {
 					</div>
 
 					{/* Información */}
-					<p id="paymentMethods" data-component="FooterSectionTitle" class="ltr-1whb09d-Body-BodyBold">Métodos de pago</p>
+					<p id="paymentMethods" data-component="FooterSectionTitle" class="ltr-1whb09d-Body-BodyBold"></p>
 					<div style={{ flex: '1 1 150px' }}>
 						<h4 style={{ marginBottom: '1rem', color: 'white' }}>Información</h4>
 						<ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem' }}>
