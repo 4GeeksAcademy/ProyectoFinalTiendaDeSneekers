@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Container, Button, Badge } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { fetchProducts } from '../../services/fetchs';
-import useGlobalReducer from "../hooks/useGlobalReducer";
+import useGlobalReducer from "../hooks/useGlobalReducer";//importar store
 const ListProducts = () => {
 
   const data = useParams()

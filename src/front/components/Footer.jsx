@@ -13,6 +13,8 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
 	return (
+
+		
 		<footer style={{ backgroundColor: '#2e2e2e', color: '#f1f1f1', fontWeight: 'bold' }}>
 			<div style={{ maxWidth: '1200px', margin: '0 auto', padding: '3rem 1.5rem' }}>
 				<div style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem' }}>
@@ -36,6 +38,7 @@ const Footer = () => {
 					</div>
 
 					{/* Información */}
+					<p id="paymentMethods" data-component="FooterSectionTitle" class="ltr-1whb09d-Body-BodyBold">Métodos de pago</p>
 					<div style={{ flex: '1 1 150px' }}>
 						<h4 style={{ marginBottom: '1rem', color: 'white' }}>Información</h4>
 						<ul style={{ listStyle: 'none', padding: 0, fontSize: '0.9rem' }}>
