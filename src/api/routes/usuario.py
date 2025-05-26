@@ -37,7 +37,7 @@ def add_user():
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "El correo ya está en uso"}), 400
     password = generate_password_hash(password)
-    user = User(name=name, email=email, password=password, is_active=True)
+    user = User(name=name, email=email, password=password, is_active=True,role="user")
     carrito = Carrito(usuario=user)
     try:
         
@@ -82,9 +82,12 @@ def add_to_cart():
     user_id = int(get_jwt_identity())
     data = request.get_json()
 
-    zapatilla_id = data.get('zapatilla_id')
-    talla = data.get('talla')
-    cantidad = data.get('cantidad')
+    try:
+        zapatilla_id = int(data.get('zapatilla_id'))
+        talla = int(data.get('talla'))
+        cantidad = int(data.get('cantidad'))
+    except (TypeError, ValueError):
+        return jsonify({"msg": "Datos inválidos"}), 400
 
     if not all([zapatilla_id, talla, cantidad]):
         return jsonify({"msg": "Faltan datos"}), 400
@@ -109,13 +112,14 @@ def add_to_cart():
         carrito_id=carrito.id,
         zapatilla_id=zapatilla.id,
         talla=talla,
-        cantidad=cantidad
+        cantidad=cantidad,
     )
     try:
         db.session.add(nuevo_item)
         db.session.commit()
     except Exception as e:
         db.session.rollback()
+        print(f"Error al añadir zapatilla al carrito: {e}")
         return jsonify({"error": str(e)}), 500
 
     return jsonify({"msg": "Zapatilla añadida al carrito"}), 200
