@@ -13,7 +13,7 @@ class User(db.Model):
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
-
+    
     carrito = relationship("Carrito", back_populates="usuario", uselist=False, cascade="all, delete-orphan")
 
     def serialize(self):
