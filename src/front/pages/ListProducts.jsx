@@ -15,7 +15,7 @@ const ListProducts = () => {
 
   const onAddToCart = async (zapatilla_id, talla, cantidad) => {
     console.log("Añadiendo al carrito", zapatilla_id, talla, cantidad);
-    const response = await fetch(`http://127.0.0.1:3001/add_to_cart`, {
+    const response = await fetch(import.meta.env.VITE_BACKEND_URL + "/add_to_cart", {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -45,7 +45,7 @@ const ListProducts = () => {
           products.map((brand) => (
             brand.zapatillas.map((product) => (
               <Col key={product.id}>
-                <ProductCard product={product} onAddToCart={onAddToCart}/>
+                <ProductCard product={product} onAddToCart={onAddToCart} />
               </Col>
             ))
           ))
