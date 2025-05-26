@@ -16,7 +16,6 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const checkToken = async () => {
             const token = localStorage.getItem("token");
-            console.log("Token:", token);
             if (!token) return;
 
             try {
@@ -29,7 +28,6 @@ export function AuthProvider({ children }) {
                 });
                 if (res.ok) {
                     const data = await res.json();
-                    console.log("Datos del usuario:", data);
                     setUser(data.user);
                     setIsAuthenticated(true);
 

@@ -63,7 +63,7 @@ def login():
     if  check_password_hash(user.password, password):
         access_token = create_access_token(identity=str(user.id))
         print(access_token)
-        return jsonify(token=access_token, user=user.name), 200
+        return jsonify(token=access_token, user=user.serialize()), 200
     else:
         return jsonify({"msg": "wrong credentials"}), 401
 @usuario_bp.route('/authorization', methods=['GET'])

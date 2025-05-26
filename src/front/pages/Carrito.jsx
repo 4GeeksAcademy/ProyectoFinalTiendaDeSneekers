@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, ListGroup } from "react-bootstrap";
+import { useAuth } from "../hooks/authContext";
 
 export default function Carrito() {
+  const { user } = useAuth();
+  const [total , setTotal] = useState(0)
+  console.log(user.carrito.items[0].zapatilla.modelo.nombre);
+  
+  useEffect( () => {
+    if (user) {
+    const listTotal = user.carrito.items
+    const total = listTotal.reduce((acc, item) => {
+      return acc + (item.cantidad * item.zapatilla.modelo.precio);
+    }, 0);
+      setTotal(total)
+    }
+  }, [user])
+  
   return (
     <div
       style={{
@@ -27,21 +42,29 @@ export default function Carrito() {
               </Card.Header>
               <ListGroup variant="flush">
                 {/* Simulación de productos */}
-                <ListGroup.Item className="d-flex justify-content-between align-items-center bg-secondary text-white">
-                  Zapatillas deportivas
-                  <span>2 x $50 = $100</span>
-                </ListGroup.Item>
-                <ListGroup.Item className="d-flex justify-content-between align-items-center bg-secondary text-white">
-                  Camiseta deportiva
-                  <span>1 x $25 = $25</span>
-                </ListGroup.Item>
-                <ListGroup.Item className="d-flex justify-content-between align-items-center bg-secondary text-white">
-                  Calcetines deportivos
-                  <span>3 x $5 = $15</span>
-                </ListGroup.Item>
+                {user ? (
+                  user.carrito.items.map((item, index) => (
+                    <ListGroup.Item
+                      key={index}
+                      className="d-flex justify-content-between align-items-center bg-secondary text-white"
+                    >
+                      {item.zapatilla.modelo.nombre}
+                      <p>Talla { item.talla}</p>
+                      <span>
+                        {item.cantidad} x {item.zapatilla.modelo.precio}€ = 
+                        {item.cantidad * item.zapatilla.modelo.precio}€
+                      </span>
+                    </ListGroup.Item>
+                  ))
+                ) : (
+                  <ListGroup.Item className="text-center">
+                    Tu carrito está vacío.
+                  </ListGroup.Item>
+                )}
+               
               </ListGroup>
               <Card.Footer className="d-flex justify-content-between align-items-center">
-                <strong>Total: $140</strong>
+                <strong>{total}€</strong>
                 <Button variant="success">Proceder al pago</Button>
               </Card.Footer>
             </Card>

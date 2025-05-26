@@ -14,8 +14,12 @@ const ListProducts = () => {
   const { store, dispatch } = useGlobalReducer();
 
   const onAddToCart = async (zapatilla_id, talla, cantidad) => {
+    if (!talla) {
+      alert("Por favor, selecciona una talla antes de añadir al carrito.");
+      return;
+    }
     console.log("Añadiendo al carrito", zapatilla_id, talla, cantidad);
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}add_to_cart`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/add_to_cart`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),

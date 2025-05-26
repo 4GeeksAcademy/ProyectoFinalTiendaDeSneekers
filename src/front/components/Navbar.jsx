@@ -7,7 +7,10 @@ import { Button } from "react-bootstrap";
 const NavbarMenu = () => {
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuth();
-
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
   const handleLogin = () => {
     navigate("/Login")
   }
@@ -125,7 +128,7 @@ const NavbarMenu = () => {
                   <Link to="/carrito" title="Carrito" className="text-white">
                     <FaShoppingBag className="fs-5" />
                   </Link>
-                  <Button onClick={() => logout() } className="btn btn-danger">
+                  <Button onClick={() => handleLogout() } className="btn btn-danger">
                     Logout
                   </Button> 
                 </div>)
