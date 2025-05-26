@@ -7,12 +7,13 @@ import ProductCard from '../components/productCard';
 
 import { fetchProducts } from '../../services/fetchs';
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { useAuth } from '../hooks/authContext';
 const ListProducts = () => {
 
   const data = useParams()
-
+  const {user, addToCart}= useAuth()
   const { store, dispatch } = useGlobalReducer();
-
+  console.log(user)
   const onAddToCart = async (zapatilla_id, talla, cantidad) => {
     if (!talla) {
       alert("Por favor, selecciona una talla antes de añadir al carrito.");
@@ -29,9 +30,12 @@ const ListProducts = () => {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log("Producto añadido al carrito:", data);
+      console.log("Producto añadido al carrito:", data.zapatilla);
+      addToCart(data.zapatilla);
+      
+
     } else {
-      console.error("Error al añadir al carrito");
+      console.error("Error al añadir al carrito", response.statusText);
     }
   }
 

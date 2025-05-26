@@ -11,6 +11,7 @@ from .api.admin import setup_admin
 from .api.commands import setup_commands
 from .api.routes.zapatillas import zapatillas_bp
 from .api.routes.usuario import usuario_bp
+from .api.routes.carrito import carrito_bp
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from datetime import timedelta
@@ -46,6 +47,7 @@ setup_commands(app)
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(zapatillas_bp)
 app.register_blueprint(usuario_bp)
+app.register_blueprint(carrito_bp)
 # Handle/serialize errors like a JSON object
 
 

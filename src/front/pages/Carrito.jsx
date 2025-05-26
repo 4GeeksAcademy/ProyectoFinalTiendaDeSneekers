@@ -3,19 +3,19 @@ import { Container, Row, Col, Card, Button, ListGroup } from "react-bootstrap";
 import { useAuth } from "../hooks/authContext";
 
 export default function Carrito() {
-  const { user } = useAuth();
+  const {  cart } = useAuth();
   const [total , setTotal] = useState(0)
-  console.log(user.carrito.items[0].zapatilla.modelo.nombre);
+  console.log(cart);
   
   useEffect( () => {
-    if (user) {
-    const listTotal = user.carrito.items
+    if (cart) {
+    const listTotal = cart
     const total = listTotal.reduce((acc, item) => {
       return acc + (item.cantidad * item.zapatilla.modelo.precio);
     }, 0);
       setTotal(total)
     }
-  }, [user])
+  }, [cart])
   
   return (
     <div
@@ -42,8 +42,8 @@ export default function Carrito() {
               </Card.Header>
               <ListGroup variant="flush">
                 {/* Simulación de productos */}
-                {user ? (
-                  user.carrito.items.map((item, index) => (
+                {cart ? (
+                  cart.map((item, index) => (
                     <ListGroup.Item
                       key={index}
                       className="d-flex justify-content-between align-items-center bg-secondary text-white"

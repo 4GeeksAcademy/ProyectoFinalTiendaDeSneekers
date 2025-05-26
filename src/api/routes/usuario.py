@@ -36,8 +36,8 @@ def add_user():
         return jsonify({"msg": "El nombre ya está en uso"}), 400
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "El correo ya está en uso"}), 400
-    password = generate_password_hash(password)
-    user = User(name=name, email=email, password=password, is_active=True,role="user")
+    passwordHas = generate_password_hash(password)
+    user = User(name=name, email=email, password=passwordHas, is_active=True,role="user")
     carrito = Carrito(usuario=user)
     try:
         
@@ -51,21 +51,25 @@ def add_user():
     
 @usuario_bp.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    print(data.get('email'))
-    email = data.get('email')
-    password = data.get('password')
-    if not email or not password:
-        return jsonify({"msg": "Faltan datos"}), 400
-    user = User.query.filter_by(email=email).first()
-    if not user:
-        return jsonify({"msg": "Usuario no encontrado"}), 404
-    if  check_password_hash(user.password, password):
-        access_token = create_access_token(identity=str(user.id))
-        print(access_token)
-        return jsonify(token=access_token, user=user.serialize()), 200
-    else:
-        return jsonify({"msg": "wrong credentials"}), 401
+   
+    try:
+        data = request.get_json()
+        print(data.get('email'))
+        email = data.get('email')
+        password = data.get('password')
+        if not email or not password:
+            return jsonify({"msg": "Faltan datos"}), 400
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
+        if  check_password_hash(user.password, password):
+            access_token = create_access_token(identity=str(user.id))
+            print(access_token)
+            return jsonify(token=access_token, user=user.serialize()), 200
+        else:
+            return jsonify({"msg": "wrong credentials"}), 401
+    except Exception as e:
+        print(f"Error al iniciar sesión: {e}")
 @usuario_bp.route('/authorization', methods=['GET'])
 @jwt_required()
 def athorization():
@@ -75,51 +79,4 @@ def athorization():
     print(user.name)
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
-    return jsonify( user =user.name), 200
-@usuario_bp.route('/add_to_cart', methods=['POST'])
-@jwt_required()
-def add_to_cart():
-    user_id = int(get_jwt_identity())
-    data = request.get_json()
-
-    try:
-        zapatilla_id = int(data.get('zapatilla_id'))
-        talla = int(data.get('talla'))
-        cantidad = int(data.get('cantidad'))
-    except (TypeError, ValueError):
-        return jsonify({"msg": "Datos inválidos"}), 400
-
-    if not all([zapatilla_id, talla, cantidad]):
-        return jsonify({"msg": "Faltan datos"}), 400
-
-    user = User.query.get(user_id)
-    if not user:
-        return jsonify({"msg": "Usuario no encontrado"}), 404
-
-    carrito = user.carrito 
-    
-    zapatilla = Zapatilla.query.get(zapatilla_id)
-    if not zapatilla:
-        return jsonify({"msg": "Zapatilla no encontrada"}), 404
-
-    for item in carrito.carrito_zapatillas:
-        if item.zapatilla_id == zapatilla_id and item.talla == talla:
-            item.cantidad += int(cantidad)
-            db.session.commit()
-            return jsonify({"msg": "Cantidad actualizada"}), 200
-
-    nuevo_item = CarritoZapatilla(
-        carrito_id=carrito.id,
-        zapatilla_id=zapatilla.id,
-        talla=talla,
-        cantidad=cantidad,
-    )
-    try:
-        db.session.add(nuevo_item)
-        db.session.commit()
-    except Exception as e:
-        db.session.rollback()
-        print(f"Error al añadir zapatilla al carrito: {e}")
-        return jsonify({"error": str(e)}), 500
-
-    return jsonify({"msg": "Zapatilla añadida al carrito"}), 200
+    return jsonify( user =user.serialize()), 200

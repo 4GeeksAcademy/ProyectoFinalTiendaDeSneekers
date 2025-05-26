@@ -5,15 +5,23 @@ const AuthContext = createContext()
 export function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
+    const [cart, setCart] = useState([]);
 
     const login = () => setIsAuthenticated(true);
     const logout = () => {
         setIsAuthenticated(false);
         setUser(null);
+        setCart([]);
         localStorage.removeItem("token");
     };
     const setUserData = (userData) => setUser(userData);
+    const addToCart = (item) => {
+        setCart((prevCart) => [...prevCart, item]);
+        console.log(cart)
+    }
+
     useEffect(() => {
+
         const checkToken = async () => {
             const token = localStorage.getItem("token");
             if (!token) return;
@@ -26,14 +34,15 @@ export function AuthProvider({ children }) {
                         "Authorization": `Bearer ${token}`,
                     },
                 });
-                if (res.ok) {
+                //user.carrito.items
+                if (res.status === 200) {
                     const data = await res.json();
                     setUser(data.user);
                     setIsAuthenticated(true);
-
+                    setCart(data.user.carrito.items);
                 }
                 setIsAuthenticated(true);
-                
+
             } catch (err) {
                 console.error("Token inválido o expirado", err);
                 logout();
@@ -41,10 +50,10 @@ export function AuthProvider({ children }) {
         };
 
         checkToken();
-    }, []);
+    }, [isAuthenticated]);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, setUserData }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, cart , login, logout, setUserData, addToCart }}>
             {children}
         </AuthContext.Provider>
     )
