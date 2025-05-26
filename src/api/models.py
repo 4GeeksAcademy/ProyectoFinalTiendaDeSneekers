@@ -12,8 +12,9 @@ class User(db.Model):
     name: Mapped[str] = mapped_column(String(120), nullable=False)
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
+    role: Mapped[str] = mapped_column(String(50), nullable=False, default="user")
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
-
+    
     carrito = relationship("Carrito", back_populates="usuario", uselist=False, cascade="all, delete-orphan")
 
     def serialize(self):
@@ -21,6 +22,7 @@ class User(db.Model):
             "id": self.id,
             "name": self.name,
             "email": self.email,
+            "role": self.role,
             "carrito": self.carrito.serialize() if self.carrito else None
         }
 
@@ -81,9 +83,9 @@ class Zapatilla(db.Model):
 
 class CarritoZapatilla(db.Model):
     __tablename__ = "carrito_zapatilla"
-
-    carrito_id = mapped_column(ForeignKey("carrito.id"), primary_key=True)
-    zapatilla_id = mapped_column(ForeignKey("zapatilla.id"), primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    carrito_id = mapped_column(ForeignKey("carrito.id"),nullable=False)
+    zapatilla_id = mapped_column(ForeignKey("zapatilla.id"),nullable=False)
     talla = mapped_column(Integer, nullable=False)
     cantidad = mapped_column(Integer, nullable=False)
 
@@ -92,6 +94,7 @@ class CarritoZapatilla(db.Model):
 
     def serialize(self):
         return {
+            "id": self.id,
             "zapatilla": self.zapatilla.serialize(),
             "talla": self.talla,
             "cantidad": self.cantidad
