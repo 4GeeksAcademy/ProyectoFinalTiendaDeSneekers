@@ -51,7 +51,7 @@ const ListProducts = () => {
           products.map((brand) => (
             brand.zapatillas.map((product) => (
               <Col key={product.id}>
-                <ProductCard product={product} onAddToCart={onAddToCart}/>
+                <ProductCard product={product} onAddToCart={onAddToCart} />
               </Col>
             ))
           ))
