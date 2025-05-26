@@ -15,7 +15,7 @@ const ListProducts = () => {
 
   const onAddToCart = async (zapatilla_id, talla, cantidad) => {
     console.log("Añadiendo al carrito", zapatilla_id, talla, cantidad);
-    const response = await fetch(import.meta.env.VITE_BACKEND_URL + "/add_to_cart", {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}add_to_cart`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -23,6 +23,12 @@ const ListProducts = () => {
       },
       body: JSON.stringify({ zapatilla_id, cantidad, talla }),
     });
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Producto añadido al carrito:", data);
+    } else {
+      console.error("Error al añadir al carrito");
+    }
   }
 
   useEffect(() => {

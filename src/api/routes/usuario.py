@@ -66,7 +66,16 @@ def login():
         return jsonify(token=access_token, user=user.name), 200
     else:
         return jsonify({"msg": "wrong credentials"}), 401
-    
+@usuario_bp.route('/authorization', methods=['GET'])
+@jwt_required()
+def athorization():
+    user_id = get_jwt_identity()
+    print(user_id)
+    user = User.query.get(int(user_id))
+    print(user.name)
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    return jsonify( user =user.name), 200
 @usuario_bp.route('/add_to_cart', methods=['POST'])
 @jwt_required()
 def add_to_cart():

@@ -6,7 +6,7 @@ import { useAuth } from "../hooks/authContext";
 import { Button } from "react-bootstrap";
 const NavbarMenu = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, login } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
 
   const handleLogin = () => {
     navigate("/Login")
@@ -125,6 +125,9 @@ const NavbarMenu = () => {
                   <Link to="/carrito" title="Carrito" className="text-white">
                     <FaShoppingBag className="fs-5" />
                   </Link>
+                  <Button onClick={() => logout() } className="btn btn-danger">
+                    Logout
+                  </Button> 
                 </div>)
                 : <Button onClick={() => handleLogin()} >Login</Button>
             }
