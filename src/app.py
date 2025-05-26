@@ -13,6 +13,8 @@ from .api.routes.zapatillas import zapatillas_bp
 from .api.routes.usuario import usuario_bp
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+from datetime import timedelta
+
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -21,6 +23,9 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 CORS(app)
 jwt=JWTManager(app)
+app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY", "Pollastre")
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
+
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
