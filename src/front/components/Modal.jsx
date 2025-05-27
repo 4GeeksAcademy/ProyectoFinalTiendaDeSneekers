@@ -40,6 +40,13 @@ export default function ModalProduct({ show, onHide }) {
             }
             console.log(newZapa)
             dispatch({ type: "addProduct", payload: newZapa });
+            setDescripcion("");
+            setImg("");
+            setMarca("");
+            setModelo("");
+            setPrecio(0);
+            setTallas("");
+            setGenero("hombre");
             onHide();
         } else if (res.status === 400) {
             setError("Error al crear el producto. Verifica los datos ingresados.");
