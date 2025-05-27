@@ -20,7 +20,7 @@ import TerminosCondiciones from "./pages/TerminosCondiciones";
 import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
 import Login from "./pages/Login";
 import Register from "./pages/register";
-
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,12 +29,11 @@ export const router = createBrowserRouter(
 
       {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
       <Route path="/" element={<Home />} />
-      <Route path="/carrito" element={<Carrito />} />
-      <Route path="/favoritos" element={<Favoritos />} />
-      <Route path="/perfil" element={<Perfil />} />
+      <Route path="/carrito" element={<ProtectedRoute requiredRole={'user'}><Carrito /></ProtectedRoute>} />
+      <Route path="/favoritos" element={<ProtectedRoute requiredRole={'user'}><Favoritos /></ProtectedRoute>} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register/>}/>
-
+      <Route path="/perfil" element={<ProtectedRoute requiredRole={'user'}><Perfil /></ProtectedRoute> } />
 
 
       <Route path="/sobre-nosotros" element={<SobreNosotros />} />

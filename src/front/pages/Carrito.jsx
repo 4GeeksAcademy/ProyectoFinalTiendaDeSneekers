@@ -74,7 +74,7 @@ export default function Carrito() {
                       key={index}
                       className="d-flex justify-content-between align-items-center bg-secondary text-white"
                     >
-                      {item.zapatilla.modelo.nombre}
+                      {item.zapatilla?.modelo.nombre}
                       <p>Talla { item.talla}</p>
                       <span>
                         {item.cantidad} x {item.zapatilla.modelo.precio}€ = 
