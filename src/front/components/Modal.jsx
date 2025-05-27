@@ -34,11 +34,11 @@ export default function ModalProduct({ show, onHide }) {
         if (res.status === 201) {
             alert("Producto creado correctamente");
             const zapa = await res.json();
-            console.log(zapa);
-            newZapa ={
+            const newZapa = {
                 marca: marca,
                 zapatilla:zapa
             }
+            console.log(newZapa)
             dispatch({ type: "addProduct", payload: newZapa });
             onHide();
         } else if (res.status === 400) {
