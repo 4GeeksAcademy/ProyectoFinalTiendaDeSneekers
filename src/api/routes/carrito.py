@@ -76,3 +76,28 @@ def delete_cart(item):
         db.session.rollback()
         print(f"Error al eliminar item del carrito: {e}")
         return jsonify({"error": str(e)}), 500
+@carrito_bp.route('/cart/<int:item_id>',methods=['PUT'])
+@jwt_required()
+def update_cart(item_id):
+    user = User.query.get(get_jwt_identity())
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    carrito = user.carrito
+    if not carrito:
+        return jsonify({"msg": "Carrito no encontrado"}), 404
+
+    data = request.get_json()
+    try:
+        cantidad = int(data.get('cantidad'))
+
+    except (TypeError, ValueError):
+        return jsonify({"msg": "Datos inválidos"}), 400
+
+    item_to_update = CarritoZapatilla.query.get(item_id)
+    if not item_to_update:
+        return jsonify({"msg": "Item no encontrado"}), 404
+
+    item_to_update.cantidad = cantidad
+    db.session.commit()
+
+    return jsonify({"msg": "Cantidad actualizada", "item": item_to_update.serialize()}), 200

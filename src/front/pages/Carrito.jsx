@@ -8,8 +8,8 @@ export default function Carrito() {
   const {  cart, removeFromCart } = useAuth();
   const [total , setTotal] = useState(0)
   console.log(cart);
-  const handleModify = (action, itemId) => {
-    if (action === 'delete') {
+  const handleDelete = ( itemId) => {
+    
       const res = fetch(`${import.meta.env.VITE_BACKEND_URL}/cart/${itemId}`, {
         method: 'DELETE',
         headers: {
@@ -27,10 +27,11 @@ export default function Carrito() {
       }).catch(error => {
         console.error("Error de red al eliminar el producto:", error);
       });
-    }
-    if(action === 'edit') {
-      console.log("Editar producto con ID:", itemId);
-     }
+    
+
+
+      
+     
   }
   useEffect( () => {
     if (cart) {
@@ -82,16 +83,11 @@ export default function Carrito() {
 
 
                       <spam>
-                        <Button
-                          variantant="`primary"
-                          className="ms-2"
-                          onClick={() => handleModify("edit",item.id)}>
-                          <FaRegEdit/>
-                        </Button>
+
                         <Button
                           variant="danger"
                           className="ms-2"
-                          onClick={() => handleModify("delete",item.id)}
+                          onClick={() => handleDelete(item.id)}
                         >
                           <MdDeleteOutline className="w-100"/>
                         </Button>
