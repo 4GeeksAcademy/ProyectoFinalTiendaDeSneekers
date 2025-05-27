@@ -10,9 +10,9 @@ export default function Login() {
     const [error, setError] = useState(null)
     const navigate = useNavigate()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async  (e) => {
         e.preventDefault()
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
+        const res= await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -22,23 +22,21 @@ export default function Login() {
                 password,
             }),
         })
-            .then((response) => {
-                if (response.status === 404) {
-                    alert("credenciales incorrectas")
-                    return
-                } else if (response.status === 400) {
-                    alert("Error en el servidor")
-                    return
-                 }
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data);
-                localStorage.setItem("token", data.token);
-                login()
-                setUserData(data.user)
-                navigate("/")
-            })
+        if (res.status === 200) {
+            const data = await res.json();
+            console.log(data);
+            localStorage.setItem("token", data.token);
+            login()
+            setUserData(data.user)
+            navigate("/")
+        } else if (res.status === 401) {
+            alert("Credenciales incorrectas")
+            return
+        } else if (res.status === 404) { 
+            alert("Usuario no encontrado")
+            return
+        }
+        
         setEmail("")
         setPassword("")
     }

@@ -5,18 +5,28 @@ const AuthContext = createContext()
 export function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
+    const [cart, setCart] = useState([]);
 
     const login = () => setIsAuthenticated(true);
     const logout = () => {
         setIsAuthenticated(false);
         setUser(null);
+        setCart([]);
         localStorage.removeItem("token");
     };
     const setUserData = (userData) => setUser(userData);
+
+    const addToCart = (item) => {
+        setCart((prevCart) => [...prevCart, item]);
+        console.log(cart)
+    }
+    const removeFromCart = (itemId) => {
+        setCart((prevCart) => prevCart.filter(item => item.id !== itemId));
+    };
     useEffect(() => {
+
         const checkToken = async () => {
             const token = localStorage.getItem("token");
-            console.log("Token:", token);
             if (!token) return;
 
             try {
@@ -27,15 +37,15 @@ export function AuthProvider({ children }) {
                         "Authorization": `Bearer ${token}`,
                     },
                 });
-                if (res.ok) {
+                //user.carrito.items
+                if (res.status === 200) {
                     const data = await res.json();
-                    console.log("Datos del usuario:", data);
                     setUser(data.user);
                     setIsAuthenticated(true);
-
+                    setCart(data.user.carrito.items);
                 }
                 setIsAuthenticated(true);
-                
+
             } catch (err) {
                 console.error("Token inválido o expirado", err);
                 logout();
@@ -43,10 +53,10 @@ export function AuthProvider({ children }) {
         };
 
         checkToken();
-    }, []);
+    }, [isAuthenticated]);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, setUserData }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, cart , login, logout, setUserData, addToCart, removeFromCart }}>
             {children}
         </AuthContext.Provider>
     )
