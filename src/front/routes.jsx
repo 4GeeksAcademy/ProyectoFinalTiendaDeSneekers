@@ -11,7 +11,7 @@ import ListProducts from "./pages/ListProducts";
 import Carrito from './pages/Carrito';
 import Favoritos from './pages/Favoritos';
 import Perfil from './pages/Perfil';
-
+import HombreProducts from "./components/HombreProducts";
 // Importa los componentes informativos que creamos antes:
 import SobreNosotros from "./pages/SobreNosotros";
 import EnviosDevoluciones from "./pages/EnviosDevoluciones";
@@ -32,8 +32,8 @@ export const router = createBrowserRouter(
       <Route path="/carrito" element={<ProtectedRoute requiredRole={'user'}><Carrito /></ProtectedRoute>} />
       <Route path="/favoritos" element={<ProtectedRoute requiredRole={'user'}><Favoritos /></ProtectedRoute>} />
       <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register/>}/>
-      <Route path="/perfil" element={<ProtectedRoute requiredRole={'user'}><Perfil /></ProtectedRoute> } />
+      <Route path="/register" element={<Register />} />
+      <Route path="/perfil" element={<ProtectedRoute requiredRole={'user'}><Perfil /></ProtectedRoute>} />
 
 
       <Route path="/sobre-nosotros" element={<SobreNosotros />} />
@@ -45,6 +45,7 @@ export const router = createBrowserRouter(
       <Route path="/genero/:genero" element={<ListProducts />} />
 
       <Route path="/descuentos" element={<Descuentos />} />
+      <Route path="/hombreProducts" element={<HombreProducts />} />
 
 
     </Route>

@@ -53,7 +53,7 @@ const NavbarMenu = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to="/genero/man" className="nav-link text-white fw-bold">
+                <Link to="/hombreProducts" className="nav-link text-white fw-bold">
                   Hombre
                 </Link>
               </li>
@@ -128,9 +128,9 @@ const NavbarMenu = () => {
                   <Link to="/carrito" title="Carrito" className="text-white">
                     <FaShoppingBag className="fs-5" />
                   </Link>
-                  <Button onClick={() => handleLogout() } className="btn btn-danger">
+                  <Button onClick={() => handleLogout()} className="btn btn-danger">
                     Logout
-                  </Button> 
+                  </Button>
                 </div>)
                 : <Button onClick={() => handleLogin()} >Login</Button>
             }
