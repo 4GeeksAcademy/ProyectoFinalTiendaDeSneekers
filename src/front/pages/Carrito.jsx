@@ -1,12 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, ListGroup } from "react-bootstrap";
 import { useAuth } from "../hooks/authContext";
+import { MdDeleteOutline } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
 
 export default function Carrito() {
-  const {  cart } = useAuth();
+  const {  cart, removeFromCart } = useAuth();
   const [total , setTotal] = useState(0)
   console.log(cart);
-  
+  const handleModify = (action, itemId) => {
+    if (action === 'delete') {
+      const res = fetch(`${import.meta.env.VITE_BACKEND_URL}/cart/${itemId}`, {
+        method: 'DELETE',
+        headers: {
+          "content-type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        }
+      });
+      res.then(response => {
+        if (response.ok) {
+          console.log("Producto eliminado del carrito con ID:", itemId);
+          removeFromCart(itemId);
+        } else {
+          console.error("Error al eliminar el producto del carrito");
+        }
+      }).catch(error => {
+        console.error("Error de red al eliminar el producto:", error);
+      });
+    }
+    if(action === 'edit') {
+      console.log("Editar producto con ID:", itemId);
+     }
+  }
   useEffect( () => {
     if (cart) {
     const listTotal = cart
@@ -54,6 +79,24 @@ export default function Carrito() {
                         {item.cantidad} x {item.zapatilla.modelo.precio}€ = 
                         {item.cantidad * item.zapatilla.modelo.precio}€
                       </span>
+
+
+                      <spam>
+                        <Button
+                          variantant="`primary"
+                          className="ms-2"
+                          onClick={() => handleModify("edit",item.id)}>
+                          <FaRegEdit/>
+                        </Button>
+                        <Button
+                          variant="danger"
+                          className="ms-2"
+                          onClick={() => handleModify("delete",item.id)}
+                        >
+                          <MdDeleteOutline className="w-100"/>
+                        </Button>
+                      </spam>
+
                     </ListGroup.Item>
                   ))
                 ) : (

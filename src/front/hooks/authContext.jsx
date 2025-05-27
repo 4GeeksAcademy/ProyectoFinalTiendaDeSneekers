@@ -15,11 +15,14 @@ export function AuthProvider({ children }) {
         localStorage.removeItem("token");
     };
     const setUserData = (userData) => setUser(userData);
+
     const addToCart = (item) => {
         setCart((prevCart) => [...prevCart, item]);
         console.log(cart)
     }
-
+    const removeFromCart = (itemId) => {
+        setCart((prevCart) => prevCart.filter(item => item.id !== itemId));
+    };
     useEffect(() => {
 
         const checkToken = async () => {
@@ -53,7 +56,7 @@ export function AuthProvider({ children }) {
     }, [isAuthenticated]);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, cart , login, logout, setUserData, addToCart }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, cart , login, logout, setUserData, addToCart, removeFromCart }}>
             {children}
         </AuthContext.Provider>
     )
