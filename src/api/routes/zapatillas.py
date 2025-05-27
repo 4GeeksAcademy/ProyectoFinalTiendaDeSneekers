@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from src.api.models import db, Zapatilla, Marca, Modelo
-from flask_jwt_extended import jwt_required
+from src.api.models import db, Zapatilla, Marca, Modelo,User
+from flask_jwt_extended import jwt_required, get_jwt_identity
 zapatillas_bp = Blueprint('zapatillas', __name__)
 @zapatillas_bp.route('/marca', methods=['POST'])
 
@@ -17,11 +17,18 @@ def get_marca(marca_name):
         return jsonify({"error": str(e)}), 500
     
 @zapatillas_bp.route('/zapatillas', methods=['POST'])
+@jwt_required()
 def add_zapatillas():
+    user_id = int(get_jwt_identity())
+    user = User.query.get(user_id)
+    if not user or user.role != 'SuperAdmin':
+        return jsonify({"msg": "No tienes permisos para añadir zapatillas"}), 403
     data = request.get_json()
     if not data:
+        print("No se ha enviado ningun dato")
         return jsonify({"msg": "No se ha enviado ningun dato"}), 400
     if 'marca' not in data or 'nombre' not in data or 'talla' not in data or 'precio' not in data or 'oferta' not in data or 'genero' not in data:
+        print("Faltan datos obligatorios")
         return jsonify({"error": "Faltan datos obligatorios"}), 400
     try:
         marca = Marca.query.filter_by(nombre=data['marca']).first()
@@ -47,8 +54,9 @@ def add_zapatillas():
         zapatilla = Zapatilla(tallas=data['talla'], modelo_id=modelo.id)
         db.session.add(zapatilla)
         db.session.commit()
-        return jsonify({"msg": "Añadidas"}), 201
+        return jsonify(zapatilla.serialize()), 201
     except Exception as e:
+        print(f"Error al añadir zapatilla: {e}")
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
     
