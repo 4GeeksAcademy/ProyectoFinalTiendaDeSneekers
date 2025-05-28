@@ -3,3 +3,7 @@
   height: 1px;
   object-fit: cover;
 }
+
+.card {
+  width: 18rem;
+}
