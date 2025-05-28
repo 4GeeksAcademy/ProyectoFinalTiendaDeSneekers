@@ -14,7 +14,7 @@ export default function ModalProduct({ show, onHide }) {
     const { store, dispatch } = useGlobalReducer();
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/zapatillas`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}zapatillas`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
