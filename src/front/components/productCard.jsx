@@ -1,14 +1,43 @@
 import { useState } from "react";
 import { Button, Card, Dropdown, DropdownButton, FormControl, InputGroup } from "react-bootstrap";
+import { useAuth } from "../hooks/authContext";
+import { MdDeleteOutline } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export default function ProductCard({ product, onAddToCart }) {
     const [talla, setTalla] = useState(0);
     const [cantidad, setCantidad] = useState(1);
+    const { user } = useAuth()
+    const { store, dispatch } = useGlobalReducer();
+    const handleDelete = async () => {
+        console.log(product.id);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}zapatillas/${product.id}`, {
+            method: 'DELETE',
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem('token')}`,
+                "Content-Type": "application/json"
+            },
+        });
+        if (response.ok) {
+            dispatch({ type: "delete", payload: {marca: product.marca, id:product.id} });
+            alert("Producto eliminado correctamente");
+            
+        }
+    }
     return (
         <Card className="h-100 shadow-sm">
+            {user?.role === "SuperAdmin" ? 
+            <Card.Header className="d-flex justify-content-between align-items-center">
+                <Button variant="secondary"><CiEdit /></Button>
+                <Button variant="danger" onClick={() => handleDelete()}><MdDeleteOutline /></Button>
+                </Card.Header>
+                : null
+        }
+            
             <Card.Img
                 variant="top"
-                src={product.modelo.img !== ""? product.modelo.img:null}
+                src={product.modelo.img !== "" ? product.modelo.img : null}
                 alt={product.modelo.name}
                 style={{ height: '200px', objectFit: 'cover' }}
             />
@@ -25,7 +54,7 @@ export default function ProductCard({ product, onAddToCart }) {
                         ${product.modelo.precio}
                     </span>
                 </Card.Text>
-                
+
             </Card.Body>
 
 

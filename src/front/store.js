@@ -1,19 +1,20 @@
-export const initialStore=()=>{
-  return{
+export const initialStore = () => {
+  return {
     message: null,
     products: []
-  }
-}
+  };
+};
 
 export default function storeReducer(store, action = {}) {
-  switch(action.type){
-   case "getProduct": 
-   return {
-    ...store,
-    products: action.payload
-   }
+  switch (action.type) {
+    case "getProduct":
+      console.log(store.products)
+      return {
+        ...store,
+        products: action.payload
+      };
     case "addProduct":
-     const { marca, zapatilla } = action.payload;
+      const { marca, zapatilla } = action.payload;
       const products = [...store.products];
       const marcaIndex = products.findIndex(p => p.marca === marca);
 
@@ -33,8 +34,23 @@ export default function storeReducer(store, action = {}) {
         ...store,
         products
       };
-    
+    case "delete":
+      const { id } = action.payload;
+      const updatedProducts = store.products.map(product => {
+        if (product.marca === action.payload.marca) {
+          return {
+            ...product,
+            zapatillas: product.zapatillas.filter(z => z.id !== id)
+          };
+        }
+        return product;
+      }).filter(product => product.zapatillas.length > 0);
+
+      return {
+        ...store,
+        products: updatedProducts
+      };
     default:
-      throw Error('Unknown action.');
-  }    
+      throw new Error('Unknown action.');
+  }
 }

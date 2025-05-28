@@ -45,7 +45,7 @@ const ListProducts = () => {
 
 //AQUI DEBEMOS ENVIAR A LA FUNCION DEL GENERO SELECCIONADO QUE OBTENEMOS DE DATA.GENERO (MUJER,HOMBRE O NIÑO)
     fetchProducts(genero,dispatch);
-  }, [genero]); // Se ejecutará cada vez que cambie el género
+  }, [store, genero]); // Se ejecutará cada vez que cambie el género o el store
 
   const { products } = store
   console.log(products)

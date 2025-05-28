@@ -12,6 +12,7 @@ export default function ModalProduct({ show, onHide }) {
     const [genero, setGenero] = useState("man")
     const [error, setError] = useState(null)
     const { store, dispatch } = useGlobalReducer();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}zapatillas`, {
@@ -59,9 +60,9 @@ export default function ModalProduct({ show, onHide }) {
             <Modal show={show} onHide={onHide} size="lg">
                 <Modal.Body className="p-0">
                     <Container fluid className="p-0 ">
-
                         <Row className="g-0">
                             <Col >
+                                
                                 <Card bg="dark" text="white" className="p-4 shadow-lg">
                                     <Form className="w-100" onSubmit={(e) => handleSubmit(e)}>
                                         <Form.Group className="mb-3" controlId="marca">
@@ -71,6 +72,7 @@ export default function ModalProduct({ show, onHide }) {
                                                 placeholder=""
                                                 onChange={(e) => setMarca(e.target.value)}
                                                 value={marca}
+                                                required
                                             />
                                         </Form.Group>
 
@@ -81,6 +83,7 @@ export default function ModalProduct({ show, onHide }) {
                                                 placeholder=""
                                                 onChange={(e) => setModelo(e.target.value)}
                                                 value={modelo}
+                                                required
                                             />
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="descripcion">
@@ -108,6 +111,7 @@ export default function ModalProduct({ show, onHide }) {
                                                 placeholder="0"
                                                 onChange={(e) => setPrecio(e.target.value)}
                                                 value={precio}
+                                                required
                                             />
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="tallas">
@@ -115,8 +119,14 @@ export default function ModalProduct({ show, onHide }) {
                                             <Form.Control
                                                 type="text"
                                                 placeholder="36,37,38,39,40,41,42,43,44,45"
-                                                onChange={(e) => setTallas(e.target.value)}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    if (/^[0-9,]*$/.test(value)) {
+                                                        setTallas(value); // o setTallas(value), según tu lógica
+                                                    }
+                                                }}
                                                 value={tallas}
+                                                required
                                             />
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="Genero">
