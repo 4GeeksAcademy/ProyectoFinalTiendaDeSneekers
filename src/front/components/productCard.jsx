@@ -4,12 +4,15 @@ import { useAuth } from "../hooks/authContext";
 import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { fetchProducts } from "../../services/fetchs";
 
-export default function ProductCard({ product, onAddToCart }) {
+export default function ProductCard({ product, onAddToCart, gender }) {
     const [talla, setTalla] = useState(0);
     const [cantidad, setCantidad] = useState(1);
     const { user } = useAuth()
     const { store, dispatch } = useGlobalReducer();
+
+
     const handleDelete = async () => {
         console.log(product.id);
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}zapatillas/${product.id}`, {
@@ -20,16 +23,22 @@ export default function ProductCard({ product, onAddToCart }) {
             },
         });
         if (response.ok) {
-            dispatch({ type: "delete", payload: {marca: product.marca, id:product.id} });
+            dispatch({ type: "delete", payload: { marca: product.marca, id: product.id } });
+            await fetchProducts(gender, dispatch);
             alert("Producto eliminado correctamente");
             
         }
+    }
+    
+    const handleEdit = async () => {
+        // Aquí puedes implementar la lógica para editar el producto
+        console.log("Editar producto", product.id);
     }
     return (
         <Card className="h-100 shadow-sm">
             {user?.role === "SuperAdmin" ? 
             <Card.Header className="d-flex justify-content-between align-items-center">
-                <Button variant="secondary"><CiEdit /></Button>
+                <Button variant="secondary" onClick={() => handleEdit()}><CiEdit /></Button>
                 <Button variant="danger" onClick={() => handleDelete()}><MdDeleteOutline /></Button>
                 </Card.Header>
                 : null
