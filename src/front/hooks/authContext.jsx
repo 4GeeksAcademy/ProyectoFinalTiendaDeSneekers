@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
             if (!token) return;
 
             try {
-                const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/authorization`, {
+                const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}authorization`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export function AuthProvider({ children }) {
     }, [isAuthenticated]);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, cart , login, logout, setUserData, addToCart, removeFromCart }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, cart, login, logout, setUserData, addToCart, removeFromCart }}>
             {children}
         </AuthContext.Provider>
     )

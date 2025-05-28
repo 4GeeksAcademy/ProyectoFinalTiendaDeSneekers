@@ -10,7 +10,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 import { useAuth } from '../hooks/authContext';
 const ListProducts = () => {
 
-  const data = useParams()
+  const data = useParams() //AQUI OBTENEMOS EL GENERO SELECCIONADO DE LA RUTA, HOMBREM, MUJER Y NIÑO, LO OBTENEMOS CON DATA.GENERO
   const {user, addToCart}= useAuth()
   const { store, dispatch } = useGlobalReducer();
   console.log(store)
@@ -20,7 +20,7 @@ const ListProducts = () => {
       return;
     }
     console.log("Añadiendo al carrito", zapatilla_id, talla, cantidad);
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/add_to_cart`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}add_to_cart`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -42,7 +42,7 @@ const ListProducts = () => {
   useEffect(() => {
 
 
-
+//AQUI DEBEMOS ENVIAR A LA FUNCION DEL GENERO SELECCIONADO QUE OBTENEMOS DE DATA.GENERO (MUJER,HOMBRE O NIÑO)
     fetchProducts(dispatch);
   }, [dispatch]); // Se ejecutará cada vez que cambie el género
 

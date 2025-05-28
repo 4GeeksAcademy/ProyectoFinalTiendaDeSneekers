@@ -12,7 +12,7 @@ export default function Login() {
 
     const handleSubmit = async  (e) => {
         e.preventDefault()
-        const res= await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
+        const res= await fetch(`${import.meta.env.VITE_BACKEND_URL}login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
