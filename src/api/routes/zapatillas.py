@@ -119,7 +119,6 @@ def data_for_genere(gender):
             zapatillas =[]
             for modelo in marca.modelos:
                 for zapatilla in modelo.zapatillas:
-                    print(zapatilla.modelo.genero)
                     if(zapatilla.modelo.genero == gender):
                         zapatillas.append(zapatilla.serialize())
             data.append({
@@ -131,6 +130,7 @@ def data_for_genere(gender):
         return jsonify({"error": str(e)}), 500
     
 @zapatillas_bp.route('/zapatillas/<int:zapatillas_id>', methods=['DELETE'])
+@jwt_required()
 def delete_zapatilla(zapatillas_id):
     try:
         zapatilla = Zapatilla.query.get(zapatillas_id)

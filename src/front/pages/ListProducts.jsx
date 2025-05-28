@@ -10,7 +10,6 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 import { useAuth } from '../hooks/authContext';
 const ListProducts = () => {
 
-  const data = useParams() //AQUI OBTENEMOS EL GENERO SELECCIONADO DE LA RUTA, HOMBREM, MUJER Y NIÑO, LO OBTENEMOS CON DATA.GENERO
   const {user, addToCart}= useAuth()
   const { store, dispatch } = useGlobalReducer();
 
@@ -45,7 +44,7 @@ const ListProducts = () => {
 
 //AQUI DEBEMOS ENVIAR A LA FUNCION DEL GENERO SELECCIONADO QUE OBTENEMOS DE DATA.GENERO (MUJER,HOMBRE O NIÑO)
     fetchProducts(genero,dispatch);
-  }, [genero]); // Se ejecutará cada vez que cambie el género
+  }, [ genero || store]); // Se ejecutará cada vez que cambie el género o el store
 
   const { products } = store
   console.log(products)
@@ -60,7 +59,7 @@ const ListProducts = () => {
           products.map((brand) => (
             brand.zapatillas.map((product) => (
               <Col key={product.id}>
-                <ProductCard product={product} onAddToCart={onAddToCart} />
+                <ProductCard product={product} gender={genero} onAddToCart={onAddToCart} />
               </Col>
             ))
           ))
