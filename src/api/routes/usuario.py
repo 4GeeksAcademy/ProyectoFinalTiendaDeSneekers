@@ -32,8 +32,6 @@ def add_user():
     password=data.get('password')
     if not name or not email or not password:
         return jsonify({"msg": "Faltan datos"}), 400
-    if User.query.filter_by(name=name).first():
-        return jsonify({"msg": "El nombre ya está en uso"}), 400
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "El correo ya está en uso"}), 400
     passwordHas = generate_password_hash(password)

@@ -26,7 +26,7 @@ export default function Register() {
         })
             .then((response) => {
                 if (response.status === 400) {
-                    alert("Error en el servidor")
+                    alert("Error en el servidor", response.data)
                     return
                 }
                 return response.json();

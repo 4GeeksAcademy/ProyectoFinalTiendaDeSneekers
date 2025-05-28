@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Boolean, Integer, ARRAY, ForeignKey,Column, Table
+from sqlalchemy import String, Boolean, Integer, ARRAY, ForeignKey,Column, Table,Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 db = SQLAlchemy()
@@ -50,7 +50,7 @@ class Modelo(db.Model):
     oferta: Mapped[bool] = mapped_column(Boolean, nullable=False)
     genero: Mapped[str] = mapped_column(String(120), nullable=False)
     descripcion: Mapped[str] = mapped_column(String(255), nullable=True)
-    img: Mapped[str] = mapped_column(String(255), nullable=True)
+    img: Mapped[str] = mapped_column(Text, nullable=True)
     marca = relationship("Marca", back_populates="modelos")
     zapatillas = relationship("Zapatilla", back_populates="modelo")
     
