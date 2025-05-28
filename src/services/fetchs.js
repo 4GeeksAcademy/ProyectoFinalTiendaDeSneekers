@@ -4,7 +4,7 @@ export const fetchProducts = async (dispatch) => {
     const response = await fetch(
       import.meta.env.VITE_BACKEND_URL + "zapatillas" 
     );
-
+//
     if (!response.ok) {
       throw new Error("Error al obtener los productos");
     }
