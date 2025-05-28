@@ -1,7 +1,10 @@
 import React from "react";
+import { use } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import { useAuth } from "../hooks/authContext";
 
 export default function Perfil() {
+    const {user} = useAuth();
     return (
         <div
             style={{
@@ -23,13 +26,13 @@ export default function Perfil() {
                         <Card bg="dark" text="white" className="p-4 shadow-lg">
                             <Form>
                                 <Form.Group className="mb-3" controlId="formName">
-                                    <Form.Label>Nombre Completo</Form.Label>
-                                    <Form.Control type="text" placeholder="Juan Pérez" />
+                                    <Form.Label>Nombre</Form.Label>
+                                    <Form.Control type="text" placeholder={user.name} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formEmail">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" placeholder="juan.perez@example.com" />
+                                    <Form.Control type="email" placeholder={user.email} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formPassword">

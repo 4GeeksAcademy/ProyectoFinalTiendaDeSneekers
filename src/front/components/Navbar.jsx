@@ -6,8 +6,11 @@ import { useAuth } from "../hooks/authContext";
 import { Button } from "react-bootstrap";
 const NavbarMenu = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, login } = useAuth();
-
+  const { isAuthenticated, logout } = useAuth();
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
   const handleLogin = () => {
     navigate("/Login")
   }
@@ -55,12 +58,12 @@ const NavbarMenu = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/genero/woman" className="nav-link text-white fw-bold">
+                <Link to="/mujer" className="nav-link text-white fw-bold">
                   Mujer
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/genero/child" className="nav-link text-white fw-bold">
+                <Link to="/ninos" className="nav-link text-white fw-bold">
                   Niño
                 </Link>
               </li>
@@ -125,6 +128,9 @@ const NavbarMenu = () => {
                   <Link to="/carrito" title="Carrito" className="text-white">
                     <FaShoppingBag className="fs-5" />
                   </Link>
+                  <Button onClick={() => handleLogout()} className="btn btn-danger">
+                    Logout
+                  </Button>
                 </div>)
                 : <Button onClick={() => handleLogin()} >Login</Button>
             }

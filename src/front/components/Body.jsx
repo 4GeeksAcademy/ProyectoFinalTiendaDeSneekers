@@ -14,13 +14,13 @@ const brands = [
 ];
 
 const sneakerImages = [
-  'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/skwgyqrbfzhu6uyeh0gg/air-max-270-mens-shoes-KkLcGR.png',
-  'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/2f1b8e5a8f0d4f2a8e1eaf8e00e5c3a9_9366/Zapatillas_Forum_Low_Blanco_GW2528_01_standard.jpg',
-  'https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/376701/01/sv01/fnd/PNA/fmt/png/SUEDE-Classic-XXI-Unisex-Sneakers',
-  'https://images.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dwbb38a1a2/images/a_107/M9160_A_107X1.jpg',
-  'https://images.vans.com/is/image/Vans/UUK24I-HERO?$583x583$',
-  'https://www.asics.com/dw/image/v2/BBWQ_PRD/on/demandware.static/-/Sites-asics-master/default/dw0c5c5c6a/images/1011B458_400_SR_RT_GLB?sw=580&sh=580&sm=fit&sfrm=png',
-  'https://images.crocs.com/images/t_thumb_squared,f_auto,q_auto/products/206750_4K8_ALT100/crocs',
+  'https://media.istockphoto.com/id/175537625/es/foto/zapatillas-con-trazado-de-recorte.jpg?s=612x612&w=0&k=20&c=cglEyR9ySoQHLEVIcxz_azVGHh4KR9SkOr27Dfgf-FA=',
+  'https://media.blackandwhite-ff.com/10000/2f63aa62-0a2d-4252-ba83-b704c903d13a_aj1colourways-0013-aj1banned.jpg',
+  'https://assets.adidas.com/images/w_600,f_auto,q_auto/b7beee7c32d4438aaba3acb6001c2e7b_9366/Zapatilla_Forum_Low_Blanco_FY7757_01_standard.jpgs',
+  'https://www.dooerssneakers.com/images/puma-zapatillas-hombre-puma-club-ii-era-yea-puntera-1000994913-1200x1200-d',
+  'https://www.lavanguardia.com/files/og_thumbnail/uploads/2020/09/16/5fad439020e84.jpeg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbWCzhHcGlya0AfocE0eLFUJJXjGT4xtrv7w&s',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThQ1Xg-lFixeae1sab0uu2jAvHkLmot_pJxLlB7Z2QdeaGrl8CoJZiyNWqIdKtu9V46fc&usqp=CAU',
 ];
 
 const promotions = [
