@@ -30,7 +30,7 @@ export function AuthProvider({ children }) {
             if (!token) return;
 
             try {
-                const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/authorization`, {
+                const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}authorization`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

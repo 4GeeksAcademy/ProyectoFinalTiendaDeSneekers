@@ -13,7 +13,6 @@ const ListProducts = () => {
   const data = useParams()
   const {user, addToCart}= useAuth()
   const { store, dispatch } = useGlobalReducer();
-  console.log(store)
   const onAddToCart = async (zapatilla_id, talla, cantidad) => {
     if (!talla) {
       alert("Por favor, selecciona una talla antes de añadir al carrito.");

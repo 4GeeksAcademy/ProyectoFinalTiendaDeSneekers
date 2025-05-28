@@ -4,12 +4,11 @@ import { Button, Card, Dropdown, DropdownButton, FormControl, InputGroup } from 
 export default function ProductCard({ product, onAddToCart }) {
     const [talla, setTalla] = useState(0);
     const [cantidad, setCantidad] = useState(1);
-    console.log(product.modelo.img)
     return (
         <Card className="h-100 shadow-sm">
             <Card.Img
                 variant="top"
-                src={product.modelo.img}
+                src={product.modelo.img !== ""? product.modelo.img:null}
                 alt={product.modelo.name}
                 style={{ height: '200px', objectFit: 'cover' }}
             />
