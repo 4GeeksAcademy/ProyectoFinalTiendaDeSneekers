@@ -9,7 +9,7 @@ export default function ModalProduct({ show, onHide }) {
     const [img, setImg] = useState("")
     const [precio, setPrecio] = useState(0)
     const [tallas, setTallas] = useState("")
-    const [genero, setGenero] = useState("hombre")
+    const [genero, setGenero] = useState("man")
     const [error, setError] = useState(null)
     const { store, dispatch } = useGlobalReducer();
     const handleSubmit = async (e) => {
@@ -36,7 +36,7 @@ export default function ModalProduct({ show, onHide }) {
             const zapa = await res.json();
             const newZapa = {
                 marca: marca,
-                zapatilla:zapa
+                zapatilla: zapa
             }
             console.log(newZapa)
             dispatch({ type: "addProduct", payload: newZapa });
@@ -125,9 +125,9 @@ export default function ModalProduct({ show, onHide }) {
                                                 value={genero}
                                                 onChange={(e) => setGenero(e.target.value)}
                                             >
-                                                <option value="hombre">Hombre</option>
-                                                <option value="mujer">Mujer</option>
-                                                <option value="niño">Niño</option>
+                                                <option value="man">Hombre</option>
+                                                <option value="woman">Mujer</option>
+                                                <option value="children">Niño</option>
                                             </Form.Select>
 
                                         </Form.Group>
@@ -135,6 +135,11 @@ export default function ModalProduct({ show, onHide }) {
                                             Guardar Cambios
                                         </Button>
                                     </Form>
+                                    <Card.Img
+                                        variant="top"
+                                        src={img}
+                                        alt={modelo}
+                                    />
                                 </Card>
                             </Col>
                         </Row>

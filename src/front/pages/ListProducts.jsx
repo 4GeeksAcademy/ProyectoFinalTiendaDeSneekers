@@ -13,6 +13,8 @@ const ListProducts = () => {
   const data = useParams() //AQUI OBTENEMOS EL GENERO SELECCIONADO DE LA RUTA, HOMBREM, MUJER Y NIÑO, LO OBTENEMOS CON DATA.GENERO
   const {user, addToCart}= useAuth()
   const { store, dispatch } = useGlobalReducer();
+
+  const { genero } = useParams()
   const onAddToCart = async (zapatilla_id, talla, cantidad) => {
     if (!talla) {
       alert("Por favor, selecciona una talla antes de añadir al carrito.");
@@ -42,8 +44,8 @@ const ListProducts = () => {
 
 
 //AQUI DEBEMOS ENVIAR A LA FUNCION DEL GENERO SELECCIONADO QUE OBTENEMOS DE DATA.GENERO (MUJER,HOMBRE O NIÑO)
-    fetchProducts(dispatch);
-  }, [dispatch]); // Se ejecutará cada vez que cambie el género
+    fetchProducts(genero,dispatch);
+  }, [genero]); // Se ejecutará cada vez que cambie el género
 
   const { products } = store
   console.log(products)

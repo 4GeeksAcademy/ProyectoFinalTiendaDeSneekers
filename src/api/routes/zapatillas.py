@@ -107,6 +107,29 @@ def get_zapatillas():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
+@zapatillas_bp.route('/zapatillas/gender/<string:gender>', methods=['GET'])
+def data_for_genere(gender):
+    try:
+        marcas = Marca.query.all()
+        if not marcas:
+            return jsonify({"msg": "No hay marcas"}), 404
+        
+        data=[]
+        for marca in marcas:
+            zapatillas =[]
+            for modelo in marca.modelos:
+                for zapatilla in modelo.zapatillas:
+                    print(zapatilla.modelo.genero)
+                    if(zapatilla.modelo.genero == gender):
+                        zapatillas.append(zapatilla.serialize())
+            data.append({
+                "marca": marca.nombre,
+                "zapatillas": zapatillas
+            })  
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
 @zapatillas_bp.route('/zapatillas/<int:zapatillas_id>', methods=['DELETE'])
 def delete_zapatilla(zapatillas_id):
     try:
