@@ -3,18 +3,15 @@ import { Card, Row, Col, Container, Button, Badge } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { FaCartArrowDown } from "react-icons/fa";
 import ProductCard from '../components/productCard';
-
-
 import { fetchProducts } from '../../services/fetchs';
-import useGlobalReducer from "../hooks/useGlobalReducer";//importar store
-
+import useGlobalReducer from "../hooks/useGlobalReducer";
 import { useAuth } from '../hooks/authContext';
-const ListProducts = () => {
 
-  const data = useParams()
-  const { user, addToCart } = useAuth()
+const ListProducts = () => {
+  const { genero } = useParams(); // Obtener el género de la URL
+  const { user, addToCart } = useAuth();
   const { store, dispatch } = useGlobalReducer();
-  console.log(store)
+  
   const onAddToCart = async (zapatilla_id, talla, cantidad) => {
     if (!talla) {
       alert("Por favor, selecciona una talla antes de añadir al carrito.");
@@ -33,29 +30,26 @@ const ListProducts = () => {
       const data = await response.json();
       console.log("Producto añadido al carrito:", data.zapatilla);
       addToCart(data.zapatilla);
-
-
     } else {
       console.error("Error al añadir al carrito", response.statusText);
     }
   }
 
   useEffect(() => {
+    fetchProducts(dispatch, genero); // Pasar el género a fetchProducts
+  }, [dispatch, genero]); // Se ejecutará cuando cambie el género
 
+  const { products } = store;
 
-
-    fetchProducts(dispatch);
-  }, [dispatch]); // Se ejecutará cada vez que cambie el género
-
-  const { products } = store
-  console.log(products)
   return (
     <Container className="my-5">
-      <h2 className="mb-4">Nuestra Colección de Sneakers</h2>
+      <h2 className="mb-4">
+        {genero === 'man' ? 'Hombre' : 
+         genero === 'mujer' ? 'Mujer' : 
+         genero === 'ninos' ? 'Niños' : 
+         'Nuestra Colección de Sneakers'}
+      </h2>
       <Row xs={1} md={2} lg={3} xl={4} className="g-4">
-
-
-
         {products?.length !== 0 ?
           products.map((brand) => (
             brand.zapatillas.map((product) => (
@@ -64,7 +58,7 @@ const ListProducts = () => {
               </Col>
             ))
           ))
-          : null}
+          : <p>No hay productos disponibles en esta categoría.</p>}
       </Row>
     </Container>
   );

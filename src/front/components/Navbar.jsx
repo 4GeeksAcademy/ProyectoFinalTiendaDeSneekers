@@ -58,12 +58,12 @@ const NavbarMenu = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/mujer" className="nav-link text-white fw-bold">
+                <Link to="genero/mujer" className="nav-link text-white fw-bold">
                   Mujer
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/ninos" className="nav-link text-white fw-bold">
+                <Link to="genero/ninos" className="nav-link text-white fw-bold">
                   Niño
                 </Link>
               </li>
