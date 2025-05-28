@@ -32,6 +32,7 @@ export default function ModalProduct({ show, onHide }) {
                 talla: tallas.split(",").map(talla => parseInt(talla.trim())),
             }),
         });
+        const data = await res.json();
         if (res.status === 201) {
             alert("Producto creado correctamente");
             const zapa = await res.json();
@@ -51,7 +52,10 @@ export default function ModalProduct({ show, onHide }) {
             onHide();
         } else if (res.status === 400) {
             setError("Error al crear el producto. Verifica los datos ingresados.");
-        } else {
+        } else if (res.status === 409) {
+            alert(await data.msg);
+        }
+        else {
             setError("Error inesperado. Inténtalo de nuevo más tarde.");
         }
     }
