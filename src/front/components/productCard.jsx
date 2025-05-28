@@ -5,13 +5,17 @@ import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { fetchProducts } from "../../services/fetchs";
+import ModalProduct from "./Modal";
 
 export default function ProductCard({ product, onAddToCart, gender }) {
     const [talla, setTalla] = useState(0);
     const [cantidad, setCantidad] = useState(1);
     const { user } = useAuth()
     const { store, dispatch } = useGlobalReducer();
-
+    const [showModal, setShowModal] = useState(false);
+    const handleModal = () => {
+        setShowModal(true);
+    }
 
     const handleDelete = async () => {
         console.log(product.id);
@@ -29,17 +33,14 @@ export default function ProductCard({ product, onAddToCart, gender }) {
             
         }
     }
-    
-    const handleEdit = async () => {
-        // Aquí puedes implementar la lógica para editar el producto
-        console.log("Editar producto", product.id);
-    }
+
     return (
         <Card className="h-100 shadow-sm">
             {user?.role === "SuperAdmin" ? 
             <Card.Header className="d-flex justify-content-between align-items-center">
-                <Button variant="secondary" onClick={() => handleEdit()}><CiEdit /></Button>
-                <Button variant="danger" onClick={() => handleDelete()}><MdDeleteOutline /></Button>
+                <Button variant="secondary" onClick={() => handleModal()}><CiEdit /></Button>
+                    <Button variant="danger" onClick={() => handleDelete()}><MdDeleteOutline /></Button>
+                    <ModalProduct product={product} show={showModal} onHide={() => setShowModal(false)} />
                 </Card.Header>
                 : null
         }
