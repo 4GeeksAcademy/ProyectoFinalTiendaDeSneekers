@@ -13,7 +13,7 @@ export default function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/users`, {
+        fetch(`${import.meta.env.VITE_BACKEND_URL}users`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
