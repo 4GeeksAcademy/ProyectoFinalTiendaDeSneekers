@@ -36,7 +36,6 @@ def add_zapatillas():
             marca = Marca(nombre=data['marca'])
             db.session.add(marca)
             db.session.commit()
-        print(marca.id)
         modelo = Modelo.query.filter_by(nombre=data['nombre']).first()
         if not modelo:
             modelo = Modelo(nombre=data['nombre'],
@@ -50,7 +49,8 @@ def add_zapatillas():
             db.session.add(modelo)
             db.session.commit()
         else:
-            return jsonify({"msg": "El modelo ya existe"}), 200
+            print("El modelo ya existe")
+            return jsonify({"msg": "El modelo ya existe"}), 409
         zapatilla = Zapatilla(tallas=data['talla'], modelo_id=modelo.id)
         db.session.add(zapatilla)
         db.session.commit()
