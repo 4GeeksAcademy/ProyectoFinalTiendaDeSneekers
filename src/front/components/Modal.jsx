@@ -32,7 +32,6 @@ export default function ModalProduct({ show, onHide }) {
                 talla: tallas.split(",").map(talla => parseInt(talla.trim())),
             }),
         });
-        const data = await res.json();
         if (res.status === 201) {
             alert("Producto creado correctamente");
             const zapa = await res.json();
@@ -40,7 +39,7 @@ export default function ModalProduct({ show, onHide }) {
                 marca: marca,
                 zapatilla: zapa
             }
-            console.log(newZapa)
+            console.log("entro")
             dispatch({ type: "addProduct", payload: newZapa });
             setDescripcion("");
             setImg("");
@@ -53,7 +52,7 @@ export default function ModalProduct({ show, onHide }) {
         } else if (res.status === 400) {
             setError("Error al crear el producto. Verifica los datos ingresados.");
         } else if (res.status === 409) {
-            alert(await data.msg);
+            alert("Ya existe un producto con el mismo nombre y marca.");
         }
         else {
             setError("Error inesperado. Inténtalo de nuevo más tarde.");
