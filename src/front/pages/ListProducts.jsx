@@ -47,7 +47,6 @@ const ListProducts = () => {
   }, [ genero || store]); // Se ejecutará cada vez que cambie el género o el store
 
   const { products } = store
-  console.log(products)
   return (
     <Container className="my-5">
       <h2 className="mb-4">Nuestra Colección de Sneakers</h2>
