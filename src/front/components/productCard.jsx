@@ -7,7 +7,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 import { fetchProducts } from "../../services/fetchs";
 import ModalProduct from "./Modal";
 
-export default function ProductCard({ product, onAddToCart, gender }) {
+export default function ProductCard({ marca,product, onAddToCart, gender }) {
     const [talla, setTalla] = useState(0);
     const [cantidad, setCantidad] = useState(1);
     const { user } = useAuth()
@@ -16,9 +16,7 @@ export default function ProductCard({ product, onAddToCart, gender }) {
     const handleModal = () => {
         setShowModal(true);
     }
-
     const handleDelete = async () => {
-        console.log(product.id);
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}zapatillas/${product.id}`, {
             method: 'DELETE',
             headers: {
@@ -27,7 +25,7 @@ export default function ProductCard({ product, onAddToCart, gender }) {
             },
         });
         if (response.ok) {
-            dispatch({ type: "delete", payload: { marca: product.marca, id: product.id } });
+            dispatch({ type: "delete", payload: { marca: marca.marca, id: product.id } });
             await fetchProducts(gender, dispatch);
             alert("Producto eliminado correctamente");
             
@@ -40,7 +38,7 @@ export default function ProductCard({ product, onAddToCart, gender }) {
             <Card.Header className="d-flex justify-content-between align-items-center">
                 <Button variant="secondary" onClick={() => handleModal()}><CiEdit /></Button>
                     <Button variant="danger" onClick={() => handleDelete()}><MdDeleteOutline /></Button>
-                    <ModalProduct product={product} show={showModal} onHide={() => setShowModal(false)} />
+                    <ModalProduct marcaProduct={marca.marca} product={product} show={showModal} onHide={() => setShowModal(false)} />
                 </Card.Header>
                 : null
         }
