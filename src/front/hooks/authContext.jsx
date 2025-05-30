@@ -45,10 +45,12 @@ export function AuthProvider({ children }) {
                     setCart(data.user.carrito.items);
                 }
                 setIsAuthenticated(true);
-
+                if(res.status === 401) {
+                    console.error("Token inválido o expirado");
+                    logout();
+                }
             } catch (err) {
                 console.error("Token inválido o expirado", err);
-                logout();
             }
         };
 
