@@ -24,6 +24,7 @@ import PreguntasFrecuentes from "./pages/PreguntasFrecuentes";
 import Login from "./pages/Login";
 import Register from "./pages/register";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Search from "./pages/Search";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,7 +47,7 @@ export const router = createBrowserRouter(
       <Route path="/privacidad" element={<PoliticaPrivacidad />} />
       <Route path="/terminos" element={<TerminosCondiciones />} />
       <Route path="/faq" element={<PreguntasFrecuentes />} />
-
+      <Route path ="/search/:modelo" element={<Search />} />
       <Route path="/genero/:genero" element={<ListProducts  />} />
 
       <Route path="/descuentos" element={<Descuentos />} />

@@ -2,6 +2,8 @@ from flask import Blueprint, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from src.api.models import db, Zapatilla, Marca, Modelo,User
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from sqlalchemy.orm import joinedload
+
 zapatillas_bp = Blueprint('zapatillas', __name__)
 @zapatillas_bp.route('/marca', methods=['POST'])
 
@@ -150,4 +152,14 @@ def delete_zapatilla(zapatillas_id):
         return jsonify({"msg": "Zapatilla eliminada"}), 200
     except Exception as e:
         db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+@zapatillas_bp.route('/modelo/<string:modelo_name>', methods=['GET'])
+def search_modelo(modelo_name):
+    try:
+        zapatillas= Zapatilla.query.filter(Zapatilla.modelo.has(Modelo.nombre.ilike(f"{modelo_name}%"))).all()
+        if not zapatillas:
+            return jsonify({"msg": "Zapatilla no encontrada"}), 404
+        
+        return jsonify( [zapatilla.serialize() for zapatilla in zapatillas ]), 200
+    except Exception as e:
         return jsonify({"error": str(e)}), 500

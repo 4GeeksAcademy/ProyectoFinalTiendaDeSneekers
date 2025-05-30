@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import { Button } from "react-bootstrap";
 const NavbarMenu = () => {
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useAuth();
+  const [modelName, setModelName] = useState("");
   const handleLogout = () => {
     logout();
     navigate("/");
@@ -14,6 +15,12 @@ const NavbarMenu = () => {
   const handleLogin = () => {
     navigate("/Login")
   }
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(`/search/${modelName}`);
+    setModelName("");
+    
+  };
   return (
     <>
       <style>{`
@@ -104,12 +111,14 @@ const NavbarMenu = () => {
               </li>
             </ul>
 
-            <form className="d-flex me-3" role="search">
+            <form className="d-flex me-3" role="search" onSubmit={(e) => handleSearch(e)}>
               <input
                 className="form-control me-2 bg-secondary text-white border-0"
                 type="search"
                 placeholder="Buscar"
                 aria-label="Search"
+                value={modelName}
+                onChange={(e) => setModelName(e.target.value)}
               />
               <button className="btn btn-outline-danger" type="submit">
                 Buscar
