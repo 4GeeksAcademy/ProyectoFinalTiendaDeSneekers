@@ -2,21 +2,23 @@ import { useState } from "react"
 import { Button, Card, Col, Container, Form, Modal, Row } from "react-bootstrap"
 import useGlobalReducer from "../hooks/useGlobalReducer"
 
-export default function ModalProduct({ show, onHide }) {
-    const [marca, setMarca] = useState("")
-    const [modelo, setModelo] = useState("")
-    const [descripcion, setDescripcion] = useState("")
-    const [img, setImg] = useState("")
-    const [precio, setPrecio] = useState(0)
-    const [tallas, setTallas] = useState("")
-    const [genero, setGenero] = useState("man")
+export default function ModalProduct({ marcaProduct, product, show, onHide }) {
+    const [marca, setMarca] = useState(marcaProduct || "")
+    const [modelo, setModelo] = useState(product?.modelo?.nombre || "")
+    const [descripcion, setDescripcion] = useState(product?.modelo?.descripcion || "")
+    const [img, setImg] = useState(product?.modelo?.img || "")
+    const [precio, setPrecio] = useState(product?.modelo?.precio || 0)
+    const [tallas, setTallas] = useState(product?.tallas?.join(",") || "")
+    const [genero, setGenero] = useState(product?.modelo?.genero || "man")
+    const [oferta, setOferta] = useState(product?.modelo?.oferta || false)
     const [error, setError] = useState(null)
     const { store, dispatch } = useGlobalReducer();
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}zapatillas`, {
-            method: "POST",
+        const url = `${import.meta.env.VITE_BACKEND_URL}${marcaProduct ? `zapatillas/${product.id}` : "zapatillas"
+            } `;
+        const res = await fetch(url, {
+            method: `${marcaProduct ? "PUT" : "POST"}`,
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -28,27 +30,29 @@ export default function ModalProduct({ show, onHide }) {
                 img,
                 precio: parseInt(precio),
                 genero,
-                oferta: false,
+                oferta,
                 talla: tallas.split(",").map(talla => parseInt(talla.trim())),
             }),
         });
+        const zapa = await res.json();
+
         if (res.status === 201) {
             alert("Producto creado correctamente");
-            const zapa = await res.json();
             const newZapa = {
                 marca: marca,
                 zapatilla: zapa
             }
-            console.log("entro")
             dispatch({ type: "addProduct", payload: newZapa });
-            setDescripcion("");
-            setImg("");
-            setMarca("");
-            setModelo("");
-            setPrecio(0);
-            setTallas("");
-            setGenero("hombre");
-            onHide();
+
+        } else if (res.status === 203) {
+            dispatch({
+                type: "updateProduct",
+                payload: {
+                    ...zapa,
+                    marca: marcaProduct
+                }
+            });
+
         } else if (res.status === 400) {
             setError("Error al crear el producto. Verifica los datos ingresados.");
         } else if (res.status === 409) {
@@ -57,6 +61,14 @@ export default function ModalProduct({ show, onHide }) {
         else {
             setError("Error inesperado. Inténtalo de nuevo más tarde.");
         }
+        setDescripcion("");
+        setImg("");
+        setMarca("");
+        setModelo("");
+        setPrecio(0);
+        setTallas("");
+        setGenero("hombre");
+        onHide();
     }
     return (
         <>
@@ -65,7 +77,7 @@ export default function ModalProduct({ show, onHide }) {
                     <Container fluid className="p-0 ">
                         <Row className="g-0">
                             <Col >
-                                
+
                                 <Card bg="dark" text="white" className="p-4 shadow-lg">
                                     <Form className="w-100" onSubmit={(e) => handleSubmit(e)}>
                                         <Form.Group className="mb-3" controlId="marca">
@@ -144,8 +156,16 @@ export default function ModalProduct({ show, onHide }) {
                                             </Form.Select>
 
                                         </Form.Group>
+                                        <Form.Group className="mb-3" conmtrolId="oferta">
+                                            <Form.Check
+                                                type="switch"
+                                                label="Poner en Oferta"
+                                                checked={oferta || false}
+                                                onChange={(e) => setOferta(e.target.checked)}
+                                            />
+                                        </Form.Group>
                                         <Button variant="primary" type="submit" className="w-100">
-                                            Guardar Cambios
+                                            {marcaProduct ? "Editar Producto" : "Crear Producto"}
                                         </Button>
                                     </Form>
                                     <Card.Img

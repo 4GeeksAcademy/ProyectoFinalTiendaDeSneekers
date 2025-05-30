@@ -50,6 +50,23 @@ export default function storeReducer(store, action = {}) {
         ...store,
         products: updatedProducts
       };
+    case "updateProduct":
+      const updateZapa  = action.payload;
+      console.log("Update Zapa:", updateZapa);
+      const updatedProductsList = store.products.map(product => {
+        if (product.marca === updateZapa.marca) {
+          return {
+            ...product,
+            zapatillas: product.zapatillas.map(z => z.id === updateZapa.id ? updateZapa : z)
+          };
+        }
+        return product;
+      });
+
+      return {
+        ...store,
+        products: updatedProductsList
+      };
     default:
       throw new Error('Unknown action.');
   }

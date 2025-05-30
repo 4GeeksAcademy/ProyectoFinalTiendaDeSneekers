@@ -61,7 +61,12 @@ def add_zapatillas():
         return jsonify({"error": str(e)}), 500
     
 @zapatillas_bp.route('/zapatillas/<int:zapatilla_id>', methods=['PUT'])
+@jwt_required()
 def update_zapatilla(zapatilla_id):
+    user_id = int(get_jwt_identity())
+    user = User.query.get(user_id)
+    if not user or user.role != 'SuperAdmin':
+        return jsonify({"msg": "No tienes permisos para actualizar zapatillas"}), 403
     data= request.get_json()
     zapatilla= Zapatilla.query.get(zapatilla_id)
     if not zapatilla:
@@ -84,7 +89,7 @@ def update_zapatilla(zapatilla_id):
     if 'genero' in data:
         modelo.genero = data['genero']
     db.session.commit()
-    return jsonify({"msg": "Zapatilla actualizada"}), 200
+    return jsonify(zapatilla.serialize() ), 203
 
 @zapatillas_bp.route('/zapatillas',methods=['GET'])
 def get_zapatillas():
