@@ -6,6 +6,7 @@ import { CiEdit } from "react-icons/ci";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { fetchProducts } from "../../services/fetchs";
 import ModalProduct from "./Modal";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductCard({ marca, product, gender }) {
     const [talla, setTalla] = useState(0);
@@ -13,8 +14,7 @@ export default function ProductCard({ marca, product, gender }) {
     const { user, cart, addToCart } = useAuth()
     const { store, dispatch } = useGlobalReducer();
     const [showModal, setShowModal] = useState(false);
-        console.log("entro al product card", product);
-
+    const navigate = useNavigate();
     const handleModal = () => {
         setShowModal(true);
     }
@@ -91,8 +91,9 @@ export default function ProductCard({ marca, product, gender }) {
 
             </Card.Body>
 
-
-            <Card.Footer className="text-end">
+            {
+                user ? 
+                      <Card.Footer className="text-end">
 
 
                 <InputGroup style={{ maxWidth: '120px' }}>
@@ -131,6 +132,12 @@ export default function ProductCard({ marca, product, gender }) {
                 )}
 
             </Card.Footer>
+                    :
+                    <Card.Footer className="text-center">
+                        <Button variant="primary" onClick={() => navigate('/login')}>Login</Button>
+                    </Card.Footer>
+            }
+          
         </Card>
     );
 }
