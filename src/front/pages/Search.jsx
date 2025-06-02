@@ -9,7 +9,7 @@ export default function Search() {
 
     useEffect(() => {
         if (modelo) {
-            const res = fetch(`${import.meta.env.VITE_BACKEND_URL}modelo/${modelo}`, {
+            const res = fetch(`${import.meta.env.VITE_BACKEND_URL}/modelo/${modelo}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
