@@ -15,7 +15,7 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
     const { store, dispatch } = useGlobalReducer();
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const url = `${import.meta.env.VITE_BACKEND_URL}${marcaProduct ? `/zapatillas/${product.id}` : "zapatillas"
+        const url = `${import.meta.env.VITE_BACKEND_URL}${marcaProduct ? `/zapatillas/${product.id}` : "/zapatillas"
             } `;
         const res = await fetch(url, {
             method: `${marcaProduct ? "PUT" : "POST"}`,
