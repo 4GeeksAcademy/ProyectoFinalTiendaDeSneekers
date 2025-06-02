@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from src.api.models import User, Carrito, CarritoZapatilla
+from api.models import User, Carrito, CarritoZapatilla
 from .zapatillas import Zapatilla
-from src.api.models import db
+from api.models import db
 
 carrito_bp=Blueprint('carrito', __name__)
 

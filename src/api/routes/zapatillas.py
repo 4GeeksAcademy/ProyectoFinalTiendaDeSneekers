@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from src.api.models import db, Zapatilla, Marca, Modelo,User
+from api.models import db, Zapatilla, Marca, Modelo,User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.orm import joinedload
 

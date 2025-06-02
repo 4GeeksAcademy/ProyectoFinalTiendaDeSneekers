@@ -5,13 +5,13 @@ import os
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
-from .api.utils import APIException, generate_sitemap
-from .api.models import db
-from .api.admin import setup_admin
-from .api.commands import setup_commands
-from .api.routes.zapatillas import zapatillas_bp
-from .api.routes.usuario import usuario_bp
-from .api.routes.carrito import carrito_bp
+from api.utils import APIException, generate_sitemap
+from api.models import db
+from api.admin import setup_admin
+from api.commands import setup_commands
+from api.routes.zapatillas import zapatillas_bp
+from api.routes.usuario import usuario_bp
+from api.routes.carrito import carrito_bp
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from datetime import timedelta
