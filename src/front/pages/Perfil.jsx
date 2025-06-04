@@ -35,7 +35,7 @@ export default function Perfil() {
             alert("Usuario no encontrado");
             return;
         } else {
-            alert("Error al guardar los cambios");
+            alert("Error al guardar los cambios" + data.msg);
             return;
         }
     }
