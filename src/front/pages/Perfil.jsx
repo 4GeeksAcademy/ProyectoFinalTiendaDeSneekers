@@ -22,8 +22,8 @@ export default function Perfil() {
                 password,
             }),
         });
+         const data = await res.json();
         if (res.status === 200) {
-            const data = await res.json();
             console.log(data);
             setUserData(data);
             alert("Cambios guardados");
