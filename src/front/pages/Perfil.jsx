@@ -1,10 +1,15 @@
 import React from "react";
 import { use } from "react";
-import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Form, Button, Image } from "react-bootstrap";
 import { useAuth } from "../hooks/authContext";
 
 export default function Perfil() {
-    const {user} = useAuth();
+    const { user } = useAuth();
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Aquí puedes agregar la lógica para actualizar el perfil del usuario
+        alert("Cambios guardados");
+    } 
     return (
         <div
             style={{
@@ -20,11 +25,11 @@ export default function Perfil() {
                 <p className="lead text-center mb-5">
                     Revisa y actualiza tu información personal.
                 </p>
-
+                
                 <Row className="justify-content-center">
                     <Col md={6}>
                         <Card bg="dark" text="white" className="p-4 shadow-lg">
-                            <Form>
+                            <Form onSubmit={(e) => handleSubmit(e)}>
                                 <Form.Group className="mb-3" controlId="formName">
                                     <Form.Label>Nombre</Form.Label>
                                     <Form.Control type="text" placeholder={user.name} />
