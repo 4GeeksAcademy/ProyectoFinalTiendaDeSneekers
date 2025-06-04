@@ -1,10 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { use } from "react";
-import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Form, Button, Image } from "react-bootstrap";
 import { useAuth } from "../hooks/authContext";
 
 export default function Perfil() {
-    const {user} = useAuth();
+    const { user, setUserData } = useAuth();
+    const [name, setName] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                password,
+            }),
+        });
+        if (res.status === 200) {
+            const data = await res.json();
+            console.log(data);
+            setUserData(data);
+            alert("Cambios guardados");
+
+        } else if (res.status === 401) {
+            alert("No autorizado");
+            return;
+        } else if (res.status === 404) {
+            alert("Usuario no encontrado");
+            return;
+        } else {
+            alert("Error al guardar los cambios");
+            return;
+        }
+    }
     return (
         <div
             style={{
@@ -24,20 +58,32 @@ export default function Perfil() {
                 <Row className="justify-content-center">
                     <Col md={6}>
                         <Card bg="dark" text="white" className="p-4 shadow-lg">
-                            <Form>
+                            <Form onSubmit={(e) => handleSubmit(e)}>
                                 <Form.Group className="mb-3" controlId="formName">
                                     <Form.Label>Nombre</Form.Label>
-                                    <Form.Control type="text" placeholder={user.name} />
+                                    <Form.Control
+                                        type="text"
+                                        placeholder={user.name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formEmail">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" placeholder={user.email} />
+                                    <Form.Control
+                                        type="email"
+                                        placeholder={user.email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formPassword">
                                     <Form.Label>Cambiar Contraseña</Form.Label>
-                                    <Form.Control type="password" placeholder="Nueva contraseña" />
+                                    <Form.Control
+                                        type="password"
+                                        placeholder="Nueva contraseña"
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
                                 </Form.Group>
 
                                 <Button variant="primary" type="submit" className="w-100">

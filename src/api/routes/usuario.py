@@ -7,6 +7,7 @@ from flask_jwt_extended import create_access_token,jwt_required,get_jwt_identity
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from .zapatillas import Zapatilla
 usuario_bp = Blueprint('usuario', __name__)
+
 @usuario_bp.route('/users', methods=['GET'])
 def get_usuarios():
     users = User.query.all()
@@ -16,13 +17,7 @@ def get_usuarios():
         return jsonify({"msg": "No hay usuarios"}), 404
     
 
-@usuario_bp.route('/users/<int:id>', methods=['GET'])
-def get_usuario(id):
-    user = User.query.get(id)
-    if user:
-        return jsonify(user.serialize()), 200
-    else:
-        return jsonify({"msg": "Usuario no encontrado"}), 404
+
     
 @usuario_bp.route('/users', methods=['POST'])
 def add_user():
@@ -35,7 +30,8 @@ def add_user():
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "El correo ya está en uso"}), 400
     passwordHas = generate_password_hash(password)
-    user = User(name=name, email=email, password=passwordHas, is_active=True,role="user")
+    img="https://xsgames.co/randomusers/avatar.php?g=male"
+    user = User(name=name, email=email, password=passwordHas, is_active=True,role="user",img=img)
     carrito = Carrito(usuario=user)
     try:
         
@@ -78,3 +74,31 @@ def athorization():
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
     return jsonify( user =user.serialize()), 200
+@usuario_bp.route('/user', methods=['PUT'])
+@jwt_required()
+def update_user():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    
+    data = request.get_json()
+    name = data.get('name')
+    email = data.get('email')
+    password = data.get('password')
+    
+    if name:
+        user.name = name
+    if email:
+        if User.query.filter_by(email=email).first() and User.query.filter_by(email=email).first().id != id:
+            return jsonify({"msg": "El correo ya está en uso"}), 400
+        user.email = email
+    if password:
+        user.password = generate_password_hash(password)
+    
+    try:
+        db.session.commit()
+        return jsonify( user.serialize()), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500

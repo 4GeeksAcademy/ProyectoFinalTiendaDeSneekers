@@ -13,6 +13,7 @@ class User(db.Model):
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     role: Mapped[str] = mapped_column(String(50), nullable=False, default="user")
+    img: Mapped[str] = mapped_column(Text, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
     
     carrito = relationship("Carrito", back_populates="usuario", uselist=False, cascade="all, delete-orphan")
@@ -23,6 +24,7 @@ class User(db.Model):
             "name": self.name,
             "email": self.email,
             "role": self.role,
+            "img": self.img,
             "carrito": self.carrito.serialize() if self.carrito else None
         }
 
