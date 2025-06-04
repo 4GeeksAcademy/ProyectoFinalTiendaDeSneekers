@@ -9,7 +9,7 @@ const TerminosCondiciones = () => {
       <Row className="align-items-center mb-5">
         <Col md={6}>
           <Image
-            src="https://images.unsplash.com/photo-1563986768609-9a8649e8d138?auto=format&fit=crop&w=800&q=80"
+            src="https://derechodelared.com/wp-content/uploads/2024/10/01200-terms-and-conditions-750x400-1.jpeg"
             alt="Contrato y términos"
             fluid
             rounded
