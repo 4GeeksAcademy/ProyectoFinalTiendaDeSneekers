@@ -76,7 +76,7 @@ export default function Login() {
                                     <Form.Label>Contraseña</Form.Label>
                                     <Form.Control
                                         type="password"
-                                        placeholder="Nueva contraseña"
+                                        placeholder="Contraseña"
                                         onChange={(e) => setPassword(e.target.value)}
                                         value={password}
                                         required

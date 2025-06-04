@@ -35,7 +35,8 @@ def add_user():
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "El correo ya está en uso"}), 400
     passwordHas = generate_password_hash(password)
-    user = User(name=name, email=email, password=passwordHas, is_active=True,role="user")
+    img="https://xsgames.co/randomusers/avatar.php?g=male"
+    user = User(name=name, email=email, password=passwordHas, is_active=True,role="user",img=img)
     carrito = Carrito(usuario=user)
     try:
         

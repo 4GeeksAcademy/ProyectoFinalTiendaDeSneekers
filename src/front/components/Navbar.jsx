@@ -3,10 +3,10 @@ import { FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
-import { Button } from "react-bootstrap";
+import { Button, Image } from "react-bootstrap";
 const NavbarMenu = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
   const [modelName, setModelName] = useState("");
   const handleLogout = () => {
     logout();
@@ -19,7 +19,7 @@ const NavbarMenu = () => {
     e.preventDefault();
     navigate(`/search/${modelName}`);
     setModelName("");
-    
+
   };
   return (
     <>
@@ -128,9 +128,18 @@ const NavbarMenu = () => {
             {
               isAuthenticated ? (
                 <div className="d-flex align-items-center gap-3">
-                  <Link to="/perfil" title="Cuenta" className="text-white">
-                    <FaUser className="fs-5" />
-                  </Link>
+                  {user.img
+                    ?
+                    <Link to="/perfil" title="Cuenta" className="text-white">
+                      <Image src={user.img} alt="User Avatar" roundedCircle width="40" height="40" className="border border-2 border-white" />
+                    </Link>
+
+                    :
+                    <Link to="/perfil" title="Cuenta" className="text-white">
+                      <FaUser className="fs-5" />
+                    </Link>
+                  }
+
                   <Link to="/favoritos" title="Favoritos" className="text-white">
                     <FaHeart className="fs-5" />
                   </Link>
