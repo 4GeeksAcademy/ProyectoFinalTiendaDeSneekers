@@ -9,7 +9,7 @@ const PoliticaPrivacidad = () => {
       <Row className="align-items-center mb-5">
         <Col md={6}>
           <Image
-            src="https://images.unsplash.com/photo-1590080877777-c60aefa98c45?auto=format&fit=crop&w=800&q=80"
+            src="https://d3t4nwcgmfrp9x.cloudfront.net/upload/crear-politica-privacidad-pagina-web.jpg"
             alt="Privacidad"
             fluid
             rounded
@@ -31,7 +31,7 @@ const PoliticaPrivacidad = () => {
       <Row className="align-items-center">
         <Col md={{ span: 6, order: 2 }} className="mt-4 mt-md-0">
           <Image
-            src="https://images.unsplash.com/photo-1580744691998-317da96c9979?auto=format&fit=crop&w=800&q=80"
+            src="https://s03.s3c.es/imag/_v0/770x420/d/4/5/seguridad-datos-ciberseguridad-dreamtime-770x420.jpg"
             alt="Seguridad de datos"
             fluid
             rounded
