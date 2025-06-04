@@ -93,17 +93,17 @@ const NavbarMenu = () => {
                     <hr className="dropdown-divider bg-light" />
                   </li>
                   <li>
-                    <Link className="dropdown-item text-white" to="/ofertas/hombre">
+                    <Link className="dropdown-item text-white" to="/ofertas/man">
                       Hombre
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item text-white" to="/ofertas/mujer">
+                    <Link className="dropdown-item text-white" to="/ofertas/women">
                       Mujer
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item text-white" to="/ofertas/nino">
+                    <Link className="dropdown-item text-white" to="/ofertas/child">
                       Niño
                     </Link>
                   </li>
