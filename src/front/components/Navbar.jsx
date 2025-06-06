@@ -105,10 +105,7 @@ const NavbarMenu = () => {
                 >
                   Ofertas
                 </button>
-                <ul
-                  className="dropdown-menu bg-dark"
-                  aria-labelledby="navbarDropdown"
-                >
+                <ul className="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
                   <li>
                     <NavLink
                       to="/ofertas"
@@ -119,9 +116,7 @@ const NavbarMenu = () => {
                       Todas las ofertas
                     </NavLink>
                   </li>
-                  <li>
-                    <hr className="dropdown-divider bg-light" />
-                  </li>
+                  <li><hr className="dropdown-divider bg-light" /></li>
                   <li>
                     <NavLink
                       to="/ofertas/hombre"
