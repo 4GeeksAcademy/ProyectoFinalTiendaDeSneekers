@@ -13,6 +13,7 @@ import Favoritos from './pages/Favoritos';
 import Perfil from './pages/Perfil';
 import MujerProducts from './pages/MujerProducts'
 import NinosProducts from './pages/NinosProducts'
+import Ofertas from './pages/Ofertas';
 
 
 // Importa los componentes informativos que creamos antes:
@@ -40,6 +41,7 @@ export const router = createBrowserRouter(
       <Route path="/perfil" element={<ProtectedRoute requiredRole={'user'}><Perfil /></ProtectedRoute> } />
       <Route path="/mujer" element={<MujerProducts />} />
       <Route path="/ninos" element={<NinosProducts />} />
+      <Route path="/ofertas" element={<Ofertas />} />
 
 
       <Route path="/sobre-nosotros" element={<SobreNosotros />} />
