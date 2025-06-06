@@ -18,7 +18,6 @@ export default function ProductCard({ marca, product, gender }) {
     const handleModal = () => {
         setShowModal(true);
     }
-    
     const onAddToCart = async (zapatilla_id, talla, cantidad) => {
         if (!talla) {
             alert("Por favor, selecciona una talla antes de añadir al carrito.");
@@ -78,16 +77,17 @@ export default function ProductCard({ marca, product, gender }) {
             <Card.Body className="d-flex flex-column">
                 <Card.Title>{product.modelo.nombre}</Card.Title>
                 <Card.Text className="text-muted">
-                    {product.modelo.oferta}
+                    {product.modelo.marca}
+                </Card.Text>
+                  <Card.Text>
+                    <span className="fs-5 fw-bold text-danger me-2">
+                        ${product.modelo.precio}
+                    </span>
                 </Card.Text>
                 <Card.Text className="flex-grow-1">
                     {product.modelo.descripcion ? product.modelo.descripcion.substring(0, 60) : <h1></h1>}...
                 </Card.Text>
-                <Card.Text>
-                    <span className="fs-5 ms-2 fw-bold text-primary">
-                        ${product.modelo.precio}
-                    </span>
-                </Card.Text>
+              
 
             </Card.Body>
 
@@ -100,13 +100,13 @@ export default function ProductCard({ marca, product, gender }) {
                     <Button variant="outline-secondary" onClick={() => setCantidad(cantidad - 1)} disabled={cantidad <= 0} >-</Button>
                     <FormControl
                         value={cantidad}
-                        onChange={(e) => setCantidad(Math.max(0, parseInt(e.target.value) || 0))}
+                        onChange={(e) => setCantidad(Math.min(10,Math.max(1, parseInt(e.target.value)) || 1))}
                         type="text"
                         inputMode="numeric"
                         pattern="[0-9]*"
                         aria-label="Cantidad"
                     />
-                    <Button variant="outline-secondary" onClick={(() => setCantidad(1 + cantidad))} >+</Button>
+                            <Button variant="outline-secondary" onClick={(() => setCantidad(1 + cantidad))} disabled={ cantidad >=10}>+</Button>
                 </InputGroup>
 
                 <DropdownButton

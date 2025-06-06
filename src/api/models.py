@@ -65,6 +65,7 @@ class Modelo(db.Model):
             "descripcion": self.descripcion,
             "img": self.img,
             "oferta": self.oferta,
+            "marca": self.marca.nombre if self.marca else None,
             "genero": self.genero,
         }
 
