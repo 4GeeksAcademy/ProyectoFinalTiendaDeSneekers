@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Row, Col, Container, Button, Badge } from 'react-bootstrap';
+import { Card, Row, Col, Container, Button, Badge, Form } from 'react-bootstrap';
 
-const onAddToCart = (producto) => {
-    console.log('Añadido al carrito:', producto);
+const onAddToCart = (producto, talla) => {
+    console.log('Añadido al carrito:', { ...producto, talla });
 };
 
-const mockDescuentos = [
+const allSizes = [36, 38, 40, 42, 44, 46];
+
+function getRandomSizes() {
+    const shuffled = [...allSizes].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 3).sort((a, b) => a - b);
+}
+
+const mockNikeModelos = [
     {
         id: 1,
         nombre: 'Nike Air Max 270',
-        marca: 'Nike',
         descripcion: 'Comodidad y estilo para todos los días.',
         precio: 89.99,
         precioOriginal: 129.99,
@@ -17,151 +23,149 @@ const mockDescuentos = [
     },
     {
         id: 2,
-        nombre: 'Adidas Ultraboost 22 Goretex',
-        marca: 'Adidas',
-        descripcion: 'Energía infinita con cada paso.',
-        precio: 99.99,
-        precioOriginal: 149.99,
-        img: 'https://www.tradeinn.com/f/13896/138961643/adidas-zapatillas-running-ultraboost-22-goretex.webp'
-    },
-    {
-        id: 3,
-        nombre: 'Puma RS-X',
-        marca: 'Puma',
-        descripcion: 'Diseño futurista con gran amortiguación.',
-        precio: 74.50,
-        precioOriginal: 110.00,
-        img: 'https://img01.ztat.net/article/spp-media-p1/44808b57bb5b4b7b83a08f4d89d5f60e/7f333c7af216419cb368ea7f2312464a.jpg?imwidth=1800&filter=packshot'
-    },
-    {
-        id: 4,
-        nombre: 'New Balance 574',
-        marca: 'New Balance',
-        descripcion: 'Icónico y clásico para uso diario.',
-        precio: 69.95,
-        precioOriginal: 99.95,
-        img: 'https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202410/01/00182869629475____14__1200x1200.jpg'
-    },
-    {
-        id: 5,
-        nombre: 'Asics Gel-Kayano 28',
-        marca: 'Asics',
-        descripcion: 'Soporte premium para corredores.',
-        precio: 94.99,
-        precioOriginal: 139.99,
-        img: 'https://cdn.sneakers123.com/release/426622/asics-asics-gel-kayano-28-french-blue-1011b189-400.jpg'
-    },
-    {
-        id: 6,
         nombre: 'Nike React Infinity Run',
-        marca: 'Nike',
         descripcion: 'Amortiguación suave y soporte flexible.',
         precio: 84.99,
         precioOriginal: 129.99,
         img: 'https://keeshoes.es/a/ale/auction_image/image1_127165.s2000/zapatillas-de-running-nike-react-infinity-run-flyknit-2-m-ct2357-009-negro-2000x2000.jpeg?_=1653317412.6614271'
     },
     {
-        id: 7,
-        nombre: 'Adidas ZX 2K Boost',
-        marca: 'Adidas',
-        descripcion: 'Estilo retro con tecnología moderna.',
-        precio: 79.99,
-        precioOriginal: 119.99,
-        img: 'https://www.footkorner.com/cdn/shop/files/footkorner-adidas-zx-2k-boost-blanc-GZ7741-100_3.png?v=1689847599'
-    },
-    {
-        id: 8,
-        nombre: 'Under Armour HOVR Phantom',
-        marca: 'Under Armour',
-        descripcion: 'Conectividad y confort en una sola zapatilla.',
-        precio: 88.00,
-        precioOriginal: 139.99,
-        img: 'https://www.shooos.es/media/catalog/product/cache/14/image/1350x778/9df78eab33525d08d6e5fb8d27136e95/3/0/3027154-1003.jpg'
-    },
-    {
-        id: 9,
-        nombre: 'Reebok Nano X1',
-        marca: 'Reebok',
-        descripcion: 'Versatilidad para entrenamiento diario.',
-        precio: 69.99,
-        precioOriginal: 110.00,
-        img: 'https://wodbox.es/16776-medium_default/reebok-nano-x1-froning.jpg'
-    },
-    {
-        id: 10,
-        nombre: 'Adidas adios pro 4 yellow',
-        marca: 'Adidas',
-        descripcion: 'Rendimiento y velocidad optimizados.',
-        precio: 170.95,
-        precioOriginal: 250.00,
-        img: 'https://www.runningxpert.com/media/catalog/product/cache/e1bfa30f5f000aa573b2ee969a7a0fde/j/r/jr6364_1_footwear_photography_side_lateral_center_view_white.jpg'
-    },
-    {
-        id: 11,
-        nombre: 'Adidas Pharrel williams 4',
-        marca: 'Adidas',
-        descripcion: 'Transiciones suaves y soporte duradero.',
-        precio: 89.00,
-        precioOriginal: 129.00,
-        img: 'https://www.shooos.es/media/catalog/product/cache/14/image/1350x778/9df78eab33525d08d6e5fb8d27136e95/a/d/adidas-originals-x-pharrell-williams-tennis-hu-b41884-4.jpg'
-    },
-    {
-        id: 12,
-        nombre: 'Crocs cuchau',
-        marca: 'Crocs',
-        descripcion: 'Ideal para senderos y terrenos difíciles.',
-        precio: 94.99,
-        precioOriginal: 144.99,
-        img: 'https://m.media-amazon.com/images/I/61bEyqdB6yL._AC_UY900_.jpg'
-    },
-    {
-        id: 13,
+        id: 3,
         nombre: 'Nike ZoomX Vaporfly',
-        marca: 'Nike',
         descripcion: 'Diseñada para competir a alta velocidad.',
         precio: 129.99,
         precioOriginal: 249.99,
         img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwkk_29fIR1beES0slXCHmno6XC0DylB9wbA&s'
     },
     {
-        id: 14,
-        nombre: 'Adidas Adizero Boston 11',
-        marca: 'Adidas',
-        descripcion: 'Diseño ligero para largas distancias.',
+        id: 4,
+        nombre: 'Nike Air Zoom Pegasus 40',
+        descripcion: 'Versátil para entrenamiento diario.',
+        precio: 99.99,
+        precioOriginal: 139.99,
+        img: 'https://www.roadrunningreview.com/Nike-Pegasus-40_1920_1_101130.jpg'
+    },
+    {
+        id: 5,
+        nombre: 'Nike Dunk',
+        descripcion: 'Estilo urbano y moderno.',
+        precio: 89.00,
+        precioOriginal: 119.00,
+        img: 'https://images.stockx.com/images/Nike-Dunk-Low-Black-White-2021-Product.jpg'
+    },
+    {
+        id: 6,
+        nombre: 'Nike Blazer Mid 77',
+        descripcion: 'Diseño clásico con toque retro.',
+        precio: 79.95,
+        precioOriginal: 109.95,
+        img: 'https://www.basketballemotion.com/imagesarticulos/186737/grandes/zapatilla-nike-blazer-mid-77-pro-club-white-black-bone-summit-white-beach-sail-0.webp'
+    },
+    {
+        id: 7,
+        nombre: 'Nike Air Force 1',
+        descripcion: 'Leyenda de las calles.',
+        precio: 94.99,
+        precioOriginal: 124.99,
+        img: 'https://www.courir.es/dw/image/v2/BCCL_PRD/on/demandware.static/-/Sites-master-catalog-courir/default/dw6496bc3a/images/hi-res/001474382_102.png?sw=450&sh=450&sm=fit'
+    },
+    {
+        id: 8,
+        nombre: 'Nike Free Run 5.0',
+        descripcion: 'Naturalidad y flexibilidad al correr.',
+        precio: 74.99,
+        precioOriginal: 104.99,
+        img: 'https://photo3.i-run.fr/nike-free-rn-5-0-m-destockage-304358-1-fz.jpg'
+    },
+    {
+        id: 9,
+        nombre: 'Nike Metcon 8',
+        descripcion: 'Zapatilla de alto rendimiento para entrenamiento.',
+        precio: 119.99,
+        precioOriginal: 149.99,
+        img: 'https://photo1.i-run.fr/nike-metcon-8-m-chaussures-homme-603702-1-fz.jpg'
+    },
+    {
+        id: 10,
+        nombre: 'Nike Air Huarache',
+        descripcion: 'Comodidad y diseño llamativo.',
         precio: 89.95,
-        precioOriginal: 149.95,
-        img: 'https://www.lepape.com/media/catalog/product/cache/473b5c523945596881637071664ad3a7/m/a/main_5037050d4b1f4937b048af1f00bcd4b9_9366_26e4.png'
+        precioOriginal: 119.95,
+        img: 'https://www.thesneakerone.com/10823-large_default/NIKE-AIR-HUARACHE-RUN-SE-852628-301.jpg'
+    },
+    {
+        id: 11,
+        nombre: 'Nike Air Max 90',
+        descripcion: 'Estilo clásico, amortiguación moderna.',
+        precio: 99.95,
+        precioOriginal: 139.95,
+        img: 'https://img01.ztat.net/article/spp-media-p1/23366a346f3949cab277e641e1e4da4d/7edafb71205c4f3392bbdf18f7733fe3.jpg?imwidth=1800&filter=packshot'
+    },
+    {
+        id: 12,
+        nombre: 'Nike Air Max Plus',
+        descripcion: 'Diseño agresivo y cómodo.',
+        precio: 119.95,
+        precioOriginal: 159.95,
+        img: 'https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/57e36f71-e64d-4a1f-87ed-a0ae1bba4341/W+AIR+MAX+PLUS.png'
+    },
+    {
+        id: 13,
+        nombre: 'Nike Renew Ride 3',
+        descripcion: 'Ligereza y confort.',
+        precio: 59.99,
+        precioOriginal: 89.99,
+        img: 'https://www.deportestrisport.com/uploads/photo/image/30876/A09900_q3CgPbkn.JPG'
+    },
+    {
+        id: 14,
+        nombre: 'Nike Air Max 97',
+        descripcion: 'Inspiradas en trenes bala japoneses.',
+        precio: 139.99,
+        precioOriginal: 189.99,
+        img: 'https://photos6.spartoo.es/photos/193/19342162/19342162_1200_A.jpg'
     },
     {
         id: 15,
-        nombre: 'Vans Old school pro',
-        marca: 'Vans',
-        descripcion: 'Gran amortiguación para distancias largas.',
+        nombre: 'Nike Wildhorse 7',
+        descripcion: 'Ideal para trail running.',
         precio: 99.95,
         precioOriginal: 139.95,
-        img: 'https://www.bdskateco.com/profesionales/7618-medium_default/vans-zapatillas-old-skool-pro-black-gum-.jpg'
+        img: 'https://www.running-point.es/dw/image/v2/BBDP_PRD/on/demandware.static/-/Sites-master-catalog/default/dw1e9919a4/images/004/160/16755000_0_1.jpg?q=80&sw=2000'
     },
     {
         id: 16,
-        nombre: 'Converse Magic jhonson',
-        marca: 'Converse',
-        descripcion: 'Pisada suave con cada zancada.',
-        precio: 89.00,
-        precioOriginal: 129.00,
-        img: 'https://preview.redd.it/k8mlql5g9qs41.jpg?width=640&crop=smart&auto=webp&s=6f5964913cf7091f05d21051a3468cc8aea6988f'
+        nombre: 'Nike Revolution 6',
+        descripcion: 'Perfectas para entrenamientos diarios.',
+        precio: 54.95,
+        precioOriginal: 74.95,
+        img: 'https://img.eobuwie.cloud/eob_product_512w_512h(f/4/7/f/f47f549e0a69430b5376b68ab221e235d074fd67_22_0195242835265_rz.jpg,jpg)/zapatos-nike-revolution-6-nn-dc3728-003-black-white-iron-grey.jpg'
     }
 ];
 
 function Descuentos() {
     const [modelos, setModelos] = useState([]);
+    const [tallasSeleccionadas, setTallasSeleccionadas] = useState({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const modelosConTallas = mockNikeModelos.map(m => ({
+            ...m,
+            marca: 'Nike',
+            tallasDisponibles: getRandomSizes()
+        }));
         setTimeout(() => {
-            setModelos(mockDescuentos);
+            setModelos(modelosConTallas);
             setLoading(false);
         }, 1000);
     }, []);
+
+    const handleTallaChange = (productoId, talla) => {
+        setTallasSeleccionadas(prev => ({
+            ...prev,
+            [productoId]: talla
+        }));
+    };
 
     if (loading) return <Container className="py-5"><h4>Cargando productos con descuento...</h4></Container>;
     if (modelos.length === 0) return <Container className="py-5"><h4>No hay productos con descuento.</h4></Container>;
@@ -169,7 +173,7 @@ function Descuentos() {
     return (
         <div className="bg-light py-5">
             <Container>
-                <h2 className="mb-4 text-danger text-center">Zapatillas en Oferta</h2>
+                <h2 className="mb-4 text-danger text-center">Zapatillas Nike en Oferta</h2>
                 <Row xs={1} md={2} lg={3} xl={4} className="g-4">
                     {modelos.map(modelo => (
                         <Col key={modelo.id}>
@@ -189,19 +193,32 @@ function Descuentos() {
                                     <Card.Text className="text-muted">{modelo.marca}</Card.Text>
                                     <Card.Text>
                                         <span className="fs-5 fw-bold text-danger me-2">
-                                            ${modelo.precio.toFixed(2)}
+                                            €{modelo.precio.toFixed(2)}
                                         </span>
                                         <span className="text-muted text-decoration-line-through">
-                                            ${modelo.precioOriginal.toFixed(2)}
+                                            €{modelo.precioOriginal.toFixed(2)}
                                         </span>
                                     </Card.Text>
-                                    <Card.Text className="flex-grow-1">
-                                        {modelo.descripcion?.substring(0, 60)}...
-                                    </Card.Text>
+                                    <Card.Text>{modelo.descripcion?.substring(0, 60)}...</Card.Text>
+
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Talla:</Form.Label>
+                                        <Form.Select
+                                            value={tallasSeleccionadas[modelo.id] || ''}
+                                            onChange={e => handleTallaChange(modelo.id, e.target.value)}
+                                        >
+                                            <option value="">Selecciona una talla</option>
+                                            {modelo.tallasDisponibles.map(t => (
+                                                <option key={t} value={t}>{t}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+
                                     <Button
                                         variant="danger"
-                                        onClick={() => onAddToCart(modelo)}
                                         className="mt-auto"
+                                        disabled={!tallasSeleccionadas[modelo.id]}
+                                        onClick={() => onAddToCart(modelo, tallasSeleccionadas[modelo.id])}
                                     >
                                         Añadir al carrito
                                     </Button>
