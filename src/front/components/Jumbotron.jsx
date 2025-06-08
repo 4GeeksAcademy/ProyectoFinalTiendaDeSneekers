@@ -42,7 +42,7 @@ const Jumbotron = () => {
                             style={{ width: "60px", height: "auto" }}
                         />
                         <Link to="/descuentos" style={{ textDecoration: "none", color: "black" }}>
-                            <h6 className="m-0">¡Envío gratis en compras mayores a $50!</h6>
+                            <h6 className="m-0">¡Envío gratis en compras mayores a €50!</h6>
                         </Link>
                     </div>
                 </div>
