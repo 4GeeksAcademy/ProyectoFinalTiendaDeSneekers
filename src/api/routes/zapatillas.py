@@ -129,7 +129,7 @@ def data_for_genere(gender):
             zapatillas =[]
             for modelo in marca.modelos:
                 for zapatilla in modelo.zapatillas:
-                    if zapatilla.model.genero == "honbre":
+                    if zapatilla.modelo.genero == "honbre":
                         zapatilla.modelo.genero = "man"
                     if(zapatilla.modelo.genero == gender):
                         zapatillas.append(zapatilla.serialize())
