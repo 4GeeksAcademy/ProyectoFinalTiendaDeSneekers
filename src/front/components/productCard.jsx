@@ -79,7 +79,7 @@ export default function ProductCard({ marca, product, gender }) {
                 <Card.Text className="text-muted">
                     {product.modelo.marca}
                 </Card.Text>
-                  <Card.Text>
+                <Card.Text>
                     <span className="fs-5 fw-bold text-danger me-2">
                         ${product.modelo.precio}
                     </span>
@@ -87,57 +87,57 @@ export default function ProductCard({ marca, product, gender }) {
                 <Card.Text className="flex-grow-1">
                     {product.modelo.descripcion ? product.modelo.descripcion.substring(0, 60) : <h1></h1>}...
                 </Card.Text>
-              
+
 
             </Card.Body>
 
             {
-                user ? 
-                      <Card.Footer className="text-end">
+                user ?
+                    <Card.Footer className="d-flex flex-column align-items-center">
 
 
-                <InputGroup style={{ maxWidth: '120px' }}>
-                    <Button variant="outline-secondary" onClick={() => setCantidad(cantidad - 1)} disabled={cantidad <= 0} >-</Button>
-                    <FormControl
-                        value={cantidad}
-                        onChange={(e) => setCantidad(Math.min(10,Math.max(1, parseInt(e.target.value)) || 1))}
-                        type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        aria-label="Cantidad"
-                    />
-                            <Button variant="outline-secondary" onClick={(() => setCantidad(1 + cantidad))} disabled={ cantidad >=10}>+</Button>
-                </InputGroup>
+                        <InputGroup style={{ maxWidth: '120px' }}>
+                            <Button variant="outline-secondary" onClick={() => setCantidad(cantidad - 1)} disabled={cantidad <= 0} >-</Button>
+                            <FormControl
+                                value={cantidad}
+                                onChange={(e) => setCantidad(Math.min(10, Math.max(1, parseInt(e.target.value)) || 1))}
+                                type="text"
+                                inputMode="numeric"
+                                pattern="[0-9]*"
+                                aria-label="Cantidad"
+                            />
+                            <Button variant="outline-secondary" onClick={(() => setCantidad(1 + cantidad))} disabled={cantidad >= 10}>+</Button>
+                        </InputGroup>
 
-                <DropdownButton
-                    id="dropdown-basic-button"
-                    title={talla ? `Talla: ${talla}` : "Selecciona una talla"}
-                    onSelect={(selectTalla) => setTalla(parseInt(selectTalla))}
-                    variant="secondary"
-                >
-                    {product.tallas.map((talla) => (
-                        <Dropdown.Item key={talla} eventKey={talla}>
-                            {talla}
-                        </Dropdown.Item>
-                    ))}
-                </DropdownButton>
-                {cart.some(item => item.zapatilla.modelo.nombre === product.modelo.nombre) ? (
-                    <Button variant="success" className="w-100 mt-2" disabled>
-                        Añadido al carrito
-                    </Button>
-                ) : (
-                    <Button variant="primary" className="w-100 mt-2" onClick={() => onAddToCart(product.id, talla, cantidad)}>
-                        Añadir al carrito
-                    </Button>
-                )}
+                        <DropdownButton
+                            id="dropdown-basic-button"
+                            title={talla ? `Talla: ${talla}` : "Selecciona una talla"}
+                            onSelect={(selectTalla) => setTalla(parseInt(selectTalla))}
+                            variant="secondary"
+                        >
+                            {product.tallas.map((talla) => (
+                                <Dropdown.Item key={talla} eventKey={talla}>
+                                    {talla}
+                                </Dropdown.Item>
+                            ))}
+                        </DropdownButton>
+                        {cart.some(item => item.zapatilla.modelo.nombre === product.modelo.nombre) ? (
+                            <Button variant="success" className="w-100 mt-2" disabled>
+                                Añadido al carrito
+                            </Button>
+                        ) : (
+                            <Button variant="primary" className="w-100 mt-2" onClick={() => onAddToCart(product.id, talla, cantidad)}>
+                                Añadir al carrito
+                            </Button>
+                        )}
 
-            </Card.Footer>
+                    </Card.Footer>
                     :
                     <Card.Footer className="text-center">
                         <Button variant="primary" onClick={() => navigate('/login')}>Login</Button>
                     </Card.Footer>
             }
-          
+
         </Card>
     );
 }
