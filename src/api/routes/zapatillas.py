@@ -89,6 +89,8 @@ def update_zapatilla(zapatilla_id):
     if 'talla' in data:
         zapatilla.tallas = data['talla']
     if 'genero' in data:
+        if data['genero'] == 'hombre':
+            data['genero'] = 'man'
         modelo.genero = data['genero']
     db.session.commit()
     return jsonify(zapatilla.serialize() ), 203
@@ -116,6 +118,7 @@ def get_zapatillas():
     
 @zapatillas_bp.route('/zapatillas/gender/<string:gender>', methods=['GET'])
 def data_for_genere(gender):
+    
     try:
         marcas = Marca.query.all()
         if not marcas:
@@ -126,6 +129,8 @@ def data_for_genere(gender):
             zapatillas =[]
             for modelo in marca.modelos:
                 for zapatilla in modelo.zapatillas:
+                    if zapatilla.model.genero == "honbre":
+                        zapatilla.modelo.genero = "man"
                     if(zapatilla.modelo.genero == gender):
                         zapatillas.append(zapatilla.serialize())
             data.append({
