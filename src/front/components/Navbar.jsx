@@ -188,9 +188,7 @@ const NavbarMenu = () => {
                   </NavLink>
                 )}
 
-                <NavLink to="/favoritos" title="Favoritos" className="text-white">
-                  <FaHeart className="fs-5" />
-                </NavLink>
+              
                 <NavLink to="/carrito" title="Carrito" className="text-white">
                   <FaShoppingBag className="fs-5" />
                 </NavLink>
