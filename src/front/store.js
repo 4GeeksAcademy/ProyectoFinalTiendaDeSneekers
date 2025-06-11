@@ -8,7 +8,6 @@ export const initialStore = () => {
 export default function storeReducer(store, action = {}) {
   switch (action.type) {
     case "getProduct":
-      console.log(store.products)
       return {
         ...store,
         products: action.payload
@@ -52,7 +51,6 @@ export default function storeReducer(store, action = {}) {
       };
     case "updateProduct":
       const updateZapa  = action.payload;
-      console.log("Update Zapa:", updateZapa);
       const updatedProductsList = store.products.map(product => {
         if (product.marca === updateZapa.marca) {
           return {

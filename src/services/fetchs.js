@@ -14,7 +14,6 @@ export const fetchProducts = async (genero,dispatch) => {
       type: "getProduct",
       payload: data,
     });
-    console.log(data);
   } catch (err) {
     console.log(err.message);
   }

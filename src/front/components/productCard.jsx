@@ -85,7 +85,7 @@ export default function ProductCard({ marca, product, gender }) {
                     </span>
                 </Card.Text>
                 <Card.Text className="flex-grow-1">
-                    {product.modelo.descripcion ? product.modelo.descripcion.substring(0, 60) : <h1></h1>}...
+                    {product.modelo.descripcion ? product.modelo.descripcion.substring(0, 60) : null}
                 </Card.Text>
 
 

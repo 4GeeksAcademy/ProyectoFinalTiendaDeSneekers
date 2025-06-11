@@ -16,7 +16,6 @@ const brands = [
 const sneakerImages = [
   'https://media.istockphoto.com/id/175537625/es/foto/zapatillas-con-trazado-de-recorte.jpg?s=612x612&w=0&k=20&c=cglEyR9ySoQHLEVIcxz_azVGHh4KR9SkOr27Dfgf-FA=',
   'https://media.blackandwhite-ff.com/10000/2f63aa62-0a2d-4252-ba83-b704c903d13a_aj1colourways-0013-aj1banned.jpg',
-  'https://assets.adidas.com/images/w_600,f_auto,q_auto/b7beee7c32d4438aaba3acb6001c2e7b_9366/Zapatilla_Forum_Low_Blanco_FY7757_01_standard.jpgs',
   'https://www.dooerssneakers.com/images/puma-zapatillas-hombre-puma-club-ii-era-yea-puntera-1000994913-1200x1200-d',
   'https://www.lavanguardia.com/files/og_thumbnail/uploads/2020/09/16/5fad439020e84.jpeg',
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbWCzhHcGlya0AfocE0eLFUJJXjGT4xtrv7w&s',
