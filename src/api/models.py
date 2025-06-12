@@ -75,13 +75,14 @@ class Zapatilla(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     modelo_id: Mapped[int] = mapped_column(ForeignKey("modelo.id"), nullable=False)
     tallas: Mapped[list[int]] = mapped_column(ARRAY(Integer), nullable=False)
-
+    stock: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     modelo = relationship("Modelo", back_populates="zapatillas")
     def serialize(self):
         return {
             "id": self.id,
             "modelo": self.modelo.serialize(),
             "tallas": self.tallas,
+            "stock": self.stock
         }
 
 class CarritoZapatilla(db.Model):

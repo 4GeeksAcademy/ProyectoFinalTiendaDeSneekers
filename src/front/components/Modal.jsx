@@ -11,8 +11,12 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
     const [tallas, setTallas] = useState(product?.tallas?.join(",") || "")
     const [genero, setGenero] = useState(product?.modelo?.genero || "man")
     const [oferta, setOferta] = useState(product?.modelo?.oferta || false)
+    const [stock, setStock] = useState(product?.modelo?.stock || 0)
     const [error, setError] = useState(null)
     const { store, dispatch } = useGlobalReducer();
+    const brands = ["Nike", "Adidas", "Puma", "Reebok", "New Balance", "Asics", "Converse", "Vans", "Crocs"];
+
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         const url = `${import.meta.env.VITE_BACKEND_URL}${marcaProduct ? `/zapatillas/${product.id}` : "/zapatillas"
@@ -29,6 +33,7 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
                 descripcion,
                 img,
                 precio: parseInt(precio),
+                stock: parseInt(stock),
                 genero,
                 oferta,
                 talla: tallas.split(",").map(talla => parseInt(talla.trim())),
@@ -59,7 +64,7 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
             alert("Ya existe un producto con el mismo nombre y marca.");
         }
         else {
-            setError("Error inesperado. Inténtalo de nuevo más tarde.");
+            alert("Error al crear el producto: " + zapa.msg);
         }
         setDescripcion("");
         setImg("");
@@ -82,13 +87,21 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
                                     <Form className="w-100" onSubmit={(e) => handleSubmit(e)}>
                                         <Form.Group className="mb-3" controlId="marca">
                                             <Form.Label>Marca</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder=""
-                                                onChange={(e) => setMarca(e.target.value)}
-                                                value={marca}
-                                                required
-                                            />
+                                            <div className="d-flex">
+                                                {brands.map((brand) => (
+                                                    <Form.Check
+                                                        key={brand}
+                                                        type="radio"
+                                                        label={brand}
+                                                        name="marca"
+                                                        value= {brand}
+                                                        checked={marca === brand}
+                                                        onChange={(e) => setMarca(e.target.value)}
+                                                    />
+                                                ))}
+
+
+                                            </div>
                                         </Form.Group>
 
                                         <Form.Group className="mb-3" controlId="modelo">
@@ -129,6 +142,16 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
                                                 required
                                             />
                                         </Form.Group>
+                                        <Form.Group className="mb-3" controlId="stock">
+                                            <Form.Label>Stock</Form.Label>
+                                            <Form.Control
+                                                type="number"
+                                                placeholder="0"
+                                                onChange={(e) => setStock(e.target.value)}
+                                                value={stock}
+                                                required
+                                            />
+                                        </Form.Group>
                                         <Form.Group className="mb-3" controlId="tallas">
                                             <Form.Label>Tallas</Form.Label>
                                             <Form.Control
@@ -137,7 +160,7 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
                                                 onChange={(e) => {
                                                     const value = e.target.value;
                                                     if (/^[0-9,]*$/.test(value)) {
-                                                        setTallas(value); // o setTallas(value), según tu lógica
+                                                        setTallas(value);
                                                     }
                                                 }}
                                                 value={tallas}
