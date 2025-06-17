@@ -10,6 +10,7 @@ services:
       startCommand: "gunicorn wsgi --chdir ./src/"
       plan: free # optional; defaults to starter
       numInstances: 1
+      publish: dist
       envVars:
           - key: VITE_BASENAME # Imported from Heroku app
             value: /
