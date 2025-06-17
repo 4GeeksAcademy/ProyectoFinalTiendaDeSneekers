@@ -121,7 +121,7 @@ export default function ProductCard({ marca, product, gender }) {
                                 </Dropdown.Item>
                             ))}
                         </DropdownButton>
-                        {cart.some(item => item.zapatilla.modelo.nombre === product.modelo.nombre) ? (
+                        {cart.some(item => item.zapatilla.modelo.nombre === product.modelo.nombre && item.talla === talla) ? (
                             <Button variant="success" className="w-100 mt-2" disabled>
                                 Añadido al carrito
                             </Button>
