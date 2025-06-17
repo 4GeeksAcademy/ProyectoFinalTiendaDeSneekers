@@ -29,7 +29,7 @@ def add_zapatillas():
     if not data:
         print("No se ha enviado ningun dato")
         return jsonify({"msg": "No se ha enviado ningun dato"}), 400
-    if 'marca' not in data or 'nombre' not in data or 'talla' not in data or 'precio' not in data or 'oferta' not in data or 'genero' not in data:
+    if 'marca' not in data or 'nombre' not in data or 'talla' not in data or 'precio' not in data or 'oferta' not in data or 'genero' not in data or 'stock' not in data:
         print("Faltan datos obligatorios")
         return jsonify({"error": "Faltan datos obligatorios"}), 400
     try:
@@ -53,7 +53,7 @@ def add_zapatillas():
         else:
             print("El modelo ya existe")
             return jsonify({"msg": "El modelo ya existe"}), 409
-        zapatilla = Zapatilla(tallas=data['talla'], modelo_id=modelo.id)
+        zapatilla = Zapatilla(tallas=data['talla'],stock=data['stock'], modelo_id=modelo.id)
         db.session.add(zapatilla)
         db.session.commit()
         return jsonify(zapatilla.serialize()), 201
@@ -114,7 +114,8 @@ def get_zapatillas():
             })  
         return jsonify(data), 200
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print(f"Error al obtener zapatillas: {e}")
+        return jsonify({"msg": str(e)}), 500
     
 @zapatillas_bp.route('/zapatillas/gender/<string:gender>', methods=['GET'])
 def data_for_genere(gender):

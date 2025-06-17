@@ -100,13 +100,13 @@ export default function ProductCard({ marca, product, gender }) {
                             <Button variant="outline-secondary" onClick={() => setCantidad(cantidad - 1)} disabled={cantidad <= 0} >-</Button>
                             <FormControl
                                 value={cantidad}
-                                onChange={(e) => setCantidad(Math.min(10, Math.max(1, parseInt(e.target.value)) || 1))}
+                                onChange={(e) => setCantidad(Math.min(product.stock, Math.max(1, parseInt(e.target.value)) || 1))}
                                 type="text"
                                 inputMode="numeric"
                                 pattern="[0-9]*"
                                 aria-label="Cantidad"
                             />
-                            <Button variant="outline-secondary" onClick={(() => setCantidad(1 + cantidad))} disabled={cantidad >= 10}>+</Button>
+                            <Button variant="outline-secondary" onClick={(() => setCantidad(1 + cantidad))} disabled={cantidad >= product.stock}>+</Button>
                         </InputGroup>
 
                         <DropdownButton
