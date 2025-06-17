@@ -7,7 +7,6 @@ import { FaRegEdit } from "react-icons/fa";
 export default function Carrito() {
   const {  cart, removeFromCart } = useAuth();
   const [total , setTotal] = useState(0)
-  console.log(cart);
   const handleDelete = ( itemId) => {
     
       const res = fetch(`${import.meta.env.VITE_BACKEND_URL}/cart/${itemId}`, {
