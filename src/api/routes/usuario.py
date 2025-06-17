@@ -48,7 +48,6 @@ def login():
    
     try:
         data = request.get_json()
-        print(data.get('email'))
         email = data.get('email')
         password = data.get('password')
         if not email or not password:
@@ -58,7 +57,6 @@ def login():
             return jsonify({"msg": "Usuario no encontrado"}), 404
         if  check_password_hash(user.password, password):
             access_token = create_access_token(identity=str(user.id))
-            print(access_token)
             return jsonify(token=access_token, user=user.serialize()), 200
         else:
             return jsonify({"msg": "wrong credentials"}), 401
@@ -68,7 +66,6 @@ def login():
 @jwt_required()
 def athorization():
     user_id = get_jwt_identity()
-    print(user_id)
     user = User.query.get(int(user_id))
     print(user.name)
     if not user:

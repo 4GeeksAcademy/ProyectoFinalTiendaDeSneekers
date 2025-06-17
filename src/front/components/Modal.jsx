@@ -8,7 +8,8 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
     const [descripcion, setDescripcion] = useState(product?.modelo?.descripcion || "")
     const [img, setImg] = useState(product?.modelo?.img || "")
     const [precio, setPrecio] = useState(product?.modelo?.precio || 0)
-    const [tallas, setTallas] = useState(product?.tallas?.join(",") || "")
+    const [talla, setTalla] = useState([])
+    const [tallaInput, setTallaInput] = useState([1,2])
     const [genero, setGenero] = useState(product?.modelo?.genero || "man")
     const [oferta, setOferta] = useState(product?.modelo?.oferta || false)
     const [stock, setStock] = useState(product?.modelo?.stock || 0)
@@ -16,7 +17,7 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
     const { store, dispatch } = useGlobalReducer();
     const brands = ["Nike", "Adidas", "Puma", "Reebok", "New Balance", "Asics", "Converse", "Vans", "Crocs"];
 
-    
+    console.log(talla)
     const handleSubmit = async (e) => {
         e.preventDefault();
         const url = `${import.meta.env.VITE_BACKEND_URL}${marcaProduct ? `/zapatillas/${product.id}` : "/zapatillas"
@@ -36,7 +37,6 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
                 stock: parseInt(stock),
                 genero,
                 oferta,
-                talla: tallas.split(",").map(talla => parseInt(talla.trim())),
             }),
         });
         const zapa = await res.json();
@@ -71,7 +71,7 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
         setMarca("");
         setModelo("");
         setPrecio(0);
-        setTallas("");
+        setTalla("");
         setGenero("hombre");
         onHide();
     }
@@ -94,7 +94,7 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
                                                         type="radio"
                                                         label={brand}
                                                         name="marca"
-                                                        value= {brand}
+                                                        value={brand}
                                                         checked={marca === brand}
                                                         onChange={(e) => setMarca(e.target.value)}
                                                     />
@@ -153,20 +153,28 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
                                             />
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="tallas">
-                                            <Form.Label>Tallas</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="36,37,38,39,40,41,42,43,44,45"
-                                                onChange={(e) => {
-                                                    const value = e.target.value;
-                                                    if (/^[0-9,]*$/.test(value)) {
-                                                        setTallas(value);
-                                                    }
-                                                }}
-                                                value={tallas}
-                                                required
-                                            />
+                                            {tallaInput.map((talla, index) => (
+                                                <div key={index} className="d-flex mb-2">
+                                                    <Form.Label>Talla</Form.Label>
+
+                                                    <Form.Control
+                                                        className="w-25"
+                                                        type="number"
+                                                        placeholder="36,37,38,39,40,41,42,43,44,45"
+                                                        onChange={(e) => setTalla(e.target.value)}
+                                                        value={talla}
+                                                        required
+                                                    >
+                                                    </Form.Control>
+                                                    <Button
+                                                        className="w-25"
+                                                    >
+                                                        ADD
+                                                    </Button>
+                                                </div>
+                                            ))}
                                         </Form.Group>
+
                                         <Form.Group className="mb-3" controlId="Genero">
                                             <Form.Label>Genero</Form.Label>
                                             <Form.Select
