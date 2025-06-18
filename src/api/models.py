@@ -74,14 +74,29 @@ class Zapatilla(db.Model):
     __tablename__ = "zapatilla"
     id: Mapped[int] = mapped_column(primary_key=True)
     modelo_id: Mapped[int] = mapped_column(ForeignKey("modelo.id"), nullable=False)
-    tallas: Mapped[list[int]] = mapped_column(ARRAY(Integer), nullable=False)
-    stock: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     modelo = relationship("Modelo", back_populates="zapatillas")
+    tallas_stock = relationship("TallaStock", back_populates="zapatilla", cascade="all, delete-orphan")
+
     def serialize(self):
         return {
             "id": self.id,
             "modelo": self.modelo.serialize(),
-            "tallas": self.tallas,
+            "tallas": [talla_stock.serialize() for talla_stock in self.tallas_stock],
+        }
+
+
+class TallaStock(db.Model):
+    __tablename__ = "talla_stock"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    zapatilla_id: Mapped[int] = mapped_column(ForeignKey("zapatilla.id"), nullable=False)
+    talla: Mapped[int] = mapped_column(Integer, nullable=False)
+    stock: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+
+    zapatilla = relationship("Zapatilla", back_populates="tallas_stock")
+
+    def serialize(self):
+        return {
+            "talla": self.talla,
             "stock": self.stock
         }
 

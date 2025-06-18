@@ -8,7 +8,10 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
     const [descripcion, setDescripcion] = useState(product?.modelo?.descripcion || "")
     const [img, setImg] = useState(product?.modelo?.img || "")
     const [precio, setPrecio] = useState(product?.modelo?.precio || 0)
-    const [tallas, setTallas] = useState(product?.tallas?.join(",") || "")
+    const [tallas, setTallas] = useState([])
+    const [tempTalla, setTempTalla] = useState(""); // Para la talla temporal
+    const [tempStock, setTempStock] = useState("");
+    const [tallaInput, setTallaInput] = useState([1])
     const [genero, setGenero] = useState(product?.modelo?.genero || "man")
     const [oferta, setOferta] = useState(product?.modelo?.oferta || false)
     const [stock, setStock] = useState(product?.modelo?.stock || 0)
@@ -16,7 +19,17 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
     const { store, dispatch } = useGlobalReducer();
     const brands = ["Nike", "Adidas", "Puma", "Reebok", "New Balance", "Asics", "Converse", "Vans", "Crocs"];
 
-    
+
+    const handleAddTalla = () => {
+        if (!tallas) {
+            setTallas({ talla: parseInt(tempTalla), stock: parseInt(tempStock) });
+        } else if (tempTalla && tempStock) {
+            setTallas([...tallas, { talla: parseInt(tempTalla), stock: parseInt(tempStock) }]);
+            setTempTalla("");
+            setTempStock("");
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const url = `${import.meta.env.VITE_BACKEND_URL}${marcaProduct ? `/zapatillas/${product.id}` : "/zapatillas"
@@ -34,9 +47,9 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
                 img,
                 precio: parseInt(precio),
                 stock: parseInt(stock),
+                tallas: tallas,
                 genero,
                 oferta,
-                talla: tallas.split(",").map(talla => parseInt(talla.trim())),
             }),
         });
         const zapa = await res.json();
@@ -71,7 +84,7 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
         setMarca("");
         setModelo("");
         setPrecio(0);
-        setTallas("");
+        setTallas([]);
         setGenero("hombre");
         onHide();
     }
@@ -94,7 +107,7 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
                                                         type="radio"
                                                         label={brand}
                                                         name="marca"
-                                                        value= {brand}
+                                                        value={brand}
                                                         checked={marca === brand}
                                                         onChange={(e) => setMarca(e.target.value)}
                                                     />
@@ -142,31 +155,71 @@ export default function ModalProduct({ marcaProduct, product, show, onHide }) {
                                                 required
                                             />
                                         </Form.Group>
-                                        <Form.Group className="mb-3" controlId="stock">
-                                            <Form.Label>Stock</Form.Label>
-                                            <Form.Control
-                                                type="number"
-                                                placeholder="0"
-                                                onChange={(e) => setStock(e.target.value)}
-                                                value={stock}
-                                                required
-                                            />
-                                        </Form.Group>
+
                                         <Form.Group className="mb-3" controlId="tallas">
-                                            <Form.Label>Tallas</Form.Label>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="36,37,38,39,40,41,42,43,44,45"
-                                                onChange={(e) => {
-                                                    const value = e.target.value;
-                                                    if (/^[0-9,]*$/.test(value)) {
-                                                        setTallas(value);
-                                                    }
-                                                }}
-                                                value={tallas}
-                                                required
-                                            />
+                                            <Container
+
+                                                className="d-flex mb-2"
+                                                fluid
+                                            >
+                                                <Form.Label>Talla</Form.Label>
+
+                                                <Form.Control
+                                                    className="w-25 mx-2"
+                                                    type="number"
+                                                    onChange={(e) => setTempTalla(e.target.value)}
+                                                    required
+                                                >
+                                                </Form.Control>
+                                                <Form.Label>Stock</Form.Label>
+                                                <Form.Control
+                                                    className="w-25 mx-2"
+                                                    type="number"
+                                                    onChange={(e) => setTempStock(e.target.value)}
+                                                    required
+                                                >
+                                                </Form.Control>
+                                                {tallas.length === 0 && (
+                                                    <Button
+                                                        onClick={() => handleAddTalla()}>ADD</Button>
+                                                )}
+
+                                            </Container>
+
+                                            {tallas.map((talla, index) => (
+                                                <Container
+                                                    key={index}
+                                                    className="d-flex mb-2"
+                                                    fluid
+                                                >
+                                                    <Form.Label>Talla</Form.Label>
+
+                                                    <Form.Control
+                                                        className="w-25 mx-2"
+                                                        type="number"
+                                                        onChange={(e) => setTempTalla(e.target.value)}
+                                                        
+                                                    >
+                                                    </Form.Control>
+                                                    <Form.Label>Stock</Form.Label>
+                                                    <Form.Control
+                                                        className="w-25 mx-2"
+                                                        type="number"
+                                                        onChange={(e) => setTempStock(e.target.value)}
+                                                        
+                                                    >
+                                                    </Form.Control>
+                                                    {index === tallas.length - 1 && (
+                                                        <Button
+                                                            onClick={() => handleAddTalla()}
+                                                        >ADD</Button>
+                                                    )}
+
+                                                </Container>
+                                            ))}
+
                                         </Form.Group>
+
                                         <Form.Group className="mb-3" controlId="Genero">
                                             <Form.Label>Genero</Form.Label>
                                             <Form.Select
