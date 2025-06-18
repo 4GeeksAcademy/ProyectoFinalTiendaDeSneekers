@@ -162,12 +162,18 @@ def delete_zapatilla(zapatillas_id):
             return jsonify({"msg": "Zapatilla no encontrada"}), 404
         modelo = Modelo.query.filter_by(id=zapatilla.modelo.id).first()
         if not modelo:
-            return jsonify({"msg": "Modelo no encontrado"}), 404    
-        db.session.delete(modelo)
+            return jsonify({"msg": "Modelo no encontrado"}), 404
+        talla = TallaStock.query.filter_by(zapatilla_id=zapatillas_id).all()
+        if not talla:
+            return jsonify({"msg": "No hay tallas asociadas a esta zapatilla"}), 404
+        for talla_stock in talla:
+            db.session.delete(talla_stock)   
         db.session.delete(zapatilla)
+        db.session.delete(modelo)
         db.session.commit()
         return jsonify({"msg": "Zapatilla eliminada"}), 200
     except Exception as e:
+        print(f"Error al buscar modelo: {e}")
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 @zapatillas_bp.route('/modelo/<string:modelo_name>', methods=['GET'])

@@ -14,10 +14,14 @@ export default function ProductCard({ marca, product, gender }) {
     const { user, cart, addToCart } = useAuth()
     const { store, dispatch } = useGlobalReducer();
     const [showModal, setShowModal] = useState(false);
+
+    const stockDisponible = product.tallas.find(t => t.talla === talla)?.stock || 0;
+
     const navigate = useNavigate();
     const handleModal = () => {
         setShowModal(true);
     }
+    console.log(product)
     const onAddToCart = async (zapatilla_id, talla, cantidad) => {
         if (!talla) {
             alert("Por favor, selecciona una talla antes de añadir al carrito.");
@@ -55,7 +59,7 @@ export default function ProductCard({ marca, product, gender }) {
             await fetchProducts(gender, dispatch);
             alert("Producto eliminado correctamente");
 
-        }
+        } 
     }
     return (
         <Card className="h-100 shadow-sm">
@@ -96,18 +100,7 @@ export default function ProductCard({ marca, product, gender }) {
                     <Card.Footer className="d-flex flex-column align-items-center">
 
 
-                        <InputGroup style={{ maxWidth: '120px' }}>
-                            <Button variant="outline-secondary" onClick={() => setCantidad(cantidad - 1)} disabled={cantidad <= 0} >-</Button>
-                            <FormControl
-                                value={cantidad}
-                                onChange={(e) => setCantidad(Math.min(product.stock, Math.max(1, parseInt(e.target.value)) || 1))}
-                                type="text"
-                                inputMode="numeric"
-                                pattern="[0-9]*"
-                                aria-label="Cantidad"
-                            />
-                            <Button variant="outline-secondary" onClick={(() => setCantidad(1 + cantidad))} disabled={cantidad >= product.stock}>+</Button>
-                        </InputGroup>
+
 
                         <DropdownButton
                             id="dropdown-basic-button"
@@ -116,11 +109,33 @@ export default function ProductCard({ marca, product, gender }) {
                             variant="secondary"
                         >
                             {product.tallas.map((talla) => (
-                                <Dropdown.Item key={talla} eventKey={talla}>
-                                    {talla}
+                                <Dropdown.Item key={talla.talla} eventKey={talla.talla}>
+                                    {talla.talla}
                                 </Dropdown.Item>
                             ))}
                         </DropdownButton>
+
+                        {talla ?
+                            <InputGroup style={{ maxWidth: '120px' }}>
+                                <Button variant="outline-secondary" onClick={() => setCantidad(cantidad - 1)} disabled={cantidad <= 0} >-</Button>
+                                <FormControl
+                                    value={cantidad}
+                                    onChange={(e) => setCantidad(Math.min(stockDisponible, Math.max(1, parseInt(e.target.value)) || 1))}
+                                    type="text"
+                                    inputMode="numeric"
+                                    pattern="[0-9]*"
+                                    aria-label="Cantidad"
+                                />
+                                <Button
+                                    variant="outline-secondary"
+                                    onClick={(() => setCantidad(1 + cantidad))}
+                                    disabled={cantidad >= stockDisponible}
+                                >+</Button>
+                            </InputGroup>
+                            : null
+                        }
+
+
                         {cart.some(item => item.zapatilla.modelo.nombre === product.modelo.nombre && item.talla === talla) ? (
                             <Button variant="success" className="w-100 mt-2" disabled>
                                 Añadido al carrito
